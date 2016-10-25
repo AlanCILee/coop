@@ -15,7 +15,7 @@ let Mysql = function () {
 
     this.sendQuery = function ( query ){
         console.log('send query : '+query);
-        
+
         conn.query( query, function(err,rows){
             if(err) {
                 console.log(err);
