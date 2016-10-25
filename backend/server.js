@@ -1,3 +1,5 @@
+"use strict";
+
 var express = require('express');
 var app = express(),
     fs = require('fs');
@@ -5,7 +7,7 @@ app.use(express.static('public'));
 app.use(express.static('dist'));
 
 app.get('/', function(req, res){
-    res.send('Hello home page');;
+    res.send('Hello home page');
 });
 app.get('/dynamic', function(req, res){
     var lis = '';
@@ -35,7 +37,7 @@ app.get('/route', function(req, res){
         if (err) {
             console.log( err );
             // emit the error
-            return callback(err, `<h2>File Read Error: ${err.message}</h2>`);
+            // return callback(err, `<h2>File Read Error: ${err.message}</h2>`);
         }
 
         let text = data.toString();
@@ -49,7 +51,7 @@ app.get('/route', function(req, res){
         res.send(text);
     });
 
-})
+});
 app.get('/login', function(req, res){
     res.send('<h1>Login please</h1>');
 });
