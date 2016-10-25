@@ -31,9 +31,9 @@ app.get('/dynamic', function(req, res){
     res.send(output);
 });
 app.get('/route', function(req, res){
-    fs.readFile( './dist/index.html', (err, data) => {
+    fs.readFile( '../dist/index.html', (err, data) => {
         if (err) {
-            log.error( err );
+            console.log( err );
             // emit the error
             return callback(err, `<h2>File Read Error: ${err.message}</h2>`);
         }
