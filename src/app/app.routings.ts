@@ -5,7 +5,7 @@ import { MainMenuComponent } from './mainmenu/mainmenu.component';
 import { EmployeesComponent } from "./employees/employees.component";
 
 const APP_ROUTES: Routes = [
-    // { path: '', redirectTo: 'home', pathMatch: 'full'},
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
     { path: 'home', component: MainMenuComponent },
     { path: 'emp', component: EmployeesComponent }
     // { path: 'about', component: AboutComponent },
@@ -13,4 +13,4 @@ const APP_ROUTES: Routes = [
     // { path: 'contactus', redirectTo: 'contact' },
 ];
 
-export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES});
+export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES);

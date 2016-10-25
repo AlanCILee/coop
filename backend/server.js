@@ -1,14 +1,14 @@
 'use strict';
 const express = require('express'),
         app = express(),
-        fs = require('fs');
+        fs = require('fs')
 
 const Server = function() {
 
     const setRoute = function(){
-        app.get('/', function (req, res) {
-            res.send('Hello home page');
-        });
+        // app.get('/', function (req, res) {
+        //     res.send('Hello home page');
+        // });
 
         app.get('/route', function(req, res){
             fs.readFile( './dist/index.html', (err, data) => {
@@ -24,8 +24,10 @@ const Server = function() {
 
         });
 
-        app.get('/login', function(req, res){
-            res.send('<h1>Login please</h1>');
+        app.get('/emp', function(req, res){
+            let feedback = {'alan': 'lee'};
+            console.log('get emp route :' + feedback);
+            res.send(feedback);
         });
 
     };
