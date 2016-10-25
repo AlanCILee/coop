@@ -2,7 +2,7 @@
 
 const mysql = require('mysql');
 
-let Mysql = function () {
+const Mysql = function () {
     // const sql = this;
 
     let conn = mysql.createConnection({
@@ -13,7 +13,7 @@ let Mysql = function () {
         port: '3306'
     });
 
-    this.sendQuery = function ( query ){
+    this.sendQuery = function ( query, callback ){
         console.log('send query : '+query);
 
         conn.query( query, function(err,rows){
@@ -23,6 +23,7 @@ let Mysql = function () {
             }
             console.log('Data received from Db:\n');
             console.log(rows);
+            return callback(rows);
         });
     };
 
@@ -36,9 +37,7 @@ let Mysql = function () {
 };
 
 Mysql.start = function(){
-    let mysql = new Mysql();
-    mysql.sendQuery( 'SELECT * FROM employees' );
-
+    return new Mysql();
 };
 
 module.exports = Mysql;

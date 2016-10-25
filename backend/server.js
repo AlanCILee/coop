@@ -1,9 +1,12 @@
 'use strict';
 const express = require('express'),
         app = express(),
-        fs = require('fs')
+        fs = require('fs');
 
-const Server = function() {
+
+const Server = function(options) {
+    const mysql = options.mysql;
+    // const server = this;
 
     const setRoute = function(){
         // app.get('/', function (req, res) {
@@ -25,9 +28,11 @@ const Server = function() {
         });
 
         app.get('/emp', function(req, res){
-            let feedback = {'alan': 'lee'};
-            console.log('get emp route :' + feedback);
-            res.send(feedback);
+            // let feedback = {'alan': 'lee'};
+            console.log('get emp route :');
+            mysql.sendQuery( 'SELECT * FROM employees', function(rows){
+                res.send(rows);
+            });
         });
 
     };
@@ -44,8 +49,8 @@ const Server = function() {
     };
 };
 
-Server.startServer = function(){
-    let server = new Server();
+Server.startServer = function(options){
+    let server = new Server(options);
     server.createServer();
     return server;
 };

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Response } from "@angular/http";
+
 import { HttpComponent } from '../module/http.component';
-import {loadavg} from "os";
 
 @Component({
     selector: 'mainmenu',
@@ -17,8 +18,12 @@ export class MainMenuComponent {
     }
 
     request(): void {
-        console.log ('request() input');
-        this.httpComponent.makeRequest();
+        console.log('request() input');
+        this.httpComponent.makeRequest('http://localhost:3000/emp').subscribe((res: Response) => {
+            this.data = res.json();
+            this.loading = false;
+            console.log('HttpComponent : ' + JSON.stringify(this.data));
+        });
     }
 
 
