@@ -4,16 +4,24 @@
     <!--<img src="../../../public/images/angular.png">-->
     <table>
         <tr *ngFor="let emp of employees">
-            <td>{{ emp.empId }}</td>
+            <td><input type="radio" name="id" value="{{ emp.empId }}"></td>
             <td>{{ emp.empName }}</td>
             <td>{{ getDepartName(emp.departId) }}</td>
             <td>{{ emp.empPhone }}</td>
             <td>{{ emp.wages.wage }}</td>
-
         </tr>
-
-
     </table>
+    <button (click)="addBtn()">Add</button>
+    <div *ngIf="modeEdit">
+    <!--<div>-->
+        <form #form ="ngForm" (ngSubmit) = "onSubmit(form.value)">
+            <label>Name </label><input type="text" name="name" ngModel>
+            <label>Department </label><select name="depart" ngModel><option *ngFor="let depart of departments">{{ depart.departName }}</option></select>
+            <label>Phone </label><input type="text" name="phone" ngModel>
+            <label>Wage </label><input type="text" name="wage" ngModel>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </main>
 
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Employees, Employee, Wage } from "../model/employee";
 import { Department, Departments } from "../model/department";
 
+
 @Component({
     selector: 'employees',
     templateUrl: './employees.component.html',
@@ -10,7 +11,9 @@ import { Department, Departments } from "../model/department";
 export class EmployeesComponent implements OnInit {
     cnt: number = 0;
     employees: Employee[];
-    // departments: Department[];
+    departments: Department[];
+    modeEdit: boolean = false;
+    modeAdd: boolean = false;
 
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments){
@@ -19,7 +22,7 @@ export class EmployeesComponent implements OnInit {
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
-        // this.departments = this.departmentsObj.department;
+        this.departments = this.departmentsObj.department;
     }
 
     getDepartName(departId: number){
@@ -30,5 +33,16 @@ export class EmployeesComponent implements OnInit {
 
     Up() {
         console.log("UP:"+this.cnt++);
+    }
+
+    onSubmit(form: any): void {
+        console.log('you submitted value: ', form);
+
+        this.modeAdd = false;
+        this.modeEdit = false;
+    }
+
+    addBtn(): void {
+        this.modeAdd = true;
     }
 }
