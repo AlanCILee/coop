@@ -5,6 +5,17 @@ export class Schedule {
 class DayilySchedule {
 	day: string;
 	jobs: Job[];
+
+	addJob(_empId: number,
+           empName: string,
+           departName: string,
+           startT: string,
+           endT: string): void{
+
+        let job = new Job(_empId, empName, departName, startT, endT);
+	    console.log("add new job :" + job);
+        this.jobs.push(job);
+    }
 }
 
 class Job {

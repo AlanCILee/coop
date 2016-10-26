@@ -10,6 +10,7 @@ import { EmployeesComponent } from "./employees/employees.component";
 import { HttpComponent } from "./module/http.component";
 import { SalaryComponent } from "./salary/salary.component";
 
+import { Employees } from './model/employee';
 
 @NgModule({
     imports: [
@@ -23,7 +24,10 @@ import { SalaryComponent } from "./salary/salary.component";
         EmployeesComponent,
         SalaryComponent
     ],
-    providers: [ HttpComponent ],
+    providers: [
+        HttpComponent,
+        Employees
+    ],
     bootstrap: [ AppComponent ]
 })
 export class AppModule { }
