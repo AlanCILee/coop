@@ -11,6 +11,7 @@ import { HttpComponent } from "./module/http.component";
 import { SalaryComponent } from "./salary/salary.component";
 
 import { Employees } from './model/employee';
+import { Departments } from "./model/department";
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import { Employees } from './model/employee';
     ],
     providers: [
         HttpComponent,
-        Employees
+        Employees,
+        Departments,
     ],
     bootstrap: [ AppComponent ]
 })

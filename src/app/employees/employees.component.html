@@ -1,11 +1,12 @@
 <main>
     <h1>Employees List</h1>
+    <p>{{ Up() }}</p>
     <!--<img src="../../../public/images/angular.png">-->
     <table>
         <tr *ngFor="let emp of employees">
             <td>{{ emp.empId }}</td>
             <td>{{ emp.empName }}</td>
-            <td>{{ emp.departId }}</td>
+            <td>{{ getDepartName(emp.departId) }}</td>
             <td>{{ emp.empPhone }}</td>
             <td>{{ emp.wages.wage }}</td>
 

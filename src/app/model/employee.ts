@@ -48,7 +48,7 @@ export class Wage {
 const mockEmployees = [
     { empid: 1, name: 'Alan', phone: '123-456-7890', depart: 1, wages: {wage: 20, date:'2016-10-01'}},
     { empid: 2, name: 'Nick', phone: '123-456-7891', depart: 2, wages: {wage: 30, date:'2016-10-05'}},
-    { empid: 3, name: 'Aaron', phone: '123-456-7892', depart: 1, wages: {wage: 40, date:'2016-10-09'}},
-    { empid: 4, name: 'Max', phone: '123-456-7893', depart: 2, wages: {wage: 50, date:'2016-10-01'}}
+    { empid: 3, name: 'Aaron', phone: '123-456-7892', depart: 4, wages: {wage: 40, date:'2016-10-09'}},
+    { empid: 4, name: 'Max', phone: '123-456-7893', depart: 3, wages: {wage: 50, date:'2016-10-01'}}
 ];
 
