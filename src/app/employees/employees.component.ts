@@ -15,6 +15,12 @@ export class EmployeesComponent implements OnInit {
     modeEdit: boolean = false;
     modeAdd: boolean = false;
 
+    eName: string;
+    eDepartment: string;
+    ePhone: string;
+    eWage: number;
+
+
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments){
 
@@ -26,8 +32,22 @@ export class EmployeesComponent implements OnInit {
     }
 
     getDepartName(departId: number){
-        console.log('call getDepartmentName in employee');
+        // console.log('call getDepartmentName in employee');
         return this.departmentsObj.getDepartmentName(departId);
+
+    }
+
+    getEmployee(employeeId: number){
+        let selectedEmp: Employee = this.employeesObj.getEmployee(employeeId);
+        if(!selectedEmp){
+            console.log("employees: Invalid Employee ID");
+        }else{
+            console.log("employees: Get Employee info",selectedEmp.empName);
+            this.eName = selectedEmp.empName;
+            this.eDepartment = this.getDepartName(selectedEmp.departId);
+            this.ePhone = selectedEmp.empPhone;
+            this.eWage = selectedEmp.wages.wage;
+        }
 
     }
 
@@ -44,5 +64,13 @@ export class EmployeesComponent implements OnInit {
 
     addBtn(): void {
         this.modeAdd = true;
+        this.modeEdit = false;
+    }
+
+    empBtn(empId: number): void {
+        console.log('click Employee ID: ', empId);
+        this.getEmployee(empId);
+        this.modeAdd = false;
+        this.modeEdit = true;
     }
 }

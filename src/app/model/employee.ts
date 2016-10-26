@@ -26,6 +26,18 @@ export class Employees {
         console.log('initEmployee Loading Employee');
         this.loadEmployee(mockEmployees);
     }
+
+    getEmployee(employeeId: number){
+            console.log('getEmployee :'+ employeeId);
+            let employee: Employee = null;
+
+            this.employees.forEach((emp) => {
+                if(emp.empId == employeeId)
+                    employee = emp;
+            });
+
+            return employee;
+    }
 }
 
 

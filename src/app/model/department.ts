@@ -20,7 +20,7 @@ export class Departments {
     }
 
     getDepartmentName(departId: number): string{
-        console.log('getDepartmentName :'+ departId);
+        // console.log('getDepartmentName :'+ departId);
         let departName: string ='';
 
         this.department.forEach((depart) => {
