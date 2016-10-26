@@ -5,4 +5,4 @@ import { HttpComponent } from "../module/http.component";
     providers: [ HttpComponent ],
 })
 
-export class MainmenuModule { }
+export class SalaryModule { }

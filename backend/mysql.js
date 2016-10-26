@@ -6,7 +6,7 @@ const Mysql = function () {
     // const sql = this;
 
     let conn = mysql.createConnection({
-        host: '0.0.0.0',
+        host: 'localhost',
         user: 'root',
         password: '',
         database: 'company',

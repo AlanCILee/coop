@@ -8,6 +8,7 @@ import { APP_ROUTING } from "./app.routings";
 import { MainMenuComponent } from './mainmenu/mainmenu.component';
 import { EmployeesComponent } from "./employees/employees.component";
 import { HttpComponent } from "./module/http.component";
+import { SalaryComponent } from "./salary/salary.component";
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { HttpComponent } from "./module/http.component";
     declarations: [
         AppComponent,
         MainMenuComponent,
-        EmployeesComponent
+        EmployeesComponent,
+        SalaryComponent
     ],
     providers: [ HttpComponent ],
     bootstrap: [ AppComponent ]
