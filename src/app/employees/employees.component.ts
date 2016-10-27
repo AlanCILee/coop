@@ -16,13 +16,14 @@ export class EmployeesComponent implements OnInit {
     departments: Department[];
     modeEdit: boolean = false;
     modeAdd: boolean = false;
-
+    btnName: string;
+    
     form : FormGroup;
     eName: string;
     eDepartment: string;
     ePhone: string;
     eWage: number;
-
+    
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private fb: FormBuilder){
@@ -66,16 +67,23 @@ export class EmployeesComponent implements OnInit {
     Up() {
         console.log("UP:"+this.cnt++);
     }
-
+    
+    clearInput(): void{
+        this.eName = '';
+        this.eDepartment = '';
+        this.ePhone = '';
+        this.eWage = null;
+    }
+    
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
-
-
         this.modeAdd = false;
         this.modeEdit = false;
     }
 
     addBtn(): void {
+        this.clearInput();
+        this.btnName = 'Add';
         this.modeAdd = true;
         this.modeEdit = false;
     }
@@ -83,6 +91,7 @@ export class EmployeesComponent implements OnInit {
     empBtn(empId: number): void {
         console.log('click Employee ID: ', empId);
         this.getEmployee(empId);
+        this.btnName = 'Update';
         this.modeAdd = false;
         this.modeEdit = true;
     }
