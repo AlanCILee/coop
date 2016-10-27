@@ -2,10 +2,10 @@ import { Injectable } from "@angular/core";
 
 @Injectable()
 export class Departments {
-    department: Department[] =[];
+    departments: Department[] =[];
 
     addDepartment(departId: number, departName: string): void{
-        this.department.push(new Department( departId, departName ));
+        this.departments.push(new Department( departId, departName ));
     }
 
     loadDepartments(departments: Object[]): void {
@@ -23,7 +23,7 @@ export class Departments {
         // console.log('getDepartmentName :'+ departId);
         let departName: string ='';
 
-        this.department.forEach((depart) => {
+        this.departments.forEach((depart) => {
             if(depart.departId == departId)
                 departName = depart.departName;
         });

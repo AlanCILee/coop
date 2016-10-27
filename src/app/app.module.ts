@@ -13,6 +13,9 @@ import { SalaryComponent } from "./salary/salary.component";
 
 import { Employees } from './model/employee';
 import { Departments } from "./model/department";
+import { TimeTable } from "./model/time";
+import { MainmenuModule } from "./mainmenu/mainmenu.module";
+
 
 @NgModule({
     imports: [
@@ -20,11 +23,12 @@ import { Departments } from "./model/department";
         HttpModule,
         APP_ROUTING,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        MainmenuModule
     ],
     declarations: [
         AppComponent,
-        MainMenuComponent,
+        // MainMenuComponent,
         EmployeesComponent,
         SalaryComponent
     ],
@@ -32,6 +36,7 @@ import { Departments } from "./model/department";
         HttpComponent,
         Employees,
         Departments,
+        TimeTable,
     ],
     bootstrap: [ AppComponent ]
 })

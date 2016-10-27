@@ -32,7 +32,7 @@ export class EmployeesComponent implements OnInit {
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
-        this.departments = this.departmentsObj.department;
+        this.departments = this.departmentsObj.departments;
         this.form = this.fb.group({
             // name: [ this.eName, Validators.required ],
             // department: [ this.eDepartment, Validators.required],

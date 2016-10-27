@@ -1,18 +1,25 @@
+import { TimeTable } from './time';
+
 export class Schedule {
 	schedule: DayilySchedule[];
+	startD: string;
+	endD: string;
 }
 
-class DayilySchedule {
+export class DayilySchedule {
 	day: string;
 	jobs: Job[];
 
-	addJob(_empId: number,
-           empName: string,
-           departName: string,
-           startT: string,
-           endT: string): void{
+	addJob( date: string,
+			_empId: number,
+            empName: string,
+			departName: string,
+            startT: string,
+            endT: string,
+	        startN: number,
+	        endN: number): void{
 
-        let job = new Job(_empId, empName, departName, startT, endT);
+        let job = new Job(date, _empId, empName, departName, startT, endT, startN, endN);
 	    console.log("add new job :" + job);
         this.jobs.push(job);
     }
@@ -22,16 +29,19 @@ class Job {
 	lDuration: number;
 	dDuration: number;
 
-	constructor(public _empId: number,
+	constructor(
+		public date: string,
+		public _empId: number,
 		public empName: string,
 		public departName: string,
 		public startT: string,
 		public endT: string,
-		_lDuration?: number,
-		_dDuration?: number){
+		public startN: number,
+		public endN: number,
+		){
 
-		this.lDuration = (16 * 60 - startT) || _lDuration;
-		this.dDuration = (endT - 16 * 60) || _dDuration;
+		this.lDuration = (16 * 60 - startN);
+		this.dDuration = (endN - 16 * 60);
 	}
 
 	calLDuration (startT:number, endT:number) : number{
