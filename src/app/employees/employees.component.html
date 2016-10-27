@@ -2,6 +2,7 @@
     <h1>Employees List</h1>
     <p>{{ Up() }}</p>
     <!--<img src="../../../public/images/angular.png">-->
+    <button (click)="addBtn()">Add New Employee</button>
     <table>
         <tr *ngFor="let emp of employees" (click)="empBtn(emp.empId)">
             <!--<td><input type="radio" name="id" value="{{ emp.empId }}"></td>-->
@@ -11,21 +12,24 @@
             <td>{{ emp.wages.wage }}</td>
         </tr>
     </table>
-    <button (click)="addBtn()">Add</button>
     <div *ngIf="modeAdd || modeEdit">
-        <form #form ="ngForm" (ngSubmit) = "onSubmit(form.value)">
-            <label>Name </label><input type="text" name="name" value="{{ eName }}" ngModel>
-            <label>Department </label><select name="depart" value="{{ eDepartment }}" ngModel><option *ngFor="let depart of departments">{{ depart.departName }}</option></select>
-            <label>Phone </label><input type="text" value="{{ ePhone }}" name="phone" ngModel>
-            <label>Wage </label><input type="text" value="{{ eWage }}" name="wage" ngModel>
+        <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+            <label>Name </label>
+            <input type="text" formControlName="name" value="{{ eName }}">
+
+            <label>Department </label>
+            <select name="depart" formControlName="department" value="{{ eDepartment }}">
+                <option *ngFor="let depart of departments">{{ depart.departName }}</option>
+            </select>
+
+            <label>Phone </label>
+            <input type="text" formControlName="phone" value="{{ ePhone }}">
+          
+            <label>Wage </label>
+            <input type="text" formControlName="wage" value="{{ eWage }}">
+
             <button type="submit">Submit</button>
         </form>
     </div>
 </main>
 
-
-<!--constructor(public empId: number,-->
-<!--public empName: string,-->
-<!--public departId: number,-->
-<!--public empPhone?: string,-->
-<!--public wage?: Wage[]){-->

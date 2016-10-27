@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Employees, Employee, Wage } from "../model/employee";
 import { Department, Departments } from "../model/department";
+import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -8,6 +9,7 @@ import { Department, Departments } from "../model/department";
     templateUrl: './employees.component.html',
     styleUrls: ['./employees.component.css']
 })
+
 export class EmployeesComponent implements OnInit {
     cnt: number = 0;
     employees: Employee[];
@@ -15,20 +17,31 @@ export class EmployeesComponent implements OnInit {
     modeEdit: boolean = false;
     modeAdd: boolean = false;
 
+    form : FormGroup;
     eName: string;
     eDepartment: string;
     ePhone: string;
     eWage: number;
 
-
     constructor(private employeesObj: Employees,
-            private departmentsObj: Departments){
+            private departmentsObj: Departments,
+            private fb: FormBuilder){
 
     };
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.department;
+        this.form = this.fb.group({
+            // name: [ this.eName, Validators.required ],
+            // department: [ this.eDepartment, Validators.required],
+            // phone: [ this.ePhone, Validators.required],
+            // wage: [ this.eWage, Validators.required],
+            name: [ '' ],
+            department: [ '' ],
+            phone: [ '' ],
+            wage: [ '' ],
+        })
     }
 
     getDepartName(departId: number){
