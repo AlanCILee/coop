@@ -48,7 +48,6 @@ export class EmployeesComponent implements OnInit {
             this.ePhone = selectedEmp.empPhone;
             this.eWage = selectedEmp.wages.wage;
         }
-
     }
 
     Up() {
@@ -57,6 +56,7 @@ export class EmployeesComponent implements OnInit {
 
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
+
 
         this.modeAdd = false;
         this.modeEdit = false;
