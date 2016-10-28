@@ -1,6 +1,6 @@
-import {Comparable} from "./comparable";
+import { Comparable } from "./comparable";
 
-class Node<T extends Comparable<T>> {
+export class Node<T extends Comparable<T>> {
 	value: T;
 	left: Node<T>;
 	right: Node<T>;
@@ -16,12 +16,13 @@ class Node<T extends Comparable<T>> {
 	}
 }
 
-class BinarySearchTree<T extends Comparable<T>>{
+export class BinarySearchTree<T extends Comparable<T>>{
 	root: Node<T> = null;
 	
 	addNode <T extends Comparable<T>> ( _node: Node<T>, _startNode: Node<T>): void {
 		
 		if( this.root == null ){
+			console.log('root?');
 			this.root = _node;
 			return;
 		}

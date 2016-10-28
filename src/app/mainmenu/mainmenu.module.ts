@@ -4,8 +4,9 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { HttpComponent } from "../core/http.component";
-import { DatePickerComponent } from './components/ng2-datepicker';
+import { DatePickerComponent } from './datepicker/ng2-datepicker';
 import { MainMenuComponent } from "./mainmenu.component";
+import { DispScheduleComponent } from "./displaySchedule/dispschedule.component";
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import { MainMenuComponent } from "./mainmenu.component";
     ],
     declarations: [
         MainMenuComponent,
-        DatePickerComponent
+        DatePickerComponent,
+        DispScheduleComponent,
     ],
     providers: [
         HttpComponent,

@@ -1,14 +1,22 @@
+import { Component, OnInit } from '@angular/core';
 import { TimeTable } from './time';
-
+import { Comparable } from "../core/comparable";
+import { BinarySearchTree, Node } from "../core/binarySearchTree";
 // export class Schedule {
 // 	schedule: DayilySchedule[] = [];
 // 	startD: string;
 // 	endD: string;
 // }
 
-export class Schedule {
+export class Schedule implements OnInit {
 	jobs: Job[] = [];
-
+	jobsBST: BinarySearchTree<Job>;
+	
+	ngOnInit (){
+		console.log("ngOnInit of Schdeul");
+		this.jobsBST = new BinarySearchTree<Job>();
+	}
+	
 	addJob( date: string,
 			_empId: number,
             empName: string,
@@ -20,11 +28,16 @@ export class Schedule {
 
         let job = new Job(date, _empId, empName, departName, startT, endT, startN, endN);
 	    console.log("add new job :" + job);
-        this.jobs.push(job);
+		if(!this.jobsBST)
+			this.jobsBST = new BinarySearchTree<Job>();
+		this.jobs.push(job);
+		this.jobsBST.addNode( new Node<Job>( job ), this.jobsBST.root);
+		this.jobsBST.inOrderTraversal(this.jobsBST.root);
     }
+    
 }
 
-class Job {
+class Job implements Comparable<Job>{
 	lDuration: number;
 	dDuration: number;
 
@@ -42,7 +55,16 @@ class Job {
 		this.lDuration = (16 * 60 - startN);
 		this.dDuration = (endN - 16 * 60);
 	}
-
+	
+	compareTo (other: Job): number {
+		if (this.date > other.date)
+			return 1;
+		else if (this.date < other.date)
+			return -1;
+		else
+			return 0;
+	}
+	
 	calLDuration (startN:number, endN:number) : number{
 		let lDuration: number;
 		let setTime = 16 * 60;
