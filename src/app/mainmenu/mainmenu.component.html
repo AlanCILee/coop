@@ -8,15 +8,17 @@
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
 
 			<label>Name </label>
-			<select formControlName="name" value="{{ sName }}">
-				<option *ngFor="let employee of employees">{{ employee.empName }}</option>
+			<select formControlName="name" value="{{ sId }},{{ sName }}">
+				<option *ngFor="let employee of employees">{{ employee.empId }},{{ employee.empName }}</option>
 			</select>
-
 
 			<label>Working Department </label>
 			<select formControlName="department" value="{{ sDepartment }}">
 				<option *ngFor="let depart of departments">{{ depart.departName }}</option>
 			</select>
+
+			<label>Date</label>
+			<label>{{ sDate }}</label>
 
 			<label>Start Time </label>
 			<select formControlName="startT" value="{{ sStartT }}">

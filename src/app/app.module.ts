@@ -15,6 +15,7 @@ import { Employees } from './model/employee';
 import { Departments } from "./model/department";
 import { TimeTable } from "./model/time";
 import { MainmenuModule } from "./mainmenu/mainmenu.module";
+import { Schedule } from "./model/schedule";
 
 
 @NgModule({
@@ -28,7 +29,6 @@ import { MainmenuModule } from "./mainmenu/mainmenu.module";
     ],
     declarations: [
         AppComponent,
-        // MainMenuComponent,
         EmployeesComponent,
         SalaryComponent
     ],
@@ -37,6 +37,7 @@ import { MainmenuModule } from "./mainmenu/mainmenu.module";
         Employees,
         Departments,
         TimeTable,
+        Schedule,
     ],
     bootstrap: [ AppComponent ]
 })

@@ -1,14 +1,13 @@
 import { TimeTable } from './time';
 
-export class Schedule {
-	schedule: DayilySchedule[];
-	startD: string;
-	endD: string;
-}
+// export class Schedule {
+// 	schedule: DayilySchedule[] = [];
+// 	startD: string;
+// 	endD: string;
+// }
 
-export class DayilySchedule {
-	day: string;
-	jobs: Job[];
+export class Schedule {
+	jobs: Job[] = [];
 
 	addJob( date: string,
 			_empId: number,
@@ -44,30 +43,30 @@ class Job {
 		this.dDuration = (endN - 16 * 60);
 	}
 
-	calLDuration (startT:number, endT:number) : number{
-		let lDuration;
+	calLDuration (startN:number, endN:number) : number{
+		let lDuration: number;
 		let setTime = 16 * 60;
 
-		if (startT >= setTime){
+		if (startN >= setTime){
 			lDuration = 0;
-		}else if (endT <= setTime) {
-			lDuration = endT - startT;
+		}else if (endN <= setTime) {
+			lDuration = endN - startN;
 		}else{
-			lDuration = setTime - startT;
+			lDuration = setTime - startN;
 		}
 		return lDuration;
 	}
 
-	calDDuration (startT:number, endT:number) : number{
-		let dDuration;
+	calDDuration (startN:number, endN:number) : number{
+		let dDuration: number;
 		let setTime = 16 * 60;
 
-		if (endT <= setTime){
+		if (endN <= setTime){
 			dDuration = 0;
-		}else if (startT >= setTime) {
-			dDuration = endT - startT;
+		}else if (startN >= setTime) {
+			dDuration = endN - startN;
 		}else{
-			dDuration = endT - setTime;
+			dDuration = endN - setTime;
 		}
 		return dDuration;
 	}

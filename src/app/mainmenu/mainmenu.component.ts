@@ -8,6 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Employees, Employee, Wage } from "../model/employee";
 import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
+import { Schedule } from "../model/schedule";
 
 
 
@@ -27,17 +28,20 @@ export class MainMenuComponent implements OnInit {
     timeTable: Time[];
 
     form : FormGroup;
+    sId: number;
     sName: string;
     sDepartment: string;
     sStartT: string;
     sEndT: string;
+    sDate: Date;
 
     public currentDate:Date = new Date();
 
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private timeObj: TimeTable,
-                private fb: FormBuilder){
+                private dScheduleObj: Schedule,
+                private fb: FormBuilder,){
     };
 
     ngOnInit(){
@@ -57,10 +61,25 @@ export class MainMenuComponent implements OnInit {
         })
     }
 
-    onSubmit(form: any): void {
+    onSubmit(form: any): any {
         console.log('you submitted value: ', form);
+        let idName: string[] = [];
+        idName = form.name.split(',');
+
+        this.dScheduleObj.addJob(
+            form.date,
+            Number(idName[0]),
+            idName[1],
+            form.department,
+            form.startT,
+            form.endT,
+            this.timeObj.timeToDuration(form.startT),
+            this.timeObj.timeToDuration(form.endT)
+        );
+
         this.modeAdd = false;
         this.modeEdit = false;
+        return false;
     }
 
     addBtn(): void {
@@ -69,6 +88,8 @@ export class MainMenuComponent implements OnInit {
         this.modeAdd = true;
         this.modeEdit = false;
     }
+
+
 }
 
 

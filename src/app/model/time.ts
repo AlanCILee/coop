@@ -23,6 +23,15 @@ export class TimeTable {
 		return retStr;
 	}
 
+	timeToDuration(time: string): number {
+		let duration: number = 0;
+		let timeStr: string[] =[];
+
+		timeStr = time.split(':');
+		duration = Number(timeStr[0]) * 60 + Number(timeStr[1]);
+		return duration;
+	}
+
 	getTimeNumber(timeStr: string): number {
 		let timeNumber: number = 0;
 
