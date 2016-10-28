@@ -8,7 +8,7 @@ import { APP_ROUTING } from "./app.routings";
 
 import { MainMenuComponent } from './mainmenu/mainmenu.component';
 import { EmployeesComponent } from "./employees/employees.component";
-import { HttpComponent } from "./module/http.component";
+import { HttpComponent } from "./core/http.component";
 import { SalaryComponent } from "./salary/salary.component";
 
 import { Employees } from './model/employee';

@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { HttpComponent } from "../module/http.component";
+import { HttpComponent } from "../core/http.component";
 
 @NgModule({
     providers: [ HttpComponent ],

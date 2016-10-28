@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Response } from "@angular/http";
 
-import { HttpComponent } from '../module/http.component';
+import { HttpComponent } from '../core/http.component';
 
 @Component({
     selector: 'salary',
