@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { Input } from "@angular/core/src/metadata/directives";
+import { Input } from "@angular/core";
+import { Job } from "../../model/schedule";
+
 
 @Component({
 	selector: 'schedule',
@@ -8,5 +10,9 @@ import { Input } from "@angular/core/src/metadata/directives";
 })
 
 export class DispScheduleComponent {
-	// @Input() tdate: string;
+	@Input() jobs: Job[];
+
+
+
+	
 }

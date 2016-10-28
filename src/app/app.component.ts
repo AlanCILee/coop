@@ -4,6 +4,7 @@ import '../../public/css/styles.css';
 import { Employees } from "./model/employee";
 import { Departments } from "./model/department";
 import { TimeTable } from "./model/time";
+import { Schedule } from "./model/schedule";
 
 @Component({
     selector: 'my-app',
@@ -13,6 +14,7 @@ import { TimeTable } from "./model/time";
 export class AppComponent implements OnInit {
     constructor(private employees: Employees,
                 private departments: Departments,
+                private schedule : Schedule,
                 private time: TimeTable) {
         
     }
@@ -20,6 +22,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.employees.initEmployee();
         this.departments.initDepartments();
+        this.schedule.loadSchedule();
         this.time.createTimeTable();
         
         // let a1 = new A(1);

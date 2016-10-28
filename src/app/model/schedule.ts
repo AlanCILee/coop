@@ -11,7 +11,11 @@ import { BinarySearchTree, Node } from "../core/binarySearchTree";
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
 	jobsBST: BinarySearchTree<Job>;
-	
+
+	constructor(){
+		console.log('Schedule class constructor');
+	}
+
 	ngOnInit (){
 		console.log("ngOnInit of Schdeul");
 		this.jobsBST = new BinarySearchTree<Job>();
@@ -34,11 +38,19 @@ export class Schedule implements OnInit {
 		this.jobsBST.inOrderTraversal(this.jobsBST.root);
     }
 
-	loadDepartments(jobs: Job[]): void {
+	loadSchedule(): void {
+		console.log('Initial Load schedule');
 		mockSchedule.forEach(( schedule ) => {
 			this.addJob( schedule['date'], schedule['empId'], schedule['name'],
 				schedule['departName'], schedule['startT'], schedule['endT']);
 		});
+	}
+
+	getJobs(date: string): Job[] {
+		let jobList: Job[] = this.jobs.filter((job)=>{
+			return job.date == date;
+		});
+		return jobList;
 	}
     
 }
@@ -53,7 +65,7 @@ const mockSchedule = [
 	{ date: '2016-10-02', empId: 2, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
 ];
 
-class Job implements Comparable<Job>{
+export class Job implements Comparable<Job>{
 	lDuration: number;
 	dDuration: number;
 	startN: number;
@@ -66,9 +78,6 @@ class Job implements Comparable<Job>{
 		public departName: string,
 		public startT: string,
 		public endT: string,) {
-
-
-
 			this.startN = this.calTime(startT);
 			this.endN = this.calTime(endT);
 			this.lDuration = (16 * 60 - this.startN);

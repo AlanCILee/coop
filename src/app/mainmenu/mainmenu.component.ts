@@ -8,7 +8,7 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { Employees, Employee, Wage } from "../model/employee";
 import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
-import { Schedule } from "../model/schedule";
+import { Schedule, Job } from "../model/schedule";
 
 
 
@@ -33,7 +33,8 @@ export class MainMenuComponent implements OnInit {
     sDepartment: string;
     sStartT: string;
     sEndT: string;
-    sDate: string;
+
+    sJobs: Job[];
 
     public currentDate:Date = new Date();
 
@@ -76,7 +77,7 @@ export class MainMenuComponent implements OnInit {
             // this.timeObj.timeToDuration(form.startT),
             // this.timeObj.timeToDuration(form.endT)
         );
-    console.log('Typeof Date: ', typeof(form.date) );
+
         this.modeAdd = false;
         this.modeEdit = false;
         return false;
@@ -90,8 +91,8 @@ export class MainMenuComponent implements OnInit {
     }
 
     dateChanged(str: string){
-        this.sDate = str;
         console.log('got message from Calendar: ' + str);
+        this.sJobs = this.dScheduleObj.getJobs(str);
     }
 
 

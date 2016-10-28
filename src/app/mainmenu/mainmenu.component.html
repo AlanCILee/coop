@@ -32,7 +32,8 @@
 			<button type="submit">{{ btnName }}</button>
 		</form>
 	</div>
-	
-	<schedule *ngIf ="sDate"></schedule>
+	<div *ngIf ="sJobs">
+		<schedule [jobs]="sJobs"></schedule>
+	</div>
 </main>
 <!--<pre>{{data | json}}</pre>-->
