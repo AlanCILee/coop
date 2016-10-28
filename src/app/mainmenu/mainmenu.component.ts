@@ -33,7 +33,7 @@ export class MainMenuComponent implements OnInit {
     sDepartment: string;
     sStartT: string;
     sEndT: string;
-    sDate: Date;
+    sDate: string;
 
     public currentDate:Date = new Date();
 
@@ -73,10 +73,10 @@ export class MainMenuComponent implements OnInit {
             form.department,
             form.startT,
             form.endT,
-            this.timeObj.timeToDuration(form.startT),
-            this.timeObj.timeToDuration(form.endT)
+            // this.timeObj.timeToDuration(form.startT),
+            // this.timeObj.timeToDuration(form.endT)
         );
-
+    console.log('Typeof Date: ', typeof(form.date) );
         this.modeAdd = false;
         this.modeEdit = false;
         return false;
@@ -87,6 +87,11 @@ export class MainMenuComponent implements OnInit {
         this.btnName = 'Add';
         this.modeAdd = true;
         this.modeEdit = false;
+    }
+
+    dateChanged(str: string){
+        this.sDate = str;
+        console.log('got message from Calendar: ' + str);
     }
 
 

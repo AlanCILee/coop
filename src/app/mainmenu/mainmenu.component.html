@@ -17,9 +17,6 @@
 				<option *ngFor="let depart of departments">{{ depart.departName }}</option>
 			</select>
 
-			<label>Date</label>
-			<label>{{ sDate }}</label>
-
 			<label>Start Time </label>
 			<select formControlName="startT" value="{{ sStartT }}">
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
@@ -30,12 +27,12 @@
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 			</select>
 
-			<datepicker formControlName="date" [expanded]="true" class="warning"></datepicker>
+			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
 			<button type="submit">{{ btnName }}</button>
 		</form>
 	</div>
 	
-	<schedule></schedule>
+	<schedule *ngIf ="sDate"></schedule>
 </main>
 <!--<pre>{{data | json}}</pre>-->

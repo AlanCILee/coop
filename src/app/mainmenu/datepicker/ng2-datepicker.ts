@@ -1,4 +1,4 @@
-import {Component, ViewContainerRef, forwardRef, OnInit, Input} from '@angular/core';
+import {Component, ViewContainerRef, forwardRef, OnInit, Input, EventEmitter} from '@angular/core';
 import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
 import * as moment_ from 'moment';
 
@@ -24,7 +24,8 @@ export const CALENDAR_VALUE_ACCESSOR: any = {
 	selector: 'datepicker',
 	templateUrl: './ng2-datepicker.component.html',
 	styleUrls: ['./ng2-datepicker.css'],
-	providers: [CALENDAR_VALUE_ACCESSOR]
+	providers: [CALENDAR_VALUE_ACCESSOR],
+	outputs: ['sendDate'],
 })
 export class DatePickerComponent implements ControlValueAccessor, OnInit {
 	@Input() class: string;
@@ -46,8 +47,11 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 	private onChangeCallback: (_: any) => void = () => {
 	};
 
+	private sendDate: EventEmitter<string>;
+
 	constructor(viewContainerRef: ViewContainerRef) {
 		this.el = viewContainerRef.element.nativeElement;
+		this.sendDate = new EventEmitter<string>();
 	}
 
 	get value(): any {
@@ -64,7 +68,8 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 		this.class = `ui-kit-calendar-container ${this.class}`;
 		this.opened = this.opened || false;
 		this.format = this.format || 'YYYY-MM-DD';
-		this.viewFormat = this.viewFormat || 'D MMMM YYYY';
+		// this.viewFormat = this.viewFormat || 'D MMMM YYYY';
+		this.viewFormat = this.viewFormat || 'YYYY-MM-DD';
 		this.firstWeekdaySunday = this.firstWeekdaySunday || false;
 		setTimeout(() => {
 			if (!this.viewDate) {
@@ -100,6 +105,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 
 		this.days = [];
 		let selectedDate = moment(this.value, this.viewFormat);
+
 		for (let i = n; i <= date.endOf('month').date(); i += 1) {
 			let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
 			let today = (moment().isSame(currentDate, 'day') && moment().isSame(currentDate, 'month')) ? true : false;
@@ -125,6 +131,7 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 				});
 			}
 		}
+		this.sendDate.emit(this.value);
 	}
 
 	selectDate(e: MouseEvent, i: number) {

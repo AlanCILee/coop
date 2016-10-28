@@ -18,15 +18,14 @@ export class Schedule implements OnInit {
 	}
 	
 	addJob( date: string,
-			_empId: number,
+			empId: number,
             empName: string,
 			departName: string,
             startT: string,
             endT: string,
-	        startN: number,
-	        endN: number): void{
+	        ): void{
 
-        let job = new Job(date, _empId, empName, departName, startT, endT, startN, endN);
+        let job = new Job(date, empId, empName, departName, startT, endT);
 	    console.log("add new job :" + job);
 		if(!this.jobsBST)
 			this.jobsBST = new BinarySearchTree<Job>();
@@ -34,28 +33,57 @@ export class Schedule implements OnInit {
 		this.jobsBST.addNode( new Node<Job>( job ), this.jobsBST.root);
 		this.jobsBST.inOrderTraversal(this.jobsBST.root);
     }
+
+	loadDepartments(jobs: Job[]): void {
+		mockSchedule.forEach(( schedule ) => {
+			this.addJob( schedule['date'], schedule['empId'], schedule['name'],
+				schedule['departName'], schedule['startT'], schedule['endT']);
+		});
+	}
     
 }
+
+const mockSchedule = [
+	{ date: '2016-10-01', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '17:00'},
+	{ date: '2016-10-01', empId: 2, name: 'Nick', departName: 'Software' , startT: '09:30' ,endT: '17:15'},
+	{ date: '2016-10-01', empId: 3, name: 'Aaron', departName: 'Sales' , startT: '09:15' ,endT: '15:45'},
+	{ date: '2016-10-01', empId: 4, name: 'Max', departName: 'Sales' , startT: '09:45' ,endT: '17:00'},
+	{ date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '12:00'},
+	{ date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '14:00' ,endT: '17:00'},
+	{ date: '2016-10-02', empId: 2, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
+];
 
 class Job implements Comparable<Job>{
 	lDuration: number;
 	dDuration: number;
+	startN: number;
+	endN: number;
 
 	constructor(
 		public date: string,
-		public _empId: number,
+		public empId: number,
 		public empName: string,
 		public departName: string,
 		public startT: string,
-		public endT: string,
-		public startN: number,
-		public endN: number,
-		){
+		public endT: string,) {
 
-		this.lDuration = (16 * 60 - startN);
-		this.dDuration = (endN - 16 * 60);
+
+
+			this.startN = this.calTime(startT);
+			this.endN = this.calTime(endT);
+			this.lDuration = (16 * 60 - this.startN);
+			this.dDuration = (this.endN - 16 * 60);
 	}
-	
+
+	calTime(timeStr: string): number {
+		let timeS: string[] = [];
+		let timeN: number = 0;
+		timeS = timeStr.split(':');
+		timeN = Number(timeS[0]) * 60 + Number(timeS[1]);
+
+		return timeN;
+	}
+
 	compareTo (other: Job): number {
 		if (this.date > other.date)
 			return 1;
@@ -93,3 +121,4 @@ class Job implements Comparable<Job>{
 		return dDuration;
 	}
 }
+
