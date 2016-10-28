@@ -32,8 +32,15 @@
 			<button type="submit">{{ btnName }}</button>
 		</form>
 	</div>
-	<div *ngIf ="sJobs">
-		<schedule [jobs]="sJobs"></schedule>
+
+	<!--<div *ngFor ="let djob of dJobs">-->
+		<!--<schedule [departJobs]="djob"></schedule>-->
+	<!--</div>-->
+	<!--<div ngif="dName && dJobs">-->
+	<br>
+	<div *ngFor ="let dname of dName">
+		<schedule *ngIf="dJobs[dname].length > 1" [department]="dname" [departJobs]="dJobs[dname]"></schedule>
 	</div>
+	<!--</div>-->
 </main>
 <!--<pre>{{data | json}}</pre>-->

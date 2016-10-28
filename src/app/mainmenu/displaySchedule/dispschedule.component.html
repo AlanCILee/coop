@@ -1,1 +1,14 @@
-<p>schedule dipslay</p>
+<h3>{{ department }}</h3>
+
+<!--<p *ngFor = "let job of jobs">-->
+	<!--{{ job.date }} {{ job.empName}} {{ job.departName}} {{ job.startT}} {{ job.endT}}-->
+<!--</p>-->
+
+<!--<div *ngIf = "departJobs">-->
+<!--<div *ngFor = "let djobs of departJobs">-->
+	<!--{{ djobs.date }}-->
+	<p *ngFor = "let job of departJobs">
+	{{ job.date }} {{ job.empName}} {{ job.departName}} {{ job.startT}} {{ job.endT}}
+	</p>
+<!--</div>-->
+<!--</div>-->

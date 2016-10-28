@@ -21,7 +21,8 @@ export class Schedule implements OnInit {
 		this.jobsBST = new BinarySearchTree<Job>();
 	}
 	
-	addJob( date: string,
+	addJob( jobId: number,
+			date: string,
 			empId: number,
             empName: string,
 			departName: string,
@@ -29,7 +30,7 @@ export class Schedule implements OnInit {
             endT: string,
 	        ): void{
 
-        let job = new Job(date, empId, empName, departName, startT, endT);
+        let job = new Job(jobId, date, empId, empName, departName, startT, endT);
 	    console.log("add new job :" + job);
 		if(!this.jobsBST)
 			this.jobsBST = new BinarySearchTree<Job>();
@@ -41,7 +42,7 @@ export class Schedule implements OnInit {
 	loadSchedule(): void {
 		console.log('Initial Load schedule');
 		mockSchedule.forEach(( schedule ) => {
-			this.addJob( schedule['date'], schedule['empId'], schedule['name'],
+			this.addJob( schedule['jobId'], schedule['date'], schedule['empId'], schedule['name'],
 				schedule['departName'], schedule['startT'], schedule['endT']);
 		});
 	}
@@ -56,13 +57,13 @@ export class Schedule implements OnInit {
 }
 
 const mockSchedule = [
-	{ date: '2016-10-01', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '17:00'},
-	{ date: '2016-10-01', empId: 2, name: 'Nick', departName: 'Software' , startT: '09:30' ,endT: '17:15'},
-	{ date: '2016-10-01', empId: 3, name: 'Aaron', departName: 'Sales' , startT: '09:15' ,endT: '15:45'},
-	{ date: '2016-10-01', empId: 4, name: 'Max', departName: 'Sales' , startT: '09:45' ,endT: '17:00'},
-	{ date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '12:00'},
-	{ date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '14:00' ,endT: '17:00'},
-	{ date: '2016-10-02', empId: 2, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
+	{ jobId: 1, date: '2016-10-01', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '17:00'},
+	{ jobId: 2, date: '2016-10-01', empId: 2, name: 'Nick', departName: 'Software' , startT: '09:30' ,endT: '17:15'},
+	{ jobId: 3, date: '2016-10-01', empId: 3, name: 'Aaron', departName: 'Sales' , startT: '09:15' ,endT: '15:45'},
+	{ jobId: 4, date: '2016-10-01', empId: 4, name: 'Max', departName: 'Sales' , startT: '09:45' ,endT: '17:00'},
+	{ jobId: 5, date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '12:00'},
+	{ jobId: 6, date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '14:00' ,endT: '17:00'},
+	{ jobId: 7, date: '2016-10-02', empId: 2, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
 ];
 
 export class Job implements Comparable<Job>{
@@ -72,6 +73,7 @@ export class Job implements Comparable<Job>{
 	endN: number;
 
 	constructor(
+		public jobId: number,
 		public date: string,
 		public empId: number,
 		public empName: string,

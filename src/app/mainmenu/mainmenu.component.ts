@@ -35,6 +35,8 @@ export class MainMenuComponent implements OnInit {
     sEndT: string;
 
     sJobs: Job[];
+    dJobs: any[][];
+    dName: string[];
 
     public currentDate:Date = new Date();
 
@@ -68,6 +70,7 @@ export class MainMenuComponent implements OnInit {
         idName = form.name.split(',');
 
         this.dScheduleObj.addJob(
+            -1,
             form.date,
             Number(idName[0]),
             idName[1],
@@ -91,8 +94,32 @@ export class MainMenuComponent implements OnInit {
     }
 
     dateChanged(str: string){
+        let departJobs: any[][] =[];
+        let departName: string[] = [];
+
         console.log('got message from Calendar: ' + str);
         this.sJobs = this.dScheduleObj.getJobs(str);
+
+
+        console.log('ngOnInit() jobs:', this.sJobs);
+        let cnt = 0;
+        this.departments.forEach((department)=>{
+            // departJobs[cnt] = [];
+            // departJobs[cnt] = this.sJobs.filter((job)=>{
+            //     return job.departName == department.departName;
+            // });
+            // cnt++;
+            departName.push(department.departName);
+            departJobs[department.departName] = [];
+            departJobs[department.departName] = this.sJobs.filter((job)=>{
+                return job.departName == department.departName;
+            });
+
+        });
+
+        this.dJobs = departJobs;
+        this.dName = departName;
+        console.log('ngOnInit() dispschedule:', departJobs);
     }
 
 
