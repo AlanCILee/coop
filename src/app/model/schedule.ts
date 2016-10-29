@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeTable } from './time';
 import { Comparable } from "../core/comparable";
-import { BinarySearchTree, Node } from "../core/binarySearchTree";
+// import { BinarySearchTree, Node } from "../core/binarySearchTree";
 // export class Schedule {
 // 	schedule: DayilySchedule[] = [];
 // 	startD: string;
@@ -10,7 +10,7 @@ import { BinarySearchTree, Node } from "../core/binarySearchTree";
 
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
-	jobsBST: BinarySearchTree<Job>;
+	// jobsBST: BinarySearchTree<Job>;
 
 	constructor(){
 		console.log('Schedule class constructor');
@@ -18,7 +18,7 @@ export class Schedule implements OnInit {
 
 	ngOnInit (){
 		console.log("ngOnInit of Schdeul");
-		this.jobsBST = new BinarySearchTree<Job>();
+		// this.jobsBST = new BinarySearchTree<Job>();
 	}
 	
 	addJob( jobId: number,
@@ -31,12 +31,13 @@ export class Schedule implements OnInit {
 	        ): void{
 
         let job = new Job(jobId, date, empId, empName, departName, startT, endT);
-	    console.log("add new job :" + job);
-		if(!this.jobsBST)
-			this.jobsBST = new BinarySearchTree<Job>();
 		this.jobs.push(job);
-		this.jobsBST.addNode( new Node<Job>( job ), this.jobsBST.root);
-		this.jobsBST.inOrderTraversal(this.jobsBST.root);
+
+	    console.log("add new job :" + job);
+		// if(!this.jobsBST)
+		// 	this.jobsBST = new BinarySearchTree<Job>();
+		// this.jobsBST.addNode( new Node<Job>( job ), this.jobsBST.root);
+		// this.jobsBST.inOrderTraversal(this.jobsBST.root);
     }
 
 	loadSchedule(): void {
