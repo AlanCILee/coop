@@ -38,10 +38,10 @@ module.exports = {
                 include: helpers.root('src', 'app'),
                 loader: 'raw'
             },
-            // {
-            //     test: require.resolve('snapsvg'),
-            //     loader: 'imports-loader?this=>window,fix=>module.exports=0'
-            // }
+            {
+                test: require.resolve('snapsvg'),
+                loader: 'imports-loader?this=>window,fix=>module.exports=0'
+            }
         ]
     },
 
