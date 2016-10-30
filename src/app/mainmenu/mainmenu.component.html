@@ -40,7 +40,7 @@
 	<br>
 	<!--<div *ngIf ="let dname of dName">-->
 		<!--<schedule *ngIf="dJobs[dname].length > 1" [department]="dname" [departJobs]="dJobs[dname]"></schedule>-->
-		<schedule *ngIf="sJobs.length > 1" [sJobs]="sJobs"></schedule>
+		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
 	<!--</div>-->
 	<!--</div>-->
 </main>

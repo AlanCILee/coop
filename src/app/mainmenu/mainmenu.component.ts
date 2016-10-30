@@ -38,6 +38,8 @@ export class MainMenuComponent implements OnInit {
     dJobs: any[][];
     dName: string[];
 
+    editJob: Job;
+    
     public currentDate:Date = new Date();
 
     constructor(private employeesObj: Employees,
@@ -99,47 +101,20 @@ export class MainMenuComponent implements OnInit {
 
         console.log('got message from Calendar: ' + str);
         this.sJobs = this.dScheduleObj.getJobs(str);
-
-
         console.log('ngOnInit() jobs:', this.sJobs);
-        // let cnt = 0;
-        // this.departments.forEach((department)=>{
-        //     // departJobs[cnt] = [];
-        //     // departJobs[cnt] = this.sJobs.filter((job)=>{
-        //     //     return job.departName == department.departName;
-        //     // });
-        //     // cnt++;
-        //     departName.push(department.departName);
-        //     departJobs[department.departName] = [];
-        //     departJobs[department.departName] = this.sJobs.filter((job)=>{
-        //         return job.departName == department.departName;
-        //     });
-        //
-        // });
-        //
-        // this.dJobs = departJobs;
-        // this.dName = departName;
-        // console.log('ngOnInit() dispschedule:', departJobs);
+
     }
-
-
+    
+    selectJob(job: Job){
+        this.sId = job.empId;
+        this.sName = job.empName;
+        this.sDepartment = job.departName;
+        this.sStartT = job.startT;
+        this.sEndT = job.endT;
+        
+        this.editJob = job;
+    }
 }
 
-
-
-// data:Object;
-//
-// constructor(private httpComponent: HttpComponent){
-//
-// }
-//
-// request(): void {
-//     console.log('request() input');
-//     this.httpComponent.makeRequest('http://localhost:3000/emp').subscribe((res: Response) => {
-//         this.data = res.json();
-//         this.loading = false;
-//         console.log('HttpComponent : ' + JSON.stringify(this.data));
-//     });
-// }
 
 
