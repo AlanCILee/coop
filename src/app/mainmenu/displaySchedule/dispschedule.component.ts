@@ -11,8 +11,6 @@ declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exp
 
 
 export class DispScheduleComponent implements OnInit {
-	snapSvgElement: any;
-
 	@Input() departJobs: Job[];
 	@Input() department: string;
 
@@ -29,41 +27,36 @@ export class DispScheduleComponent implements OnInit {
 		this.createInitiativeBg();
 	
 	}
-	createInitiativeBg(): void {
-
-		let initiativeSvg = Snap('#initiativeSvg'),
-			width = initiativeSvg.node.clientWidth,
-			height = initiativeSvg.node.clientHeight,
-			bandHeight = (height / 4.95),
-			textOffsetY = bandHeight / 1.7,
-			label = 1;
-
-		var initiativeSvgBg = [
-			{y: (bandHeight * 4) + textOffsetY},
-			{y: (bandHeight * 3) + textOffsetY},
-			{y: (bandHeight * 2) + textOffsetY},
-			{y: bandHeight + textOffsetY},
-			{y: textOffsetY}
-		];
-
-
-		//x,y,w,h
-		initiativeSvg.rect(0, 0, width, height).attr({fill: '#ababab'});
-		//x1,y1,x2,y2
-		initiativeSvg.line(width / 2, 0, width / 2, height).attr({stroke: '#fff'});
-		initiativeSvg.line(width * .05, height / 2, width, height / 2).attr({stroke: '#fff'});
-
-		initiativeSvgBg.forEach(function (item) {
-			initiativeSvg.text(width * .02, item.y, label).attr({
-				font: "100 1.8em Source Sans Pro",
-				textAnchor: "middle",
-				fill: "#FFF"
-			});
-			label++;
+	
+	getEmpNum(jobs: Job[]): number {
+		let cnt: number = 0;
+		let empId: number[] = [];
+		
+		jobs.forEach(( job )=>{
+			if( empId.some(( id )=> {
+				return id == job.empId;
+				})
+			){
+				
+			}else{
+				empId.push(job.empId);
+				cnt++;
+			}
 		});
-		this.snapSvgElement = initiativeSvg;
-		//container.appendChild(document.getElementById('initiativeSvg'));
+		console.log('number of emp for depart:', cnt);
+		return cnt;
+	}
+	
+	createInitiativeBg(): void {
+		
+		let width = 1000,
+			height = this.getEmpNum(this.departJobs) * 30,
+			container = document.getElementById(this.department),
+			svgCanvas = Snap(width, height).attr({'id': 'bg'+this.department});
 
+		    svgCanvas.rect(0, 0, width, height).attr({fill: '#ababab'});
+		    container.appendChild(document.getElementById('bg'+this.department));
+	
 	}
 
 }

@@ -1,13 +1,7 @@
-<!--<h3>{{ department }}</h3>-->
-<p>Helo</p>
-
-	
-	<!---->
-	<p *ngFor = "let job of departJobs">
+	<div *ngFor = "let job of departJobs">
 		{{ job.date }} {{ job.empName}} {{ job.departName}} {{ job.startT}} {{ job.endT}}
-			<svg id="initiativeSvg"> </svg>
-
-	</p>
+	</div>
+		<svg width="100%" height="100%" [id]="department"> </svg>
 
 
 
