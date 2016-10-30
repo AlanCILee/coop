@@ -34,7 +34,7 @@ export class MainMenuComponent implements OnInit {
     sStartT: string;
     sEndT: string;
 
-    sJobs: Job[];
+    sJobs: Job[] =[];
     dJobs: any[][];
     dName: string[];
 
@@ -102,24 +102,24 @@ export class MainMenuComponent implements OnInit {
 
 
         console.log('ngOnInit() jobs:', this.sJobs);
-        let cnt = 0;
-        this.departments.forEach((department)=>{
-            // departJobs[cnt] = [];
-            // departJobs[cnt] = this.sJobs.filter((job)=>{
-            //     return job.departName == department.departName;
-            // });
-            // cnt++;
-            departName.push(department.departName);
-            departJobs[department.departName] = [];
-            departJobs[department.departName] = this.sJobs.filter((job)=>{
-                return job.departName == department.departName;
-            });
-
-        });
-
-        this.dJobs = departJobs;
-        this.dName = departName;
-        console.log('ngOnInit() dispschedule:', departJobs);
+        // let cnt = 0;
+        // this.departments.forEach((department)=>{
+        //     // departJobs[cnt] = [];
+        //     // departJobs[cnt] = this.sJobs.filter((job)=>{
+        //     //     return job.departName == department.departName;
+        //     // });
+        //     // cnt++;
+        //     departName.push(department.departName);
+        //     departJobs[department.departName] = [];
+        //     departJobs[department.departName] = this.sJobs.filter((job)=>{
+        //         return job.departName == department.departName;
+        //     });
+        //
+        // });
+        //
+        // this.dJobs = departJobs;
+        // this.dName = departName;
+        // console.log('ngOnInit() dispschedule:', departJobs);
     }
 
 

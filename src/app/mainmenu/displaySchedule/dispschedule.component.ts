@@ -11,10 +11,18 @@ declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exp
 
 
 export class DispScheduleComponent implements OnInit {
-	@Input() departJobs: Job[];
-	@Input() department: string;
+	// @Input() departJobs: Job[];
+	// @Input() department: string;
+	// departJobs: Job[][];
+	department: string;
+	@Input() sJobs: Job[];
+	
+	departJobs: any[][] =[];
 
-	constructor(private departments: Departments) {
+	departCnt: number;
+	dispEmpNum: number;
+	
+	constructor(private departmentsObj: Departments) {
 	
 	}
 
@@ -27,6 +35,18 @@ export class DispScheduleComponent implements OnInit {
 		this.createInitiativeBg();
 	
 	}
+	
+	// getDepNum(sJobs: Job[]): number {
+	// 	let cnt: number = 0;
+	// 	let depId: number[] = [];
+	//
+	// 	sJobs.forEach(( sJob )=>{
+	// 		if( sJob.length > 1)
+	// 			cnt++;
+	// 	});
+	// 	console.log('number of depart have Schedule :', cnt);
+	// 	return cnt;
+	// }
 	
 	getEmpNum(jobs: Job[]): number {
 		let cnt: number = 0;
@@ -43,20 +63,43 @@ export class DispScheduleComponent implements OnInit {
 				cnt++;
 			}
 		});
-		console.log('number of emp for depart:', cnt);
+		console.log('number of emp for each depart:', cnt);
 		return cnt;
 	}
 	
-	createInitiativeBg(): void {
-		
-		let width = 1000,
-			height = this.getEmpNum(this.departJobs) * 30,
-			container = document.getElementById(this.department),
-			svgCanvas = Snap(width, height).attr({'id': 'bg'+this.department});
 
-		    svgCanvas.rect(0, 0, width, height).attr({fill: '#ababab'});
-		    container.appendChild(document.getElementById('bg'+this.department));
 	
+	alignJobs(sJobs: Job[]){
+		let departJob: Job[] =[];
+		
+		this.departCnt = 0;
+		this.dispEmpNum = 0;
+		
+		this.departmentsObj.departments.forEach((department)=>{
+
+			departJob = sJobs.filter((job)=>{
+				return job.departName == department.departName;
+			});
+			
+			if(departJob.length > 1) {
+				this.departJobs[department.departName] = [];
+				this.departJobs[department.departName] =  departJob;
+				this.departCnt++;
+				this.dispEmpNum += this.getEmpNum(departJob);
+			}
+		});
+	
+		console.log('alignJobs:', this.departJobs, 'dispDepart: ', this.departCnt,'dispEmpNumb:', this.dispEmpNum);
+	}
+	
+	createInitiativeBg(): void {
+		this.alignJobs(this.sJobs);
+		
+		let width = 100 * 15,
+		 	height = this.dispEmpNum * 30 + this.departCnt * 30,
+		 	container = Snap('#svgContainer');
+		
+		    container.rect(0, 0, width, height).attr({fill: '#ababab'});
 	}
 
 }
