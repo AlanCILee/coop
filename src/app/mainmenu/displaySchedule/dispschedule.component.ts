@@ -9,6 +9,7 @@ declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exp
 	templateUrl: './dispschedule.component.html'
 })
 
+
 export class DispScheduleComponent implements OnInit {
 	snapSvgElement: any;
 
@@ -16,14 +17,18 @@ export class DispScheduleComponent implements OnInit {
 	@Input() department: string;
 
 	constructor(private departments: Departments) {
+	
 	}
 
 	ngOnInit() {
 		Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
-		this.createInitiativeBg();
 
 	}
-
+	
+	ngAfterViewInit(): void {
+		this.createInitiativeBg();
+	
+	}
 	createInitiativeBg(): void {
 
 		let initiativeSvg = Snap('#initiativeSvg'),
