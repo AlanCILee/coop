@@ -12,21 +12,26 @@
             <td>{{ emp.wages.wage }}</td>
         </tr>
     </table>
-    <div *ngIf="modeAdd || modeEdit">
+    <!--<div *ngIf="modeAdd || modeEdit">-->
+    <div>
         <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
             <label>Name </label>
-            <input type="text" formControlName="name" value="{{ eName }}">
+            <!--<input type="text" formControlName="name" value="{{ eName }}">-->
+            <input type="text" formControlName="name">
 
             <label>Department </label>
-            <select name="depart" formControlName="department" value="{{ eDepartment }}">
+            <!--<select name="depart" formControlName="department" value="{{ eDepartment }}">-->
+            <select name="depart" formControlName="department">
                 <option *ngFor="let depart of departments">{{ depart.departName }}</option>
             </select>
 
             <label>Phone </label>
-            <input type="text" formControlName="phone" value="{{ ePhone }}">
-          
+            <!--<input type="text" formControlName="phone" value="{{ ePhone }}">-->
+            <input type="text" formControlName="phone">
+
             <label>Wage </label>
-            <input type="text" formControlName="wage" value="{{ eWage }}">
+            <!--<input type="text" formControlName="wage" value="{{ eWage }}">-->
+            <input type="text" formControlName="wage">
 
             <button type="submit">{{ btnName }}</button>
         </form>

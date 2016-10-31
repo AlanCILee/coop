@@ -15,15 +15,15 @@ export class EmployeesComponent implements OnInit {
     employees: Employee[];
     departments: Department[];
     modeEdit: boolean = false;
-    modeAdd: boolean = false;
-    btnName: string;
+    modeAdd: boolean = true;
+    btnName: string = 'Add';
     
     form : FormGroup;
-    eName: string;
-    eDepartment: string;
-    ePhone: string;
-    eWage: number;
-    
+    // eName: string;
+    // eDepartment: string;
+    // ePhone: string;
+    // eWage: number;
+
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private fb: FormBuilder){
@@ -34,10 +34,6 @@ export class EmployeesComponent implements OnInit {
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.form = this.fb.group({
-            // name: [ this.eName, Validators.required ],
-            // department: [ this.eDepartment, Validators.required],
-            // phone: [ this.ePhone, Validators.required],
-            // wage: [ this.eWage, Validators.required],
             name: [ '' ],
             department: [ '' ],
             phone: [ '' ],
@@ -57,10 +53,18 @@ export class EmployeesComponent implements OnInit {
             console.log("employees: Invalid Employee ID");
         }else{
             console.log("employees: Get Employee info",selectedEmp.empName);
-            this.eName = selectedEmp.empName;
-            this.eDepartment = this.getDepartName(selectedEmp.departId);
-            this.ePhone = selectedEmp.empPhone;
-            this.eWage = selectedEmp.wages.wage;
+
+            this.form.patchValue({
+                name: selectedEmp.empName,
+                department: this.getDepartName(selectedEmp.departId),
+                phone: selectedEmp.empPhone,
+                wage: selectedEmp.wages.wage
+            });
+
+            // this.eName = selectedEmp.empName;
+            // this.eDepartment = this.getDepartName(selectedEmp.departId);
+            // this.ePhone = selectedEmp.empPhone;
+            // this.eWage = selectedEmp.wages.wage;
         }
     }
 
@@ -69,16 +73,23 @@ export class EmployeesComponent implements OnInit {
     }
     
     clearInput(): void{
-        this.eName = '';
-        this.eDepartment = '';
-        this.ePhone = '';
-        this.eWage = null;
+        this.form.patchValue({
+            name: '',
+            department: '',
+            phone: '',
+            wage: ''
+        });
+        // this.eName = '';
+        // this.eDepartment = '';
+        // this.ePhone = '';
+        // this.eWage = null;
     }
     
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
         this.modeAdd = false;
         this.modeEdit = false;
+        this.clearInput();
     }
 
     addBtn(): void {
@@ -90,9 +101,9 @@ export class EmployeesComponent implements OnInit {
 
     empBtn(empId: number): void {
         console.log('click Employee ID: ', empId);
-        this.getEmployee(empId);
         this.btnName = 'Update';
         this.modeAdd = false;
         this.modeEdit = true;
+        this.getEmployee(empId);
     }
 }

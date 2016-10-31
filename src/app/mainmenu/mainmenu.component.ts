@@ -28,14 +28,14 @@ export class MainMenuComponent implements OnInit {
     timeTable: Time[];
     
     form: FormGroup;
-    sId: number;
-    sName: string;
-    sDepartment: string;
-    sStartT: string;
-    sEndT: string;
+    // sId: number;
+    // sName: string;
+    // sDepartment: string;
+    // sStartT: string;
+    // sEndT: string;
     
     sJobs: Job[] = [];
-    dJobs: any[][];
+    // dJobs: any[][];
     dName: string[];
     
     editJob: Job;
@@ -56,6 +56,7 @@ export class MainMenuComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         
         this.form = this.fb.group({
+        	jobId: [ '' ],
             name: [ '' ],
             department: [ '' ],
             startT: [ '' ],
@@ -73,15 +74,18 @@ export class MainMenuComponent implements OnInit {
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
         let idName: string[] = [];
-        let jobId: number = -1;
+        // let jobId: number = -1;
         
         idName = form.name.split(',');
         
-        if(this.modeEdit)
-           jobId = this.editJob.jobId;
-        
+        // if(this.modeEdit)
+        //    jobId = this.editJob.jobId;
+
+	    // if(form.jobId)
+		 //    jobId = form.jobId;
+
         this.dScheduleObj.addJob(
-            jobId,
+            form.jobId,
             form.date,
             Number(idName[0]),
             idName[1],
@@ -114,11 +118,23 @@ export class MainMenuComponent implements OnInit {
     
     // Select job for edit
     selectJob(job: Job){
-        this.sId = job.empId;
-        this.sName = job.empName;
-        this.sDepartment = job.departName;
-        this.sStartT = job.startT;
-        this.sEndT = job.endT;
+    	console.log('select Job: ', job);
+	    this.form.patchValue({
+	    	jobId: job.jobId,
+		    name: job.empId+','+job.empName,
+		    department: job.departName,
+		    startT: job.startT,
+		    endT: job.endT,
+		    date: this.editDate
+	    });
+
+
+
+        // this.sId = job.empId;
+        // this.sName = job.empName;
+        // this.sDepartment = job.departName;
+        // this.sStartT = job.startT;
+        // this.sEndT = job.endT;
         
         this.btnName = 'Edit';
         this.editJob = job;

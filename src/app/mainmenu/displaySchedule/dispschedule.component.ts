@@ -47,9 +47,11 @@ export class DispScheduleComponent implements OnInit {
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
 		this.hOffset = 0;
-		if(this.container)
+		if(this.container){
+			console.log("clear Container");
 			this.container.clear();
-		
+			this.container = null;
+		}
 		this.createInitiativeBg();
 		this.showSchdule();
 	}
@@ -72,7 +74,7 @@ export class DispScheduleComponent implements OnInit {
 		console.log('number of emp for each depart:', cnt);
 		return cnt;
 	}
-	
+
 	alignJobs(sJobs: Job[]){
 		console.log('alignJobs sJobs:', sJobs);
 		let departJob: Job[] =[];
@@ -94,7 +96,7 @@ export class DispScheduleComponent implements OnInit {
 				this.dispEmpNum += this.getEmpNum(departJob);
 			}
 		});
-	
+
 		console.log('alignJobs:', this.departJobs, 'dispDepart: ', this.departCnt,'dispEmpNumb:', this.dispEmpNum);
 	}
 	
@@ -109,7 +111,7 @@ export class DispScheduleComponent implements OnInit {
 		this.alignJobs(this.sJobs);
 		
 		let width = HOURW * HOURS + OFFSET,
-		 	height = this.dispEmpNum * 30 + this.departCnt * 30,
+		 	height = this.dispEmpNum * 30 + this.departCnt * 30 + 50,
 		 	container = Snap('#svgContainer');
 		
 		console.log('width: ',width,'height: ',height);
@@ -150,12 +152,13 @@ export class DispScheduleComponent implements OnInit {
 			});
 			
 			this.departJobs[department].forEach((departJob) =>{
-				this.hOffset += 20;
-				
+
 				// empName[departJob.empName] = [];
 				if(!empOffset[departJob.empName]) {
+					this.hOffset += 20;
+
 					empOffset[departJob.empName] = this.hOffset;
-					
+
 					svg.text(0, empOffset[departJob.empName], departJob.empName).attr({
 						font: "100 1em Source Sans Pro",
 						textAnchor: "left",
