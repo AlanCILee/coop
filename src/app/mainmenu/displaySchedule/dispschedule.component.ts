@@ -24,7 +24,7 @@ export class DispScheduleComponent implements OnInit {
 	
 	hOffset: number = 0;
 	private sendJob: EventEmitter<Job>;
-	
+
 	constructor(private departmentsObj: Departments) {
 		this.sendJob = new EventEmitter<Job>();
 	}
@@ -111,13 +111,14 @@ export class DispScheduleComponent implements OnInit {
 		this.alignJobs(this.sJobs);
 		
 		let width = HOURW * HOURS + OFFSET,
-		 	height = this.dispEmpNum * 30 + this.departCnt * 30 + 50,
-		 	container = Snap('#svgContainer');
-		
-		console.log('width: ',width,'height: ',height);
+		height = this.dispEmpNum * 30 + this.departCnt * 30 + 30,
+	    container = Snap('#svgContainer');
+
 		container.attr({ width: width, height: height });
 		container.rect(0, 0, width, height).attr({fill: '#ababab'});
-		
+
+		console.log('width: ',width,'height: ',height);
+
 		this.hOffset += 20;
 		
 		for (var i= 0; i < HOURS; i++){
@@ -157,7 +158,6 @@ export class DispScheduleComponent implements OnInit {
 				// empName[departJob.empName] = [];
 				if(!empOffset[departJob.empName]) {
 					this.hOffset += 20;
-
 					empOffset[departJob.empName] = this.hOffset;
 
 					svg.text(0, empOffset[departJob.empName], departJob.empName).attr({

@@ -1,12 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeTable } from './time';
 import { Comparable } from "../core/comparable";
-// import { BinarySearchTree, Node } from "../core/binarySearchTree";
-// export class Schedule {
-// 	schedule: DayilySchedule[] = [];
-// 	startD: string;
-// 	endD: string;
-// }
 
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
@@ -34,11 +28,11 @@ export class Schedule implements OnInit {
 			jobId = this.jobs.length+1;
 			let job = new Job(jobId, date, empId, empName, departName, startT, endT);
 			this.jobs.push(job);
-	        console.log("add new job :", job);
-		}else{
+			console.log("add new job :", job);
+		}else {
 			let updateJob = this.getJob(jobId);
 
-			if(updateJob){
+			if (updateJob) {
 				updateJob.date = date;
 				updateJob.empId = empId;
 				updateJob.empName = empName;
@@ -48,11 +42,11 @@ export class Schedule implements OnInit {
 				updateJob.startN = updateJob.calTime(startT);
 				updateJob.endN = updateJob.calTime(endT);
 
-		        console.log("update job :", updateJob);
-			}else{
+				console.log("update job :", updateJob);
+			} else {
 				let job = new Job(jobId, date, empId, empName, departName, startT, endT);
 				this.jobs.push(job);
-		        console.log("Import job :", job);
+				console.log("Import job :", job);
 			}
 		}
 
@@ -68,13 +62,13 @@ export class Schedule implements OnInit {
 		});
 	}
 
+
 	getJobs(date: string): Job[] {
 		let jobList: Job[] = this.jobs.filter((job)=>{
 			return job.date == date;
 		});
 		return jobList;
 	}
-
 
 	getJob(jobId: number): Job {
 		let retJob: Job = null;
@@ -86,7 +80,7 @@ export class Schedule implements OnInit {
 
 		return retJob;
 	}
-	
+
 	deleteJob(jobId : number) : void {
 		let newJobs : Job[];
 		newJobs = this.jobs.filter((job) => {

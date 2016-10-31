@@ -28,14 +28,7 @@ export class MainMenuComponent implements OnInit {
     timeTable: Time[];
     
     form: FormGroup;
-    // sId: number;
-    // sName: string;
-    // sDepartment: string;
-    // sStartT: string;
-    // sEndT: string;
-    
     sJobs: Job[] = [];
-    // dJobs: any[][];
     dName: string[];
     
     editJob: Job;
@@ -74,16 +67,8 @@ export class MainMenuComponent implements OnInit {
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
         let idName: string[] = [];
-        // let jobId: number = -1;
         
         idName = form.name.split(',');
-        
-        // if(this.modeEdit)
-        //    jobId = this.editJob.jobId;
-
-	    // if(form.jobId)
-		 //    jobId = form.jobId;
-
         this.dScheduleObj.addJob(
             form.jobId,
             form.date,
@@ -93,8 +78,10 @@ export class MainMenuComponent implements OnInit {
             form.startT,
             form.endT,
         );
-        
+
+        this.clearForm();
         this.modeEdit = false;
+
         this.sJobs = this.dScheduleObj.getJobs(this.editDate);
         return false;
     }
@@ -120,7 +107,7 @@ export class MainMenuComponent implements OnInit {
     selectJob(job: Job){
     	console.log('select Job: ', job);
 	    this.form.patchValue({
-	    	jobId: job.jobId,
+		    jobId: job.jobId,
 		    name: job.empId+','+job.empName,
 		    department: job.departName,
 		    startT: job.startT,
@@ -128,21 +115,22 @@ export class MainMenuComponent implements OnInit {
 		    date: this.editDate
 	    });
 
-
-
-        // this.sId = job.empId;
-        // this.sName = job.empName;
-        // this.sDepartment = job.departName;
-        // this.sStartT = job.startT;
-        // this.sEndT = job.endT;
-        
-        this.btnName = 'Edit';
+	    this.btnName = 'Edit';
         this.editJob = job;
-    
         this.modeAdd = false;
         this.modeEdit = true;
     }
-    
+
+    clearForm(): void{
+        this.form.patchValue({
+            jobId: -1,
+            name: null,
+            department: null,
+            startT: null,
+            endT: null,
+        });
+    }
+
     deleteJob(): void{
         console.log('Click delete Job');
         this.dScheduleObj.deleteJob(this.editJob.jobId);

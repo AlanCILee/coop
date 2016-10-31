@@ -19,10 +19,6 @@ export class EmployeesComponent implements OnInit {
     btnName: string = 'Add';
     
     form : FormGroup;
-    // eName: string;
-    // eDepartment: string;
-    // ePhone: string;
-    // eWage: number;
 
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
@@ -44,10 +40,9 @@ export class EmployeesComponent implements OnInit {
     getDepartName(departId: number){
         // console.log('call getDepartmentName in employee');
         return this.departmentsObj.getDepartmentName(departId);
-
     }
 
-    getEmployee(employeeId: number){
+    getEmployee(employeeId: number): void{
         let selectedEmp: Employee = this.employeesObj.getEmployee(employeeId);
         if(!selectedEmp){
             console.log("employees: Invalid Employee ID");
@@ -60,11 +55,6 @@ export class EmployeesComponent implements OnInit {
                 phone: selectedEmp.empPhone,
                 wage: selectedEmp.wages.wage
             });
-
-            // this.eName = selectedEmp.empName;
-            // this.eDepartment = this.getDepartName(selectedEmp.departId);
-            // this.ePhone = selectedEmp.empPhone;
-            // this.eWage = selectedEmp.wages.wage;
         }
     }
 
@@ -79,10 +69,6 @@ export class EmployeesComponent implements OnInit {
             phone: '',
             wage: ''
         });
-        // this.eName = '';
-        // this.eDepartment = '';
-        // this.ePhone = '';
-        // this.eWage = null;
     }
     
     onSubmit(form: any): void {

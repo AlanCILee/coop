@@ -5,33 +5,30 @@
 	<button (click)="addBtn()">Create New Schedule</button>
 	<button *ngIf = "modeEdit" (click)="deleteJob()">Delete</button>
 	
-	<!--<div *ngIf="modeAdd || modeEdit">-->
+
 	<div>
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-
-
-			<label>Name </label>
-			<!--<select formControlName="name" value="{{ sId }},{{ sName }}">-->
 			<input type = "hidden" formControlName= "jobId">
 
+			<label>Name </label>
 			<select formControlName="name">
 				<option *ngFor="let employee of employees">{{ employee.empId }},{{ employee.empName }}</option>
 			</select>
 
 			<label>Working Department </label>
-			<!--<select formControlName="department" value="{{ sDepartment }}">-->
+
 			<select formControlName="department">
 				<option *ngFor="let depart of departments">{{ depart.departName }}</option>
 			</select>
 
 			<label>Start Time </label>
-			<!--<select formControlName="startT" value="{{ sStartT }}">-->
+
 			<select formControlName="startT">
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 			</select>
 
 			<label>End Time </label>
-			<!--<select formControlName="endT" value="{{ sEndT }}">-->
+
 			<select formControlName="endT">
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 			</select>
@@ -43,15 +40,7 @@
 		</form>
 	</div>
 
-	<!--<div *ngFor ="let djob of dJobs">-->
-		<!--<schedule [departJobs]="djob"></schedule>-->
-	<!--</div>-->
-	<!--<div ngif="dName && dJobs">-->
 	<br>
-	<!--<div *ngIf ="let dname of dName">-->
-		<!--<schedule *ngIf="dJobs[dname].length > 1" [department]="dname" [departJobs]="dJobs[dname]"></schedule>-->
 		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
-	<!--</div>-->
-	<!--</div>-->
 </main>
 <!--<pre>{{data | json}}</pre>-->
