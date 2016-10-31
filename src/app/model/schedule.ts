@@ -55,12 +55,9 @@ export class Schedule implements OnInit {
 				console.log("Import job :", job);
 			}
 		}
-		//
-		// let job = new Job(jobId, date, empId, empName, departName, startT, endT);
-		// this.jobs.push(job);
+
 		//TODO updateDB
 
-	    // console.log("add new job :" + job);
     }
 
 	loadSchedule(): void {

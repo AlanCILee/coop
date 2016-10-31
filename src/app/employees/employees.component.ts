@@ -16,14 +16,14 @@ export class EmployeesComponent implements OnInit {
     departments: Department[];
     modeEdit: boolean = false;
     modeAdd: boolean = true;
-    btnName: string ='Add';
-
+    btnName: string = 'Add';
+    
     form : FormGroup;
     // eName: string;
     // eDepartment: string;
     // ePhone: string;
     // eWage: number;
-    
+
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private fb: FormBuilder){
@@ -34,10 +34,6 @@ export class EmployeesComponent implements OnInit {
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.form = this.fb.group({
-            // name: [ this.eName, Validators.required ],
-            // department: [ this.eDepartment, Validators.required],
-            // phone: [ this.ePhone, Validators.required],
-            // wage: [ this.eWage, Validators.required],
             name: [ '' ],
             department: [ '' ],
             phone: [ '' ],
@@ -51,7 +47,7 @@ export class EmployeesComponent implements OnInit {
 
     }
 
-    getEmployee(employeeId: number){
+    getEmployee(employeeId: number): void{
         let selectedEmp: Employee = this.employeesObj.getEmployee(employeeId);
         if(!selectedEmp){
             console.log("employees: Invalid Employee ID");
@@ -69,7 +65,6 @@ export class EmployeesComponent implements OnInit {
             // this.eDepartment = this.getDepartName(selectedEmp.departId);
             // this.ePhone = selectedEmp.empPhone;
             // this.eWage = selectedEmp.wages.wage;
-
         }
     }
 
