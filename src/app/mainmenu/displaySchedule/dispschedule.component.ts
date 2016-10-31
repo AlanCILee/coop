@@ -115,6 +115,7 @@ export class DispScheduleComponent implements OnInit {
 		 	container = Snap('#svgContainer');
 		
 		console.log('width: ',width,'height: ',height);
+		container.attr({ width: width, height: height });
 		container.rect(0, 0, width, height).attr({fill: '#ababab'});
 		
 		this.hOffset += 20;
