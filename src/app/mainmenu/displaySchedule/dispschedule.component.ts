@@ -150,12 +150,12 @@ export class DispScheduleComponent implements OnInit {
 			});
 			
 			this.departJobs[department].forEach((departJob) =>{
-				this.hOffset += 20;
-				
+
 				// empName[departJob.empName] = [];
 				if(!empOffset[departJob.empName]) {
+					this.hOffset += 20;
 					empOffset[departJob.empName] = this.hOffset;
-					
+
 					svg.text(0, empOffset[departJob.empName], departJob.empName).attr({
 						font: "100 1em Source Sans Pro",
 						textAnchor: "left",

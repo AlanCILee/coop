@@ -32,15 +32,35 @@ export class Schedule implements OnInit {
 
 		if(jobId <0 ) {     // ADD Case
 			jobId = this.jobs.length+1;
-		}else{              // Edit Case
-			this.deleteJob(jobId);
+			let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+			this.jobs.push(job);
+			console.log("add new job :", job);
+		}else {
+			let updateJob = this.getJob(jobId);
+
+			if (updateJob) {
+				updateJob.date = date;
+				updateJob.empId = empId;
+				updateJob.empName = empName;
+				updateJob.departName = departName;
+				updateJob.startT = startT;
+				updateJob.endT = endT;
+				updateJob.startN = updateJob.calTime(startT);
+				updateJob.endN = updateJob.calTime(endT);
+
+				console.log("update job :", updateJob);
+			} else {
+				let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+				this.jobs.push(job);
+				console.log("Import job :", job);
+			}
 		}
-		
-		let job = new Job(jobId, date, empId, empName, departName, startT, endT);
-		this.jobs.push(job);
+		//
+		// let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+		// this.jobs.push(job);
 		//TODO updateDB
 
-	    console.log("add new job :" + job);
+	    // console.log("add new job :" + job);
     }
 
 	loadSchedule(): void {
@@ -51,13 +71,27 @@ export class Schedule implements OnInit {
 		});
 	}
 
+
 	getJobs(date: string): Job[] {
 		let jobList: Job[] = this.jobs.filter((job)=>{
 			return job.date == date;
 		});
 		return jobList;
 	}
-	
+
+
+
+	getJob(jobId: number): Job {
+		let retJob: Job = null;
+
+		this.jobs.forEach((job) => {
+			if(job.jobId == jobId)
+				retJob = job;
+		});
+
+		return retJob;
+	}
+
 	deleteJob(jobId : number) : void {
 		let newJobs : Job[];
 		newJobs = this.jobs.filter((job) => {
