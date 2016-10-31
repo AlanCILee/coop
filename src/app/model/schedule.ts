@@ -54,6 +54,15 @@ export class Schedule implements OnInit {
 		});
 		return jobList;
 	}
+	
+	deleteJob(jobId : number) : void {
+		let newJobs : Job[];
+		newJobs = this.jobs.filter((job) => {
+			return job.jobId != jobId;
+		});
+		
+		this.jobs = newJobs;
+	}
     
 }
 

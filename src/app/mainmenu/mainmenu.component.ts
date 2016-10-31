@@ -22,37 +22,39 @@ export class MainMenuComponent implements OnInit {
     btnName: string;
     modeAdd: boolean;
     modeEdit: boolean;
-
+    
     departments: Department[];
     employees: Employee[];
     timeTable: Time[];
-
-    form : FormGroup;
+    
+    form: FormGroup;
     sId: number;
     sName: string;
     sDepartment: string;
     sStartT: string;
     sEndT: string;
-
-    sJobs: Job[] =[];
+    
+    sJobs: Job[] = [];
     dJobs: any[][];
     dName: string[];
-
-    editJob: Job;
     
-    public currentDate:Date = new Date();
-
+    editJob: Job;
+    editDate: string;
+    
+    public currentDate: Date = new Date();
+    
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private timeObj: TimeTable,
                 private dScheduleObj: Schedule,
-                private fb: FormBuilder,){
+                private fb: FormBuilder,) {
     };
-
+    
     ngOnInit(){
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.timeTable = this.timeObj.timeTable;
+        
         this.form = this.fb.group({
             // name: [ this.eName, Validators.required ],
             // department: [ this.eDepartment, Validators.required],
@@ -64,6 +66,20 @@ export class MainMenuComponent implements OnInit {
             endT: [ '' ],
             date: [ '' ],
         })
+    }
+    
+    ngOnChange(): void {
+        // this.form = this.fb.group({
+        //     // name: [ this.eName, Validators.required ],
+        //     // department: [ this.eDepartment, Validators.required],
+        //     // phone: [ this.ePhone, Validators.required],
+        //     // wage: [ this.eWage, Validators.required],
+        //     name: [ '' ],
+        //     department: [ '' ],
+        //     startT: [ '' ],
+        //     endT: [ '' ],
+        //     date: [ '' ],
+        // })
     }
 
     onSubmit(form: any): any {
@@ -98,13 +114,14 @@ export class MainMenuComponent implements OnInit {
     dateChanged(str: string){
         let departJobs: any[][] =[];
         let departName: string[] = [];
-
+        this.editDate = str;
         console.log('got message from Calendar: ' + str);
         this.sJobs = this.dScheduleObj.getJobs(str);
         console.log('ngOnInit() jobs:', this.sJobs);
 
     }
     
+    // Select job for edit
     selectJob(job: Job){
         this.sId = job.empId;
         this.sName = job.empName;
@@ -112,7 +129,19 @@ export class MainMenuComponent implements OnInit {
         this.sStartT = job.startT;
         this.sEndT = job.endT;
         
+        this.btnName = 'Edit';
         this.editJob = job;
+    
+        this.modeAdd = false;
+        this.modeEdit = true;
+    }
+    
+    deleteJob(): void{
+        console.log('Click delete Job');
+        this.dScheduleObj.deleteJob(this.editJob.jobId);
+        this.sJobs = this.dScheduleObj.getJobs(this.editDate);
+        //ToDo
+        //DataBaseControl
     }
 }
 

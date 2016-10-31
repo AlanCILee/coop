@@ -36,21 +36,22 @@ export class DispScheduleComponent implements OnInit {
 	
 	ngAfterViewInit(): void {
 		console.log("Schedule Disp : ngAfterViewInit");
-		// this.createInitiativeBg();
-		// this.showSchdule();
+
 	}
 	
 	ngOnChanges(): void {
+		console.log("Schedule Disp : ngOnChange");
+		
 		this.departJobs = [];
 		this.departments = [];
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
-		this.container = null;
 		this.hOffset = 0;
+		if(this.container)
+			this.container.clear();
 		
 		this.createInitiativeBg();
 		this.showSchdule();
-		console.log("Schedule Disp : ngOnChange");
 	}
 	
 	getEmpNum(jobs: Job[]): number {
@@ -111,6 +112,7 @@ export class DispScheduleComponent implements OnInit {
 		 	height = this.dispEmpNum * 30 + this.departCnt * 30,
 		 	container = Snap('#svgContainer');
 		
+		console.log('width: ',width,'height: ',height);
 		container.rect(0, 0, width, height).attr({fill: '#ababab'});
 		
 		this.hOffset += 20;
@@ -153,7 +155,7 @@ export class DispScheduleComponent implements OnInit {
 				// empName[departJob.empName] = [];
 				if(!empOffset[departJob.empName]) {
 					empOffset[departJob.empName] = this.hOffset;
-					;
+					
 					svg.text(0, empOffset[departJob.empName], departJob.empName).attr({
 						font: "100 1em Source Sans Pro",
 						textAnchor: "left",

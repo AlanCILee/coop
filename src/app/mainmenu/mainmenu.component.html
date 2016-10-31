@@ -3,7 +3,8 @@
 
 	<!--<img src="../../../public/images/angular.png">-->
 	<button (click)="addBtn()">Create New Schedule</button>
-
+	<button *ngIf = "modeEdit" (click)="deleteJob()">Delete</button>
+	
 	<div *ngIf="modeAdd || modeEdit">
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
 
@@ -30,6 +31,7 @@
 			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
 			<button type="submit">{{ btnName }}</button>
+			
 		</form>
 	</div>
 
