@@ -56,51 +56,42 @@ export class MainMenuComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         
         this.form = this.fb.group({
-            // name: [ this.eName, Validators.required ],
-            // department: [ this.eDepartment, Validators.required],
-            // phone: [ this.ePhone, Validators.required],
-            // wage: [ this.eWage, Validators.required],
             name: [ '' ],
             department: [ '' ],
             startT: [ '' ],
             endT: [ '' ],
             date: [ '' ],
-        })
+        });
+    
+        this.addBtn();
     }
     
     ngOnChange(): void {
-        // this.form = this.fb.group({
-        //     // name: [ this.eName, Validators.required ],
-        //     // department: [ this.eDepartment, Validators.required],
-        //     // phone: [ this.ePhone, Validators.required],
-        //     // wage: [ this.eWage, Validators.required],
-        //     name: [ '' ],
-        //     department: [ '' ],
-        //     startT: [ '' ],
-        //     endT: [ '' ],
-        //     date: [ '' ],
-        // })
+        console.log("Mainmenu ngOnChange");
     }
 
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
         let idName: string[] = [];
+        let jobId: number = -1;
+        
         idName = form.name.split(',');
-
+        
+        if(this.modeEdit)
+           jobId = this.editJob.jobId;
+        
         this.dScheduleObj.addJob(
-            -1,
+            jobId,
             form.date,
             Number(idName[0]),
             idName[1],
             form.department,
             form.startT,
             form.endT,
-            // this.timeObj.timeToDuration(form.startT),
-            // this.timeObj.timeToDuration(form.endT)
         );
-
-        this.modeAdd = false;
+        
         this.modeEdit = false;
+        this.sJobs = this.dScheduleObj.getJobs(this.editDate);
         return false;
     }
 

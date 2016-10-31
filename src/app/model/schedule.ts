@@ -30,14 +30,17 @@ export class Schedule implements OnInit {
             endT: string,
 	        ): void{
 
-        let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+		if(jobId <0 ) {     // ADD Case
+			jobId = this.jobs.length+1;
+		}else{              // Edit Case
+			this.deleteJob(jobId);
+		}
+		
+		let job = new Job(jobId, date, empId, empName, departName, startT, endT);
 		this.jobs.push(job);
+		//TODO updateDB
 
 	    console.log("add new job :" + job);
-		// if(!this.jobsBST)
-		// 	this.jobsBST = new BinarySearchTree<Job>();
-		// this.jobsBST.addNode( new Node<Job>( job ), this.jobsBST.root);
-		// this.jobsBST.inOrderTraversal(this.jobsBST.root);
     }
 
 	loadSchedule(): void {
@@ -62,6 +65,7 @@ export class Schedule implements OnInit {
 		});
 		
 		this.jobs = newJobs;
+		//ToDO UpdateDB
 	}
     
 }
