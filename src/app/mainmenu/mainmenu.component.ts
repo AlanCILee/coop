@@ -112,7 +112,7 @@ export class MainMenuComponent implements OnInit {
 		    department: job.departName,
 		    startT: job.startT,
 		    endT: job.endT,
-		    date: this.editDate
+		    date: job.date
 	    });
 
 	    this.btnName = 'Edit';

@@ -218,7 +218,7 @@ export class DispScheduleComponent implements OnInit {
 			for (var depart in dateJob) {
 				let departJob = dateJob[depart];
 				let empOffset: any[] = [];
-				console.log('depart: ', depart);
+				// console.log('depart: ', depart);
 				
 				this.hOffset += 20;
 				
@@ -229,7 +229,7 @@ export class DispScheduleComponent implements OnInit {
 				});
 				
 				departJob.forEach((job) => {
-					console.log('each job: ', job);
+					// console.log('each job: ', job);
 					if (!empOffset[job.empName]) {
 						this.hOffset += 20;
 						empOffset[job.empName] = this.hOffset;
@@ -243,22 +243,17 @@ export class DispScheduleComponent implements OnInit {
 					
 					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
 					let w = HOURW * (job.endN - job.startN) /60;
-					console.log("x: ",x, "w: ",w );
+					// console.log("x: ",x, "w: ",w );
 					svg.rect(x, empOffset[job.empName]-20, w, 20).attr({
 						fill: "#FFF",
 						stroke: "#000",
 						strokeWidth: 1
 					}).click(()=>{
-						this.jobClick(job);
+						this.sendJob.emit(job);
 					});
 				});
 			}
 			this.hOffset += 20;
 		}
 	}
-	
-	jobClick(selectJob : Job): void{
-		this.sendJob.emit(selectJob);
-	}
-
 }

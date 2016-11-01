@@ -9,7 +9,7 @@ export class TimeTable {
 			for (var min = 0; min < 60; min+=15){
 				this.timestring = this.timeFormatter(hour) + ':' + this.timeFormatter(min);
 				this.time = hour * 60 + min;
-				console.log(this.timestring, this.time);
+				// console.log(this.timestring, this.time);
 				this.timeTable.push(new Time(this.timestring, this.time));
 			}
 		}
