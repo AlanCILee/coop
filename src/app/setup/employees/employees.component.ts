@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Employees, Employee, Wage } from "../model/employee";
-import { Department, Departments } from "../model/department";
+import { Employees, Employee, Wage } from "../../model/employee";
+import { Department, Departments } from "../../model/department";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 

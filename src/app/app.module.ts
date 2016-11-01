@@ -6,8 +6,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AppComponent } from './app.component';
 import { APP_ROUTING } from "./app.routings";
 
-import { MainMenuComponent } from './mainmenu/mainmenu.component';
-import { EmployeesComponent } from "./employees/employees.component";
 import { HttpComponent } from "./core/http.component";
 import { SalaryComponent } from "./salary/salary.component";
 
@@ -16,6 +14,8 @@ import { Departments } from "./model/department";
 import { TimeTable } from "./model/time";
 import { MainmenuModule } from "./mainmenu/mainmenu.module";
 import { Schedule } from "./model/schedule";
+import { SetupComponent } from "./setup/setup.component";
+import { SetupModule } from "./setup/setup.module";
 
 
 @NgModule({
@@ -25,12 +25,14 @@ import { Schedule } from "./model/schedule";
         APP_ROUTING,
         FormsModule,
         ReactiveFormsModule,
-        MainmenuModule
+        MainmenuModule,
+        SetupModule
     ],
     declarations: [
         AppComponent,
-        EmployeesComponent,
-        SalaryComponent
+        // EmployeesComponent,
+        SalaryComponent,
+        SetupComponent
     ],
     providers: [
         HttpComponent,
