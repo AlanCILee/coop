@@ -81,21 +81,80 @@ export class DispScheduleComponent implements OnInit {
 		
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
-		
-		this.departmentsObj.departments.forEach((department)=>{
 
-			departJob = sJobs.filter((job)=>{
-				return job.departName == department.departName;
-			});
-			
-			if(departJob.length > 0) {
-				this.departJobs[department.departName] = [];
-				this.departJobs[department.departName] =  departJob;
-				this.departments.push(department.departName);
-				this.departCnt++;
-				this.dispEmpNum += this.getEmpNum(departJob);
+		let jobsDates: any[] = [];
+		let jobsDatesDeparts: any[] = [];
+
+		sJobs.forEach(( job ) => {
+			if(!(job.date in jobsDates)){
+				jobsDates[job.date] = [];
+				jobsDatesDeparts[job.date] = [];
+				console.log('create date');
 			}
+
+			jobsDates[job.date].push( job );
+			console.log('Add job date:', job.date, 'Add job: ',job);
 		});
+
+		console.log('aligh job by date: ', jobsDates);
+
+		for (var key in jobsDates ){
+			let jobs = jobsDates[key];
+
+			console.log('jobsDates[key] :', jobs);
+			this.departJobs = [];
+
+			this.departmentsObj.departments.forEach((department)=> {
+
+				departJob = jobs.filter((job)=>{
+					return job.departName == department.departName;
+				});
+
+				if(departJob.length > 0) {
+					this.departJobs[department.departName] = [];
+					jobsDatesDeparts[key][department.departName] = [];
+
+					this.departJobs[department.departName] =  departJob;
+					jobsDatesDeparts[key][department.departName] = departJob;
+					console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
+
+					this.departments.push(department.departName);
+					this.departCnt++;
+					this.dispEmpNum += this.getEmpNum(departJob);
+				}
+			});
+
+			jobsDates[key] = [];
+
+			console.log('align0 job by date & department: ', jobsDates);
+			console.log('align0 job by date & department: ', this.departJobs);
+		}
+			console.log('jobsDatesDeparts: ', jobsDatesDeparts);
+
+			for(key in jobsDatesDeparts){
+				let arr = jobsDatesDeparts[key];
+				console.log('key1: ',key);
+
+				for(key in arr){
+					console.log('key2: ',key);
+					console.log(arr[key]);
+				}
+			}
+
+		// this.departmentsObj.departments.forEach((department)=>{
+		//
+		// 	departJob = sJobs.filter((job)=>{
+		// 		return job.departName == department.departName;
+		// 	});
+		//
+		// 	if(departJob.length > 0) {
+		// 		this.departJobs[department.departName] = [];
+		// 		this.departJobs[department.departName] =  departJob;
+		// 		this.departments.push(department.departName);
+		// 		this.departCnt++;
+		// 		this.dispEmpNum += this.getEmpNum(departJob);
+		// 	}
+		// });
 
 		console.log('alignJobs:', this.departJobs, 'dispDepart: ', this.departCnt,'dispEmpNumb:', this.dispEmpNum);
 	}

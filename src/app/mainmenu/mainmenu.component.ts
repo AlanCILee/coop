@@ -10,8 +10,6 @@ import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
 import { Schedule, Job } from "../model/schedule";
 
-
-
 @Component({
     selector: 'mainmenu',
     templateUrl: './mainmenu.component.html',
@@ -33,7 +31,9 @@ export class MainMenuComponent implements OnInit {
     
     editJob: Job;
     editDate: string;
-    
+
+    LIST_DATE: number = 7;
+
     public currentDate: Date = new Date();
     
     constructor(private employeesObj: Employees,
@@ -82,7 +82,7 @@ export class MainMenuComponent implements OnInit {
         this.clearForm();
         this.modeEdit = false;
 
-        this.sJobs = this.dScheduleObj.getJobs(this.editDate);
+        this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
         return false;
     }
 
@@ -98,7 +98,7 @@ export class MainMenuComponent implements OnInit {
         let departName: string[] = [];
         this.editDate = str;
         console.log('got message from Calendar: ' + str);
-        this.sJobs = this.dScheduleObj.getJobs(str);
+        this.sJobs = this.dScheduleObj.getJobs(str, this.LIST_DATE);
         console.log('ngOnInit() jobs:', this.sJobs);
 
     }
@@ -134,7 +134,7 @@ export class MainMenuComponent implements OnInit {
     deleteJob(): void{
         console.log('Click delete Job');
         this.dScheduleObj.deleteJob(this.editJob.jobId);
-        this.sJobs = this.dScheduleObj.getJobs(this.editDate);
+        this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
         //ToDo
         //DataBaseControl
     }

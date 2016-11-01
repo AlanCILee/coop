@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TimeTable } from './time';
 import { Comparable } from "../core/comparable";
+import * as moment from 'moment';
 
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
@@ -63,10 +64,22 @@ export class Schedule implements OnInit {
 	}
 
 
-	getJobs(date: string): Job[] {
+	getJobs(date: string, day: number): Job[] {
+		let days: string[] = [];
+		let momentDay = moment(date);
+
+		days.push(date);
+
+		for(var i=0; i < day; i++){
+			days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
+		}
+
+		console.log('getJobs: ', days);
+
 		let jobList: Job[] = this.jobs.filter((job)=>{
-			return job.date == date;
+			return days.indexOf(job.date) >= 0;
 		});
+
 		return jobList;
 	}
 
