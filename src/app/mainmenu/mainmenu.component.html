@@ -39,8 +39,10 @@
 			
 		</form>
 	</div>
+	<form>
 
-	<br>
+	</form>
+		<br>
 		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
 </main>
 <!--<pre>{{data | json}}</pre>-->

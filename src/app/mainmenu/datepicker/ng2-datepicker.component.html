@@ -20,13 +20,12 @@
 			<span>Sun</span>
 		</div>
 		<div class="ui-kit-calendar-days">
-
-      <span *ngFor="let d of days; let i = index;"
-			(click)="selectDate($event, i)"
-			[class.today]="d.today"
-			[class.is-active]="d.selected">
-        {{ d.day }}
-      </span>
+			  <span *ngFor="let d of days; let i = index;"
+					(click)="selectDate($event, i)"
+					[class.today]="d.today"
+					[class.is-active]="d.selected">
+				{{ d.day }}
+			  </span>
 		</div>
 	</div>
 </div>
