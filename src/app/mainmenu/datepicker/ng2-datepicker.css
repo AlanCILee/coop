@@ -2,9 +2,10 @@
 	position: relative;
 	width: 170px;
 	margin: 0 10px 0 0;
-	display: block;
-	/*float: left;*/
-	float: right;
+	/*display: block;*/
+	display: inline-block;
+	float: none;
+	/*float: right;*/
 	z-index: 99;
 }
 
