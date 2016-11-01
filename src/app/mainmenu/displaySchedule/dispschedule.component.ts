@@ -24,7 +24,8 @@ export class DispScheduleComponent implements OnInit {
 	
 	hOffset: number = 0;
 	private sendJob: EventEmitter<Job>;
-
+	jobsDatesDeparts: any[] = [];
+	
 	constructor(private departmentsObj: Departments) {
 		this.sendJob = new EventEmitter<Job>();
 	}
@@ -83,12 +84,12 @@ export class DispScheduleComponent implements OnInit {
 		this.dispEmpNum = 0;
 
 		let jobsDates: any[] = [];
-		let jobsDatesDeparts: any[] = [];
+		
 
 		sJobs.forEach(( job ) => {
 			if(!(job.date in jobsDates)){
 				jobsDates[job.date] = [];
-				jobsDatesDeparts[job.date] = [];
+				this.jobsDatesDeparts[job.date] = [];
 				console.log('create date');
 			}
 
@@ -112,10 +113,10 @@ export class DispScheduleComponent implements OnInit {
 
 				if(departJob.length > 0) {
 					this.departJobs[department.departName] = [];
-					jobsDatesDeparts[key][department.departName] = [];
+					this.jobsDatesDeparts[key][department.departName] = [];
 
 					this.departJobs[department.departName] =  departJob;
-					jobsDatesDeparts[key][department.departName] = departJob;
+					this.jobsDatesDeparts[key][department.departName] = departJob;
 					console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
 
 					this.departments.push(department.departName);
@@ -129,17 +130,18 @@ export class DispScheduleComponent implements OnInit {
 			console.log('align0 job by date & department: ', jobsDates);
 			console.log('align0 job by date & department: ', this.departJobs);
 		}
-			console.log('jobsDatesDeparts: ', jobsDatesDeparts);
+		
+		console.log('jobsDatesDeparts: ', this.jobsDatesDeparts);
 
-			for(key in jobsDatesDeparts){
-				let arr = jobsDatesDeparts[key];
-				console.log('key1: ',key);
+		for(var key in this.jobsDatesDeparts){
+			let arr = this.jobsDatesDeparts[key];
+			console.log('key1: ',key);
 
-				for(key in arr){
-					console.log('key2: ',key);
-					console.log(arr[key]);
-				}
+			for(var key in arr){
+				console.log('key2: ',key);
+				console.log(arr[key]);
 			}
+		}
 
 		// this.departmentsObj.departments.forEach((department)=>{
 		//
@@ -202,46 +204,61 @@ export class DispScheduleComponent implements OnInit {
 		const HOURW = 100;
 		const START_HOUR = 8;
 		
-		this.departments.forEach((department)=>{
-			this.hOffset += 20;
-			let empOffset: any[]=[];
+		for(var date in this.jobsDatesDeparts) {
+			let dateJob = this.jobsDatesDeparts[date];
 			
-			svg.text(0, this.hOffset, department).attr({
+			this.hOffset += 20;
+			
+			svg.text(0, this.hOffset, date).attr({
 				font: "100 1em Source Sans Pro",
 				textAnchor: "left",
 				fill: "#FFF"
 			});
 			
-			this.departJobs[department].forEach((departJob) =>{
-
-				// empName[departJob.empName] = [];
-				if(!empOffset[departJob.empName]) {
-					this.hOffset += 20;
-					empOffset[departJob.empName] = this.hOffset;
-
-					svg.text(0, empOffset[departJob.empName], departJob.empName).attr({
-						font: "100 1em Source Sans Pro",
-						textAnchor: "left",
-						fill: "#FFF"
-					});
-				}
+			for (var depart in dateJob) {
+				let departJob = dateJob[depart];
+				let empOffset: any[] = [];
+				console.log('depart: ', depart);
 				
-				let x = OFFSET + HOURW * (departJob.startN - START_HOUR*60) /60;
-				let w = HOURW * (departJob.endN - departJob.startN) /60;
-				console.log("x: ",x, "w: ",w );
-				svg.rect(x, empOffset[departJob.empName]-20, w, 20).attr({
-					fill: "#FFF",
-					stroke: "#000",
-					strokeWidth: 1
-				}).click(()=>{
-					this.jobClick(departJob);
+				this.hOffset += 20;
+				
+				svg.text(0, this.hOffset, depart).attr({
+					font: "100 1em Source Sans Pro",
+					textAnchor: "left",
+					fill: "#FFF"
 				});
-			})
-		});
+				
+				departJob.forEach((job) => {
+					console.log('each job: ', job);
+					if (!empOffset[job.empName]) {
+						this.hOffset += 20;
+						empOffset[job.empName] = this.hOffset;
+						
+						svg.text(0, empOffset[job.empName], job.empName).attr({
+							font: "100 1em Source Sans Pro",
+							textAnchor: "left",
+							fill: "#FFF"
+						});
+					}
+					
+					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
+					let w = HOURW * (job.endN - job.startN) /60;
+					console.log("x: ",x, "w: ",w );
+					svg.rect(x, empOffset[job.empName]-20, w, 20).attr({
+						fill: "#FFF",
+						stroke: "#000",
+						strokeWidth: 1
+					}).click(()=>{
+						this.jobClick(job);
+					});
+				});
+			}
+			this.hOffset += 20;
+		}
 	}
 	
-	jobClick(departJob : Job): void{
-		this.sendJob.emit(departJob);
+	jobClick(selectJob : Job): void{
+		this.sendJob.emit(selectJob);
 	}
 
 }
