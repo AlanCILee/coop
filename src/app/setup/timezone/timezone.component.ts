@@ -12,7 +12,6 @@ export class TimezoneComponent implements OnInit {
 
     timeTable: Time[] = [];
     form: FormGroup;
-    btnName: string = 'Add';
     timeZones: Object =[];
 
     constructor(private timeObj: TimeTable,
@@ -35,5 +34,23 @@ export class TimezoneComponent implements OnInit {
     onSubmit(form: any): any{
         console.log('timezone form result: ',form);
         this.timeObj.addTimeZone(form.zoneName, form.startT, form.endT);
+        this.clearInput();
+    }
+
+    zoneBtn(zone: any){
+        console.log('click zoneBtn: ', zone);
+        this.form.patchValue({
+            zoneName: zone.key,
+            startT: zone.val.startT.timeStr,
+            endT: zone.val.endT.timeStr,
+        });
+    }
+
+    clearInput(): void{
+        this.form.patchValue({
+            zoneName: '',
+            startT: '00:00',
+            endT: '00:00',
+        });
     }
 }

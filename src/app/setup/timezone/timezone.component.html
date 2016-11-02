@@ -1,4 +1,4 @@
-<h1>Here is Timezone menu</h1>
+<h3>Timezone Setup</h3>
 
 <div>
 	<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
@@ -17,12 +17,11 @@
 			<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 		</select>
 
-
-		<button type="submit">{{ btnName }}</button>
+		<button type="submit">Submit</button>
+		<button type="button" (click)="clearInput()">Clear</button>
 	</form>
 	<table>
 		<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">
-			<!--<td><input type="radio" name="id" value="{{ emp.empId }}"></td>-->
 			<td>{{ zone.val.zoneName}}</td>
 			<td>{{ zone.val.startT.timeStr }}</td>
 			<td>{{ zone.val.endT.timeStr }}</td>

@@ -1,37 +1,39 @@
 <main>
-    <h1>Employees List</h1>
+    <h3>Employees List</h3>
     <!--<img src="../../../public/images/angular.png">-->
-    <button (click)="addBtn()">Add New Employee</button>
-    <table>
-        <tr *ngFor="let emp of employees" (click)="empBtn(emp.empId)">
-            <!--<td><input type="radio" name="id" value="{{ emp.empId }}"></td>-->
-            <td>{{ emp.empName }}</td>
-            <td>{{ getDepartName(emp.departId) }}</td>
-            <td>{{ emp.empPhone }}</td>
-            <td>{{ emp.wages.wage }}</td>
-        </tr>
-    </table>
+    <!--<button (click)="addBtn()">Add New Employee</button>-->
 
     <div>
         <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+            <input type="hidden" formControlName="eId">
+
             <label>Name </label>
             <input type="text" formControlName="name">
 
             <label>Department </label>
 
             <select formControlName="department">
-                <option *ngFor="let depart of departments">{{ depart.departName }}</option>
+                <option *ngFor="let depart of departments" value="{{ depart.departId }}">{{ depart.departName }}</option>
             </select>
 
             <label>Phone </label>
 
             <input type="text" formControlName="phone">
-          
+
             <label>Wage </label>
             <input type="text" formControlName="wage">
 
-            <button type="submit">{{ btnName }}</button>
+            <button type="submit">Submit</button>
+            <button type="button" (click)="clearInput()">Clear</button>
         </form>
     </div>
+    <table>
+        <tr *ngFor="let emp of employees" (click)="empBtn( emp )">
+            <td>{{ emp.empName }}</td>
+            <td>{{ getDepartName(emp.departId) }}</td>
+            <td>{{ emp.empPhone }}</td>
+            <td>{{ emp.wages.wage }}</td>
+        </tr>
+    </table>
 </main>
 

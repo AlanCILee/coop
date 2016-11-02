@@ -11,25 +11,20 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 })
 
 export class EmployeesComponent implements OnInit {
-    cnt: number = 0;
     employees: Employee[];
     departments: Department[];
-    modeEdit: boolean = false;
-    modeAdd: boolean = true;
-    btnName: string = 'Add';
-    
     form : FormGroup;
 
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private fb: FormBuilder){
-
     };
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.form = this.fb.group({
+            eId: [ -1 ],
             name: [ '' ],
             department: [ '' ],
             phone: [ '' ],
@@ -38,32 +33,12 @@ export class EmployeesComponent implements OnInit {
     }
 
     getDepartName(departId: number){
-        // console.log('call getDepartmentName in employee');
         return this.departmentsObj.getDepartmentName(departId);
     }
 
-    getEmployee(employeeId: number): void{
-        let selectedEmp: Employee = this.employeesObj.getEmployee(employeeId);
-        if(!selectedEmp){
-            console.log("employees: Invalid Employee ID");
-        }else{
-            console.log("employees: Get Employee info",selectedEmp.empName);
-
-            this.form.patchValue({
-                name: selectedEmp.empName,
-                department: this.getDepartName(selectedEmp.departId),
-                phone: selectedEmp.empPhone,
-                wage: selectedEmp.wages.wage
-            });
-        }
-    }
-
-    Up() {
-        console.log("UP:"+this.cnt++);
-    }
-    
     clearInput(): void{
         this.form.patchValue({
+            eId: -1,
             name: '',
             department: '',
             phone: '',
@@ -73,23 +48,19 @@ export class EmployeesComponent implements OnInit {
     
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
-        this.modeAdd = false;
-        this.modeEdit = false;
+        this.employeesObj.addEmployee(form.eId,
+            form.name, form.department, form.phone, form.wage);
         this.clearInput();
     }
 
-    addBtn(): void {
-        this.clearInput();
-        this.btnName = 'Add';
-        this.modeAdd = true;
-        this.modeEdit = false;
-    }
-
-    empBtn(empId: number): void {
-        console.log('click Employee ID: ', empId);
-        this.btnName = 'Update';
-        this.modeAdd = false;
-        this.modeEdit = true;
-        this.getEmployee(empId);
+    empBtn(emp: Employee): void {
+        console.log('click Employee ID: ', emp);
+        this.form.patchValue({
+            eId: emp.empId,
+            name: emp.empName,
+            department: emp.departId,
+            phone: emp.empPhone,
+            wage: emp.wages.wage
+        });
     }
 }
