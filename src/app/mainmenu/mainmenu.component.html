@@ -8,6 +8,8 @@
 
 	<div>
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+
 			<input type = "hidden" formControlName= "jobId">
 
 			<label>Name </label>
@@ -33,7 +35,6 @@
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 			</select>
 
-			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
 			<button type="submit">{{ btnName }}</button>
 			
