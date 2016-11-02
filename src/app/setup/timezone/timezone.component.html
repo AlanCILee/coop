@@ -21,7 +21,7 @@
 		<button type="submit">{{ btnName }}</button>
 	</form>
 	<table>
-		<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn(zone.zoneName)">
+		<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">
 			<!--<td><input type="radio" name="id" value="{{ emp.empId }}"></td>-->
 			<td>{{ zone.val.zoneName}}</td>
 			<td>{{ zone.val.startT.timeStr }}</td>

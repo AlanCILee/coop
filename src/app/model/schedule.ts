@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, Injectable } from '@angular/core';
 import { TimeTable } from './time';
 import { Comparable } from "../core/comparable";
 import * as moment from 'moment';
 
+@Injectable()
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
 	// jobsBST: BinarySearchTree<Job>;
