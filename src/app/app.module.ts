@@ -16,6 +16,7 @@ import { MainmenuModule } from "./mainmenu/mainmenu.module";
 import { Schedule } from "./model/schedule";
 import { SetupComponent } from "./setup/setup.component";
 import { SetupModule } from "./setup/setup.module";
+import { SalaryModule } from "./salary/salary.module";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { SetupModule } from "./setup/setup.module";
         FormsModule,
         ReactiveFormsModule,
         MainmenuModule,
-        SetupModule
+        SetupModule,
+        SalaryModule
     ],
     declarations: [
         AppComponent,
