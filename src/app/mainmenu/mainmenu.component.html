@@ -2,20 +2,21 @@
 	<h1>Schedule Management</h1>
 
 	<!--<img src="../../../public/images/angular.png">-->
-	<button (click)="addBtn()">Create New Schedule</button>
-	<button *ngIf = "modeEdit" (click)="deleteJob()">Delete</button>
+	<!--<button (click)="addBtn()">Create New Schedule</button>-->
+	<!--<button *ngIf = "modeEdit" (click)="deleteJob()">Delete</button>-->
 	
 
 	<div>
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
+			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 			<input type = "hidden" formControlName= "jobId">
 
 			<label>Name </label>
 			<select formControlName="name">
-				<option *ngFor="let employee of employees">{{ employee.empId }},{{ employee.empName }}</option>
+				<option *ngFor="let employee of employees" value="{{ employee.empId }}">{{ employee.empName }}</option>
 			</select>
+
 
 			<label>Working Department </label>
 
@@ -35,9 +36,9 @@
 				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 			</select>
 
-
-			<button type="submit">{{ btnName }}</button>
-			
+			<button type="submit">Submit</button>
+			<button type="button" (click)="clearInput()">Clear</button>
+			<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
 		</form>
 	</div>
 	<form>

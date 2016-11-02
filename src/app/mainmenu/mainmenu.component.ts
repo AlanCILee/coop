@@ -16,11 +16,6 @@ import { Schedule, Job } from "../model/schedule";
     styleUrls: ['./mainmenu.component.css']
 })
 export class MainMenuComponent implements OnInit {
-    loading: boolean;
-    btnName: string;
-    modeAdd: boolean;
-    modeEdit: boolean;
-    
     departments: Department[];
     employees: Employee[];
     timeTable: Time[];
@@ -28,13 +23,13 @@ export class MainMenuComponent implements OnInit {
     form: FormGroup;
     sJobs: Job[] = [];
     dName: string[];
-    
-    editJob: Job;
+
     editDate: string;
+    editItem: any = null;
 
     LIST_DATE: number = 7;
 
-    public currentDate: Date = new Date();
+    // public currentDate: Date = new Date();
     
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
@@ -56,8 +51,6 @@ export class MainMenuComponent implements OnInit {
             endT: [ '' ],
             date: [ '' ],
         });
-    
-        this.addBtn();
     }
     
     ngOnChange(): void {
@@ -66,62 +59,47 @@ export class MainMenuComponent implements OnInit {
 
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
-        let idName: string[] = [];
-        
-        idName = form.name.split(',');
+
         this.dScheduleObj.addJob(
             form.jobId,
             form.date,
-            Number(idName[0]),
-            idName[1],
+            form.name,      // empId
+            this.employeesObj.getEmployeeName(form.name),   // empName
             form.department,
             form.startT,
             form.endT,
         );
 
-        this.clearForm();
-        this.modeEdit = false;
-
+        this.clearInput();
         this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
         return false;
     }
 
-    addBtn(): void {
-        // this.clearInput();
-        this.btnName = 'Add';
-        this.modeAdd = true;
-        this.modeEdit = false;
-    }
-
     dateChanged(str: string){
-        let departJobs: any[][] =[];
-        let departName: string[] = [];
+        // let departJobs: any[][] =[];
+        // let departName: string[] = [];
         this.editDate = str;
         console.log('got message from Calendar: ' + str);
         this.sJobs = this.dScheduleObj.getJobs(str, this.LIST_DATE);
         console.log('ngOnInit() jobs:', this.sJobs);
 
     }
-    
     // Select job for edit
     selectJob(job: Job){
     	console.log('select Job: ', job);
 	    this.form.patchValue({
 		    jobId: job.jobId,
-		    name: job.empId+','+job.empName,
+		    name: job.empId,
 		    department: job.departName,
 		    startT: job.startT,
 		    endT: job.endT,
 		    date: job.date
 	    });
 
-	    this.btnName = 'Edit';
-        this.editJob = job;
-        this.modeAdd = false;
-        this.modeEdit = true;
+        this.editItem = job;
     }
 
-    clearForm(): void{
+    clearInput(): void{
         this.form.patchValue({
             jobId: -1,
             name: null,
@@ -129,11 +107,14 @@ export class MainMenuComponent implements OnInit {
             startT: null,
             endT: null,
         });
+        this.editItem = null;
     }
 
-    deleteJob(): void{
+    deleteItem(): void{
         console.log('Click delete Job');
-        this.dScheduleObj.deleteJob(this.editJob.jobId);
+        this.dScheduleObj.deleteJob(this.editItem.jobId);
+        this.clearInput();
+        
         this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
         //ToDo
         //DataBaseControl

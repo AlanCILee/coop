@@ -108,13 +108,13 @@ export class Schedule implements OnInit {
 }
 
 const mockSchedule = [
-	{ jobId: 1, date: '2016-10-01', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '17:00'},
-	{ jobId: 2, date: '2016-10-01', empId: 2, name: 'Nick', departName: 'Software' , startT: '09:30' ,endT: '17:15'},
-	{ jobId: 3, date: '2016-10-01', empId: 3, name: 'Aaron', departName: 'Sales' , startT: '09:15' ,endT: '15:45'},
-	{ jobId: 4, date: '2016-10-01', empId: 4, name: 'Max', departName: 'Sales' , startT: '09:45' ,endT: '17:00'},
-	{ jobId: 5, date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '12:00'},
-	{ jobId: 6, date: '2016-10-02', empId: 1, name: 'Alan', departName: 'Software' , startT: '14:00' ,endT: '17:00'},
-	{ jobId: 7, date: '2016-10-02', empId: 2, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
+	{ jobId: 1, date: '2016-10-01', empId: 0, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '17:00'},
+	{ jobId: 2, date: '2016-10-01', empId: 1, name: 'Nick', departName: 'Software' , startT: '09:30' ,endT: '17:15'},
+	{ jobId: 3, date: '2016-10-01', empId: 2, name: 'Aaron', departName: 'Sales' , startT: '09:15' ,endT: '15:45'},
+	{ jobId: 4, date: '2016-10-01', empId: 3, name: 'Max', departName: 'Sales' , startT: '09:45' ,endT: '17:00'},
+	{ jobId: 5, date: '2016-10-02', empId: 4, name: 'Alan', departName: 'Software' , startT: '09:00' ,endT: '12:00'},
+	{ jobId: 6, date: '2016-10-02', empId: 5, name: 'Alan', departName: 'Software' , startT: '14:00' ,endT: '17:00'},
+	{ jobId: 7, date: '2016-10-02', empId: 6, name: 'Nick', departName: 'HR' , startT: '09:00' ,endT: '17:00'},
 ];
 
 export class Job implements Comparable<Job>{

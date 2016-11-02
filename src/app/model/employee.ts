@@ -46,8 +46,8 @@ export class Employees {
         this.loadEmployee(mockEmployees);
     }
 
-    getEmployee(employeeId: number){
-            console.log('getEmployee :'+ employeeId);
+    getEmployeeName(employeeId: number): string{
+            console.log('getEmployeeName :'+ employeeId);
             let employee: Employee = null;
 
             this.employees.forEach((emp) => {
@@ -55,8 +55,20 @@ export class Employees {
                     employee = emp;
             });
 
-            return employee;
+            return employee.empName;
     }
+	//
+	// getEmployee(employeeId: number){
+    //         console.log('getEmployee :'+ employeeId);
+    //         let employee: Employee = null;
+    //
+    //         this.employees.forEach((emp) => {
+    //             if(emp.empId == employeeId)
+    //                 employee = emp;
+    //         });
+    //
+    //         return employee;
+    // }
 }
 
 
