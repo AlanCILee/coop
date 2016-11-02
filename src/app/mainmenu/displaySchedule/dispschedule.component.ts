@@ -48,6 +48,8 @@ export class DispScheduleComponent implements OnInit {
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
 		this.hOffset = 0;
+		this.jobsDatesDeparts = [];
+		
 		if(this.container){
 			console.log("clear Container");
 			this.container.clear();
