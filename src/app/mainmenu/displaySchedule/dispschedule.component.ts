@@ -16,7 +16,7 @@ export class DispScheduleComponent implements OnInit {
 	@Input() sJobs: Job[];
 	
 	// department: string;
-	departJobs: any[][] =[];
+	departJobs: Object[] =[];
 	departments: string[]=[];
 	departCnt: number;
 	dispEmpNum: number;
@@ -100,7 +100,7 @@ export class DispScheduleComponent implements OnInit {
 		console.log('aligh job by date: ', jobsDates);
 
 		for (var key in jobsDates ){
-			let jobs = jobsDates[key];
+			let jobs: Job[] = jobsDates[key];
 
 			console.log('jobsDates[key] :', jobs);
 			this.departJobs = [];
@@ -216,7 +216,7 @@ export class DispScheduleComponent implements OnInit {
 			});
 			
 			for (var depart in dateJob) {
-				let departJob = dateJob[depart];
+				let departJob: Job[] = dateJob[depart];
 				let empOffset: any[] = [];
 				// console.log('depart: ', depart);
 				

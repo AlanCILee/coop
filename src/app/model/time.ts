@@ -1,6 +1,6 @@
 export class TimeTable {
 	timeTable: Time[] = [];
-
+	timeZones: Object =[];
 	timestring: string = '';
 	time: number;
 
@@ -42,10 +42,37 @@ export class TimeTable {
 
 		return timeNumber;
 	}
+
+	addTimeZone(zName: string, sT: string, eT: string): Object {
+		this.timeZones[zName] = new TimeZone(zName,
+			new Time(sT, this.getTimeNumber(sT)),
+			new Time(eT, this.getTimeNumber(eT)));
+		console.log('add Time Zone: ', this.timeZones[zName]);
+		return this.timeZones;
+		//ToDo DB Backup
+	}
+
+	loadMockTimeZone(): void{
+		mockTimeZone.forEach((zone) =>{
+			this.addTimeZone(zone.zoneName, zone.sT, zone.eT);
+		});
+	}
 }
 
+export class TimeZone {
+	constructor (public zoneName: string,
+			public startT: Time,
+			public endT: Time){
+	}
+}
 export class Time {
 	constructor (public	timeStr: string,
 			public timeNum: number){
 	}
 }
+
+const mockTimeZone = [
+	{zoneName: 'Morning', sT:'08:00', eT:'14:00'},
+	{zoneName: 'Afternoon', sT:'14:00', eT:'22:00'},
+];
+
