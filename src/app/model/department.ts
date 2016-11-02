@@ -18,6 +18,12 @@ export class Departments {
         }
     }
 
+    removeDepartment(depart: Department): void{
+        console.log('removeDepartment : ', depart);
+        let index = this.departments.indexOf(depart);
+        this.departments.splice( index, 1 );
+    }
+
     loadDepartments(departments: Object[]): void {
         departments.forEach(( depart ) => {
             this.addDepartment( depart['departId'], depart['departName'], depart['ratio']);

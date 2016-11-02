@@ -12,7 +12,9 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 
 export class DepartmentComponent implements OnInit {
     departments: Department[];
-    form : FormGroup;
+    form: FormGroup;
+    modeEdit: boolean;
+    editItem: any = null;
 
     constructor(private departmentsObj: Departments,
                 private fb: FormBuilder){
@@ -34,6 +36,8 @@ export class DepartmentComponent implements OnInit {
             dName: '',
             dRatio: ''
         });
+        this.modeEdit = false;
+        this.editItem = null;
     }
 
     onSubmit(form: any): void{
@@ -44,11 +48,17 @@ export class DepartmentComponent implements OnInit {
 
     depBtn( dep: Department): void {
         console.log('click department: ', dep);
+        this.editItem = dep;
 
         this.form.patchValue({
             dId: dep.departId,
             dName: dep.departName,
             dRatio: dep.departRatio
         });
+    }
+
+    deleteItem(): void {
+        this.departmentsObj.removeDepartment(this.editItem);
+        this.clearInput();
     }
 }
