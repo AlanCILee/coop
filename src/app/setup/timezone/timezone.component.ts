@@ -13,6 +13,7 @@ export class TimezoneComponent implements OnInit {
     timeTable: Time[] = [];
     form: FormGroup;
     timeZones: Object =[];
+    editItem: any = null;
 
     constructor(private timeObj: TimeTable,
                 private fb: FormBuilder){
@@ -44,6 +45,7 @@ export class TimezoneComponent implements OnInit {
             startT: zone.val.startT.timeStr,
             endT: zone.val.endT.timeStr,
         });
+        this.editItem = zone;
     }
 
     clearInput(): void{
@@ -52,5 +54,11 @@ export class TimezoneComponent implements OnInit {
             startT: '00:00',
             endT: '00:00',
         });
+        this.editItem = null;
+    }
+
+    deleteItem(): void {
+        this.timeObj.removeTimeZone(this.editItem.key);
+        this.clearInput();
     }
 }

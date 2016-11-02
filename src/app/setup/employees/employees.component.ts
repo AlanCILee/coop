@@ -14,6 +14,7 @@ export class EmployeesComponent implements OnInit {
     employees: Employee[];
     departments: Department[];
     form : FormGroup;
+    editItem: any = null;
 
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
@@ -44,6 +45,7 @@ export class EmployeesComponent implements OnInit {
             phone: '',
             wage: ''
         });
+        this.editItem = null;
     }
     
     onSubmit(form: any): void {
@@ -62,5 +64,11 @@ export class EmployeesComponent implements OnInit {
             phone: emp.empPhone,
             wage: emp.wages.wage
         });
+        this.editItem = emp;
+    }
+
+    deleteItem(): void {
+        this.employeesObj.removeEmployee(this.editItem);
+        this.clearInput();
     }
 }

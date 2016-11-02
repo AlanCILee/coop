@@ -29,6 +29,12 @@ export class Employees {
         let employee = new Employee(empId, empName, departId, empPhone, wageObj);
     }
 
+	removeEmployee(emp: Employee): void{
+		console.log('removeEmployee : ', emp);
+		let index = this.employees.indexOf(emp);
+		this.employees.splice( index, 1 );
+	}
+
     loadEmployee(employees: Object[]): void {
         employees.forEach(( emp ) => {
             this.addEmployee( emp['empid'], emp['name'], emp['depart'], emp['phone'], emp['wages']);

@@ -19,6 +19,7 @@
 
 		<button type="submit">Submit</button>
 		<button type="button" (click)="clearInput()">Clear</button>
+		<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
 	</form>
 	<table>
 		<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">

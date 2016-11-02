@@ -50,6 +50,11 @@ export class TimeTable {
 		//ToDo DB Backup
 	}
 
+	removeTimeZone(key: string): void{
+		console.log('removeTimeZone : ', key);
+		delete this.timeZones[key];
+	}
+
 	loadMockTimeZone(): void{
 		mockTimeZone.forEach((zone) =>{
 			this.addTimeZone(zone.zoneName, zone.sT, zone.eT);

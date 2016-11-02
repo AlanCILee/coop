@@ -13,7 +13,6 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 export class DepartmentComponent implements OnInit {
     departments: Department[];
     form: FormGroup;
-    modeEdit: boolean;
     editItem: any = null;
 
     constructor(private departmentsObj: Departments,
@@ -36,7 +35,6 @@ export class DepartmentComponent implements OnInit {
             dName: '',
             dRatio: ''
         });
-        this.modeEdit = false;
         this.editItem = null;
     }
 
