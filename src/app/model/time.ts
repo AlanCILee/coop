@@ -9,7 +9,7 @@ export class TimeTable {
 			for (var min = 0; min < 60; min+=15){
 				this.timestring = this.timeFormatter(hour) + ':' + this.timeFormatter(min);
 				this.time = hour * 60 + min;
-				// console.log(this.timestring, this.time);
+				console.log(this.timestring, this.time);
 				this.timeTable.push(new Time(this.timestring, this.time));
 			}
 		}
@@ -43,12 +43,10 @@ export class TimeTable {
 		return timeNumber;
 	}
 
-	addTimeZone(zName: string, sT: string, eT: string): Object {
+	addTimeZone(zName: string, sT: string, eT: string): void {
 		this.timeZones[zName] = new TimeZone(zName,
 			new Time(sT, this.getTimeNumber(sT)),
 			new Time(eT, this.getTimeNumber(eT)));
-		console.log('add Time Zone: ', this.timeZones[zName]);
-		return this.timeZones;
 		//ToDo DB Backup
 	}
 

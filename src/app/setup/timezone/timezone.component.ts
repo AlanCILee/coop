@@ -25,18 +25,15 @@ export class TimezoneComponent implements OnInit {
         this.timeZones = this.timeObj.timeZones;
         this.form = this.fb.group({
             zoneName: [ '' ],
-            startT: [ '' ],
-            endT: [ '' ],
+            startT: [ '00:00' ],
+            endT: [ '00:00' ],
         });
 
         console.log('timeZone :',this.timeZones);
     }
 
-    ngOnChange(){
-        console.log('ngOnChange: timezone');
-    }
-
     onSubmit(form: any): any{
-        this.timeZones = this.timeObj.addTimeZone(form.zoneName, form.startT, form.endT);
+        console.log('timezone form result: ',form);
+        this.timeObj.addTimeZone(form.zoneName, form.startT, form.endT);
     }
 }
