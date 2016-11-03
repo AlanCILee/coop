@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {FormGroup, FormControl, Validators, FormBuilder, FormsModule} from '@angular/forms';
+
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
-// import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { TimeTable } from "../../model/time";
 
 
 @Component({
@@ -13,23 +15,32 @@ import { Department, Departments } from "../../model/department";
 export class InputComponent implements OnInit {
     employees: Employee[];
     departments: Department[];
-    // form : FormGroup;
+    timeZones: Object = [];
+    form : FormGroup;
     // editItem: any = null;
     //
     constructor(private employeesObj: Employees,
-            private departmentsObj: Departments,){
+            private departmentsObj: Departments,
+            private timeObj: TimeTable){
             // private fb: FormBuilder){
     };
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
+        this.timeZones = this.timeObj.timeZones;
+
+
+        this.form.addControl({ date: new FormControl('', null ) });
+        for(var key in this.timeZones){
+            this.form.registerControl( key, new this.form.controls('') );
+        }
         // this.form = this.fb.group({
-        //     eId: [ -1 ],
-        //     name: [ '' ],
-        //     department: [ '' ],
-        //     phone: [ '' ],
-        //     wage: [ '' ],
+        //     date: [ '' ],
+        //     // name: [ '' ],
+        //     // department: [ '' ],
+        //     // phone: [ '' ],
+        //     // wage: [ '' ],
         // })
     }
     //

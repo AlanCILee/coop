@@ -41,9 +41,6 @@
 			<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
 		</form>
 	</div>
-	<form>
-
-	</form>
 		<br>
 		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
 </main>

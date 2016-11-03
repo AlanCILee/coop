@@ -1,41 +1,46 @@
-<!--<main>-->
-    <h3>Input Salary</h3>
-    <!--<img src="../../../public/images/angular.png">-->
-    <!--<button (click)="addBtn()">Add New Employee</button>-->
 
-    <!--<div>-->
-        <!--<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">-->
-            <!--<input type="hidden" formControlName="eId">-->
+<h3>Input Salary</h3>
+<div>
+    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
 
-            <!--<label>Name </label>-->
-            <!--<input type="text" formControlName="name">-->
+        <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
-            <!--<label>Department </label>-->
+        <span *ngFor = "let zone of timeZones">
 
-            <!--<select formControlName="department">-->
-                <!--<option *ngFor="let depart of departments" value="{{ depart.departId }}">{{ depart.departName }}</option>-->
-            <!--</select>-->
 
-            <!--<label>Phone </label>-->
 
-            <!--<input type="text" formControlName="phone">-->
+        </span>
 
-            <!--<label>Wage </label>-->
-            <!--<input type="text" formControlName="wage">-->
+        <!--<input type = "hidden" formControlName= "jobId">-->
 
-            <!--<button type="submit">Submit</button>-->
-            <!--<button type="button" (click)="clearInput()">Clear</button>-->
-            <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
+        <!--<label>Name </label>-->
+        <!--<select formControlName="name">-->
+            <!--<option *ngFor="let employee of employees" value="{{ employee.empId }}">{{ employee.empName }}</option>-->
+        <!--</select>-->
 
-        <!--</form>-->
-    <!--</div>-->
-    <!--<table>-->
-        <!--<tr *ngFor="let emp of employees" (click)="empBtn( emp )">-->
-            <!--<td>{{ emp.empName }}</td>-->
-            <!--<td>{{ getDepartName(emp.departId) }}</td>-->
-            <!--<td>{{ emp.empPhone }}</td>-->
-            <!--<td>{{ emp.wages.wage }}</td>-->
-        <!--</tr>-->
-    <!--</table>-->
-<!--</main>-->
+
+        <!--<label>Working Department </label>-->
+
+        <!--<select formControlName="department">-->
+            <!--<option *ngFor="let depart of departments">{{ depart.departName }}</option>-->
+        <!--</select>-->
+
+        <!--<label>Start Time </label>-->
+
+        <!--<select formControlName="startT">-->
+            <!--<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>-->
+        <!--</select>-->
+
+        <!--<label>End Time </label>-->
+
+        <!--<select formControlName="endT">-->
+            <!--<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>-->
+        <!--</select>-->
+
+        <button type="submit">Submit</button>
+        <button type="button" (click)="clearInput()">Clear</button>
+        <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
+    </form>
+</div>
+<br>
 
