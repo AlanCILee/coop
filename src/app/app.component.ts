@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
     constructor(private employees: Employees,
                 private departments: Departments,
                 private schedule : Schedule,
+                private timeObj: TimeTable,
                 private time: TimeTable) {
         
     }
@@ -24,7 +25,8 @@ export class AppComponent implements OnInit {
         this.departments.initDepartments();
         this.schedule.loadSchedule();
         this.time.createTimeTable();
-        
+        this.timeObj.loadMockTimeZone();
+
         // let a1 = new A(1);
         // let a2 = new A(2);
         // let a3 = new A(3);

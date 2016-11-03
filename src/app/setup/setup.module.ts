@@ -6,8 +6,9 @@ import { TimezoneComponent } from "./timezone/timezone.component";
 import { Routes, RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
-import { MapToIterable } from "../core/maptoIterable.pipe";
+// import { MapToIterable } from "../core/maptoIterable.pipe";
 import { DepartmentComponent } from "./department/department.component";
+import { ShareModule } from "../core/Share.module";
 
 
 @NgModule({
@@ -15,12 +16,13 @@ import { DepartmentComponent } from "./department/department.component";
 		CommonModule,
 		FormsModule,
 		ReactiveFormsModule,
+		ShareModule,
 	],
 	declarations: [
 		EmployeesComponent,
 		TimezoneComponent,
 		DepartmentComponent,
-		MapToIterable
+		// MapToIterable
 	],
 	providers: [
 

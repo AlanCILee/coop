@@ -5,8 +5,12 @@
 
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 
-
-
+        <input *ngFor = "let key of timeZones | mapToIterable" formControlName="{{ key.key }}">
+        <!--<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">-->
+            <!--<td>{{ zone.val.zoneName}}</td>-->
+            <!--<td>{{ zone.val.startT.timeStr }}</td>-->
+            <!--<td>{{ zone.val.endT.timeStr }}</td>-->
+        <!--</tr>-->
 
 
 

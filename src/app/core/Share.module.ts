@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { DatePickerComponent } from '../core/datepicker/ng2-datepicker';
+import { MapToIterable } from "./maptoIterable.pipe";
 
 
 @NgModule({
@@ -13,12 +14,14 @@ import { DatePickerComponent } from '../core/datepicker/ng2-datepicker';
 	],
 	declarations: [
 		DatePickerComponent,
+		MapToIterable,
 	],
 	providers: [
 
 	],
 	exports: [
 		DatePickerComponent,
+		MapToIterable,
 	],
 })
 

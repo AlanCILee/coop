@@ -17,6 +17,7 @@ import { Schedule } from "./model/schedule";
 import { SetupComponent } from "./setup/setup.component";
 import { SetupModule } from "./setup/setup.module";
 import { SalaryModule } from "./salary/salary.module";
+import { TipModel } from "./model/tip";
 
 @NgModule({
     imports: [
@@ -41,6 +42,7 @@ import { SalaryModule } from "./salary/salary.module";
         Departments,
         TimeTable,
         Schedule,
+        TipModel,
     ],
     bootstrap: [ AppComponent ]
 })

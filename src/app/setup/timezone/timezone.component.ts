@@ -21,7 +21,7 @@ export class TimezoneComponent implements OnInit {
 
     ngOnInit(){
         this.timeTable = this.timeObj.timeTable;
-        this.timeObj.loadMockTimeZone();
+        // this.timeObj.loadMockTimeZone();
         this.timeZones = this.timeObj.timeZones;
         this.form = this.fb.group({
             zoneName: [ '' ],

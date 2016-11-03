@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, FormsModule, AbstractControl} from '@angular/forms';
 
-import { Employees, Employee, Wage } from "../../model/employee";
+import { Employees, Employee } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { TimeTable } from "../../model/time";
+import { TipModel } from "../../model/tip";
 
 
 @Component({
@@ -22,6 +23,7 @@ export class InputComponent implements OnInit {
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private timeObj: TimeTable,
+            private tipObj: TipModel,
             private fb: FormBuilder){
     };
 
@@ -29,8 +31,12 @@ export class InputComponent implements OnInit {
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
+        this.tipObj.loadMockTips();
 
-
+        this.form = this.fb.group({
+            date: [ '' ],
+        });
+        console.log('inputComponent ngOninit: ', this.timeZones);
         // var control = new AbstractControl(null, null);
 
         for(var key in this.timeZones){
@@ -52,6 +58,16 @@ export class InputComponent implements OnInit {
         //     // phone: [ '' ],
         //     // wage: [ '' ],
         // })
+    }
+
+    dateChanged(str: string){
+        // let departJobs: any[][] =[];
+        // let departName: string[] = [];
+        // this.editDate = str;
+        // console.log('got message from Calendar: ' + str);
+        // this.sJobs = this.dScheduleObj.getJobs(str, this.LIST_DATE);
+        // console.log('ngOnInit() jobs:', this.sJobs);
+
     }
     //
     // getDepartName(departId: number){
