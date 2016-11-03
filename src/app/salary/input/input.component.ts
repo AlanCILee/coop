@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormGroup, FormControl, Validators, FormBuilder, FormsModule} from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormsModule, AbstractControl} from '@angular/forms';
 
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
@@ -21,8 +21,8 @@ export class InputComponent implements OnInit {
     //
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
-            private timeObj: TimeTable){
-            // private fb: FormBuilder){
+            private timeObj: TimeTable,
+            private fb: FormBuilder){
     };
 
     ngOnInit(){
@@ -31,10 +31,20 @@ export class InputComponent implements OnInit {
         this.timeZones = this.timeObj.timeZones;
 
 
-        this.form.addControl({ date: new FormControl('', null ) });
+        // var control = new AbstractControl(null, null);
+
         for(var key in this.timeZones){
-            this.form.registerControl( key, new this.form.controls('') );
+            let control = new FormControl();
+            this.form.addControl( key, control);
         }
+
+        // control['date'] = ['', ];
+        // this.form.addControl( 'date', this.fb.control(control));
+        // for(var key in this.timeZones){
+        //
+        //     control[key] = ['', ];
+        //     this.form.addControl( key, this.fb.control(control));
+        // }
         // this.form = this.fb.group({
         //     date: [ '' ],
         //     // name: [ '' ],

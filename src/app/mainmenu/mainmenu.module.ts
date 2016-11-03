@@ -7,16 +7,18 @@ import { HttpComponent } from "../core/http.component";
 import { DatePickerComponent } from '../core/datepicker/ng2-datepicker';
 import { MainMenuComponent } from "./mainmenu.component";
 import { DispScheduleComponent } from "./displaySchedule/dispschedule.component";
+import { ShareModule } from "../core/Share.module";
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        ShareModule
     ],
     declarations: [
         MainMenuComponent,
-        DatePickerComponent,
+        // DatePickerComponent,
         DispScheduleComponent,
     ],
     providers: [

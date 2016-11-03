@@ -3,11 +3,20 @@ import { HttpComponent } from "../core/http.component";
 import { ReviewComponent } from "./review/review.component";
 import { InputComponent } from "./input/input.component";
 import { Routes } from "@angular/router";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { DatePickerComponent } from "../core/datepicker/ng2-datepicker";
+import { ShareModule } from "../core/Share.module";
 
 @NgModule({
     declarations: [
         InputComponent,
         ReviewComponent,
+        // DatePickerComponent,
+    ],
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        ShareModule,
     ],
     providers: [ HttpComponent ],
 })
