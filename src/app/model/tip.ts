@@ -1,9 +1,10 @@
 import { OnInit, Injectable } from "@angular/core";
 import { TimeTable } from "./time";
+import * as moment from 'moment';
 
 @Injectable()
 export class TipModel implements OnInit{
-	dailyT : {} = {};
+	dailyT : Object = {};
 	timeZones: Object =[];
 
 	constructor(private timeTableObj: TimeTable){
@@ -27,25 +28,25 @@ export class TipModel implements OnInit{
 		}
 		console.log('loadMockWages :', this.dailyT);
 	}
-	//
-	// getTip(date: string, day: number): Job[] {
-	// 	let days: string[] = [];
-	// 	let momentDay = moment(date);
-	//
-	// 	days.push(date);
-	//
-	// 	for(var i=0; i < day; i++){
-	// 		days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
-	// 	}
-	//
-	// 	console.log('getJobs for: ', days);
-	//
-	// 	let jobList: Job[] = this.jobs.filter((job)=>{
-	// 		return days.indexOf(job.date) >= 0;
-	// 	});
-	//
-	// 	return jobList;
-	// }
+
+	getTipList(date: string, day: number): Object {
+		let days: string[] = [];
+		let listT: Object = {};
+		let momentDay = moment(date);
+
+		days.push(date);
+
+		for(var i=0; i < day; i++){
+			days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
+		}
+
+		for (var key in this.dailyT){
+			console.log('key :', key);
+			if( days.indexOf(key) >=0 )
+				listT[key] = this.dailyT[key];
+		}
+		return listT;
+	}
 }
 
 const mockTips:{} = {

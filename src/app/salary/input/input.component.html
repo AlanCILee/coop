@@ -9,56 +9,17 @@
             <label>{{ key.key }}</label>
             <input formControlName="{{ key.key }}">
         </span>
-            <!--<input type='text' formControlName="Morning">-->
-            <!--<input type='text' formControlName="Afternoon">-->
-        <!--<label>Morning</label>-->
-        <!--<input formControlName="Morning">-->
-        <!--<label>Afternoon</label>-->
-        <!--<input formControlName="Afternoon">-->
-        <table>
-            <tr *ngFor="let dt of dailyT | mapToIterable" (click)="tipBtn( dt )">
-                <td>{{ dt.key }}</td>
-                <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
-            </tr>
-        </table>
-        <!--</tr>-->
-        <!--const mockTips:{} = {-->
-        <!--'2016-10-01': { Morning : 300, Afternoon: 500 },-->
-        <!--'2016-10-02': { Morning : 350, Afternoon: 550 }-->
-        <!--};-->
-
-
-
-        <!--<input type = "hidden" formControlName= "jobId">-->
-
-        <!--<label>Name </label>-->
-        <!--<select formControlName="name">-->
-            <!--<option *ngFor="let employee of employees" value="{{ employee.empId }}">{{ employee.empName }}</option>-->
-        <!--</select>-->
-
-
-        <!--<label>Working Department </label>-->
-
-        <!--<select formControlName="department">-->
-            <!--<option *ngFor="let depart of departments">{{ depart.departName }}</option>-->
-        <!--</select>-->
-
-        <!--<label>Start Time </label>-->
-
-        <!--<select formControlName="startT">-->
-            <!--<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>-->
-        <!--</select>-->
-
-        <!--<label>End Time </label>-->
-
-        <!--<select formControlName="endT">-->
-            <!--<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>-->
-        <!--</select>-->
 
         <button type="submit">Submit</button>
         <!--<button type="button" (click)="clearInput()">Clear</button>-->
         <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
     </form>
+    <table>
+        <tr *ngFor="let dt of dailyT | mapToIterable" (click)="tipSelect( dt )">
+            <td>{{ dt.key }}</td>
+            <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
+        </tr>
+    </table>
 </div>
 <br>
 

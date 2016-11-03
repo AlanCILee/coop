@@ -19,6 +19,9 @@ export class InputComponent implements OnInit {
     timeZones: Object = [];
     form : FormGroup;
     dailyT: Object;
+    editDate: string;
+
+    LIST_DATE: number = 7;
     // editItem: any = null;
     //
     constructor(private employeesObj: Employees,
@@ -33,7 +36,7 @@ export class InputComponent implements OnInit {
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
         this.tipObj.loadMockTips();
-        this.dailyT = this.tipObj.dailyT;
+        // this.dailyT = this.tipObj.dailyT;
         // let control = new FormControl({value: '', disabled: false});
 
         this.form = this.fb.group({
@@ -48,6 +51,7 @@ export class InputComponent implements OnInit {
         for(var key in this.timeZones){
             // let control = new FormControl({value: '', });
             // this.form.addControl( key, control);
+
             this.form.addControl( key, this.fb.control(['', ]));
         }
 
@@ -68,12 +72,9 @@ export class InputComponent implements OnInit {
     }
 
     dateChanged(str: string){
-        // let departJobs: any[][] =[];
-        // let departName: string[] = [];
-        // this.editDate = str;
-        // console.log('got message from Calendar: ' + str);
-        // this.sJobs = this.dScheduleObj.getJobs(str, this.LIST_DATE);
-        // console.log('ngOnInit() jobs:', this.sJobs);
+        this.editDate = str;
+        this.dailyT = this.tipObj.getTipList(str, this.LIST_DATE);
+        console.log('got message from Calendar: ' + str, 'dailyT: ', this.dailyT);
 
     }
     //
@@ -99,20 +100,12 @@ export class InputComponent implements OnInit {
         // this.clearInput();
     }
     //
-    tipBtn(tip: Object): void {
+    tipSelect(tip: Object): void {
         console.log('click Tip : ', tip);
-        // this.form.patchValue({
-        //     eId: emp.empId,
-        //     name: emp.empName,
-        //     department: emp.departId,
-        //     phone: emp.empPhone,
-        //     wage: emp.wages.wage
-        // });
-        // this.editItem = emp;
+        for(var key in tip['val']){
+                console.log('tipBtn :', key, 'value :',tip['val'][key]);
+                this.form.patchValue({ [ key ]: tip['val'][key] });
+        }
     }
-    //
-    // deleteItem(): void {
-    //     this.employeesObj.removeEmployee(this.editItem);
-    //     this.clearInput();
-    // }
+
 }
