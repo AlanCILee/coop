@@ -27,7 +27,25 @@ export class TipModel implements OnInit{
 		}
 		console.log('loadMockWages :', this.dailyT);
 	}
-
+	//
+	// getTip(date: string, day: number): Job[] {
+	// 	let days: string[] = [];
+	// 	let momentDay = moment(date);
+	//
+	// 	days.push(date);
+	//
+	// 	for(var i=0; i < day; i++){
+	// 		days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
+	// 	}
+	//
+	// 	console.log('getJobs for: ', days);
+	//
+	// 	let jobList: Job[] = this.jobs.filter((job)=>{
+	// 		return days.indexOf(job.date) >= 0;
+	// 	});
+	//
+	// 	return jobList;
+	// }
 }
 
 const mockTips:{} = {

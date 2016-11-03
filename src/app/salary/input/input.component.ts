@@ -18,6 +18,7 @@ export class InputComponent implements OnInit {
     departments: Department[];
     timeZones: Object = [];
     form : FormGroup;
+    dailyT: Object;
     // editItem: any = null;
     //
     constructor(private employeesObj: Employees,
@@ -32,16 +33,22 @@ export class InputComponent implements OnInit {
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
         this.tipObj.loadMockTips();
+        this.dailyT = this.tipObj.dailyT;
+        // let control = new FormControl({value: '', disabled: false});
 
         this.form = this.fb.group({
             date: [ '' ],
+            // Morning: [ '' ],
+            // Afternoon: [ '' ],
         });
+
         console.log('inputComponent ngOninit: ', this.timeZones);
         // var control = new AbstractControl(null, null);
 
         for(var key in this.timeZones){
-            let control = new FormControl();
-            this.form.addControl( key, control);
+            // let control = new FormControl({value: '', });
+            // this.form.addControl( key, control);
+            this.form.addControl( key, this.fb.control(['', ]));
         }
 
         // control['date'] = ['', ];
@@ -85,24 +92,24 @@ export class InputComponent implements OnInit {
     //     this.editItem = null;
     // }
     //
-    // onSubmit(form: any): void {
-    //     console.log('you submitted value: ', form);
-    //     this.employeesObj.addEmployee(form.eId,
-    //         form.name, form.department, form.phone, form.wage);
-    //     this.clearInput();
-    // }
+    onSubmit(form: any): void {
+        console.log('you submitted value: ', form);
+        // this.employeesObj.addEmployee(form.eId,
+        //     form.name, form.department, form.phone, form.wage);
+        // this.clearInput();
+    }
     //
-    // empBtn(emp: Employee): void {
-    //     console.log('click Employee ID: ', emp);
-    //     this.form.patchValue({
-    //         eId: emp.empId,
-    //         name: emp.empName,
-    //         department: emp.departId,
-    //         phone: emp.empPhone,
-    //         wage: emp.wages.wage
-    //     });
-    //     this.editItem = emp;
-    // }
+    tipBtn(tip: Object): void {
+        console.log('click Tip : ', tip);
+        // this.form.patchValue({
+        //     eId: emp.empId,
+        //     name: emp.empName,
+        //     department: emp.departId,
+        //     phone: emp.empPhone,
+        //     wage: emp.wages.wage
+        // });
+        // this.editItem = emp;
+    }
     //
     // deleteItem(): void {
     //     this.employeesObj.removeEmployee(this.editItem);
