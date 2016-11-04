@@ -1,41 +1,24 @@
-<!--<main>-->
-    <h3>Review Salary</h3>
-    <!--<img src="../../../public/images/angular.png">-->
-    <!--<button (click)="addBtn()">Add New Employee</button>-->
 
-    <!--<div>-->
-        <!--<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">-->
-            <!--<input type="hidden" formControlName="eId">-->
+<h3>Review Salary</h3>
+<div>
 
-            <!--<label>Name </label>-->
-            <!--<input type="text" formControlName="name">-->
+    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+        <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+        <!--<span *ngFor = "let val of zoneStr">-->
+			<!--<label>{{ val }}</label>-->
+			<!--<input type="text" formControlName= "{{ val }}" >-->
+		<!--</span>-->
 
-            <!--<label>Department </label>-->
+        <button type="submit">Submit</button>
+        <!--<button type="button" (click)="clearInput()">Clear</button>-->
+        <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
 
-            <!--<select formControlName="department">-->
-                <!--<option *ngFor="let depart of departments" value="{{ depart.departId }}">{{ depart.departName }}</option>-->
-            <!--</select>-->
-
-            <!--<label>Phone </label>-->
-
-            <!--<input type="text" formControlName="phone">-->
-
-            <!--<label>Wage </label>-->
-            <!--<input type="text" formControlName="wage">-->
-
-            <!--<button type="submit">Submit</button>-->
-            <!--<button type="button" (click)="clearInput()">Clear</button>-->
-            <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
-
-        <!--</form>-->
-    <!--</div>-->
+    </form>
+    <br>
     <!--<table>-->
-        <!--<tr *ngFor="let emp of employees" (click)="empBtn( emp )">-->
-            <!--<td>{{ emp.empName }}</td>-->
-            <!--<td>{{ getDepartName(emp.departId) }}</td>-->
-            <!--<td>{{ emp.empPhone }}</td>-->
-            <!--<td>{{ emp.wages.wage }}</td>-->
+        <!--<tr *ngFor="let dt of dailyT | mapToIterable" (click)="tipSelect( dt )">-->
+            <!--<td>{{ dt.key }}</td>-->
+            <!--<td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>-->
         <!--</tr>-->
     <!--</table>-->
-<!--</main>-->
-
+</div>

@@ -75,12 +75,12 @@ export class Schedule implements OnInit {
 			days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
 		}
 
-		console.log('getJobs for: ', days);
 
 		let jobList: Job[] = this.jobs.filter((job)=>{
 			return days.indexOf(job.date) >= 0;
 		});
 
+		console.log('getJobs for: ', jobList);
 		return jobList;
 	}
 
