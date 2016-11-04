@@ -16,6 +16,7 @@ export class TipModel implements OnInit{
 	}
 
 	addDailyT(date:string, wages: Object){
+		console.log('addDailyT :', date, wages);
 		this.dailyT[date] = wages;
 	}
 

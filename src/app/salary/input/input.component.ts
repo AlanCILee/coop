@@ -36,7 +36,6 @@ export class InputComponent implements OnInit {
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
         this.tipObj.loadMockTips();
-        // this.dailyT = this.tipObj.dailyT;
 
 	    let group:any ={};
 
@@ -57,38 +56,25 @@ export class InputComponent implements OnInit {
     }
 
     ngOnAfterViewInit(){
-    	// let string = `
-	    // <label>Morning</label>
-	    // <input type="text" formControlName= "Morning" >
-	    //
-	    // <label>Afternoon</label>
-	    // <input type="text" formControlName= "Afternoon" >`;
-	    //
-	    // this.loadData(string);
     }
-    //
-    // getDepartName(departId: number){
-    //     return this.departmentsObj.getDepartmentName(departId);
-    // }
-    //
-    // clearInput(): void{
-    //     this.form.patchValue({
-    //         eId: -1,
-    //         name: '',
-    //         department: '',
-    //         phone: '',
-    //         wage: ''
-    //     });
-    //     this.editItem = null;
-    // }
-    //
+
+    clearInput(): void{
+	    this.zoneStr.forEach((zone) =>{
+	    	console.log('patch value: ', zone);
+	    	this.form.patchValue({ [ zone ]: ''});
+	    });
+    }
+
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
-        // this.employeesObj.addEmployee(form.eId,
-        //     form.name, form.department, form.phone, form.wage);
-        // this.clearInput();
+	    let date = form.date;
+		delete form.date;
+        this.tipObj.addDailyT(date, form );
+
+	    this.dailyT = this.tipObj.getTipList(this.editDate, this.LIST_DATE);
+        this.clearInput();
     }
-    //
+
     tipSelect(tip: Object): void {
         console.log('click Tip : ', tip);
         for(var key in tip['val']){
