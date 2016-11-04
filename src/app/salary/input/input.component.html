@@ -1,19 +1,20 @@
 
 <h3>Input Salary</h3>
 <div>
+
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-
-        <span *ngFor = "let key of timeZones | mapToIterable">
-            <label>{{ key.key }}</label>
-            <input formControlName="{{ key.key }}">
-        </span>
+		<span *ngFor = "let val of zoneStr">
+			<label>{{ val }}</label>
+			<input type="text" formControlName= "{{ val }}" >
+		</span>
 
         <button type="submit">Submit</button>
-        <!--<button type="button" (click)="clearInput()">Clear</button>-->
-        <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
+        <button type="button" (click)="clearInput()">Clear</button>
+        <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
+
     </form>
+	<br>
     <table>
         <tr *ngFor="let dt of dailyT | mapToIterable" (click)="tipSelect( dt )">
             <td>{{ dt.key }}</td>
@@ -21,5 +22,5 @@
         </tr>
     </table>
 </div>
-<br>
+
 

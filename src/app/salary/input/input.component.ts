@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder, FormsModule, AbstractControl} from '@angular/forms';
+import {Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
 
 import { Employees, Employee } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { TimeTable } from "../../model/time";
 import { TipModel } from "../../model/tip";
-
 
 @Component({
     selector: 'enter',
@@ -22,13 +21,14 @@ export class InputComponent implements OnInit {
     editDate: string;
 
     LIST_DATE: number = 7;
-    // editItem: any = null;
-    //
+	zoneStr: string[] =[];
+
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private timeObj: TimeTable,
             private tipObj: TipModel,
-            private fb: FormBuilder){
+            ){
+
     };
 
     ngOnInit(){
@@ -37,45 +37,34 @@ export class InputComponent implements OnInit {
         this.timeZones = this.timeObj.timeZones;
         this.tipObj.loadMockTips();
         // this.dailyT = this.tipObj.dailyT;
-        // let control = new FormControl({value: '', disabled: false});
 
-        this.form = this.fb.group({
-            date: [ '' ],
-            // Morning: [ '' ],
-            // Afternoon: [ '' ],
-        });
-
-        console.log('inputComponent ngOninit: ', this.timeZones);
-        // var control = new AbstractControl(null, null);
+	    let group:any ={};
 
         for(var key in this.timeZones){
-            // let control = new FormControl({value: '', });
-            // this.form.addControl( key, control);
-
-            this.form.addControl( key, this.fb.control(['', ]));
+        	this.zoneStr.push(key);
+        	console.log('add formcontrol: ',key);
+            group[key] = new FormControl('');
         }
+	    group['date'] = new FormControl('');
+        this.form = new FormGroup(group);
 
-        // control['date'] = ['', ];
-        // this.form.addControl( 'date', this.fb.control(control));
-        // for(var key in this.timeZones){
-        //
-        //     control[key] = ['', ];
-        //     this.form.addControl( key, this.fb.control(control));
-        // }
-        // this.form = this.fb.group({
-        //     date: [ '' ],
-        //     // name: [ '' ],
-        //     // department: [ '' ],
-        //     // phone: [ '' ],
-        //     // wage: [ '' ],
-        // })
     }
 
     dateChanged(str: string){
         this.editDate = str;
         this.dailyT = this.tipObj.getTipList(str, this.LIST_DATE);
         console.log('got message from Calendar: ' + str, 'dailyT: ', this.dailyT);
+    }
 
+    ngOnAfterViewInit(){
+    	// let string = `
+	    // <label>Morning</label>
+	    // <input type="text" formControlName= "Morning" >
+	    //
+	    // <label>Afternoon</label>
+	    // <input type="text" formControlName= "Afternoon" >`;
+	    //
+	    // this.loadData(string);
     }
     //
     // getDepartName(departId: number){
