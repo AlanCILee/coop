@@ -23,6 +23,8 @@ export class ReviewComponent implements OnInit {
     sJobs: Job[] = [];
     LIST_DATE: number = 7;
     timeZones: Object =[];
+    jobsDates: any = {};
+    jobsPeople: any = {};
 
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
@@ -54,61 +56,60 @@ export class ReviewComponent implements OnInit {
     }
 
     show(): void {
-        let jobsDates: any[] = [];
-        let jobsPeople: any[] = [];
+
         console.log("show():", this.timeZones);
 
         this.sJobs.forEach(( job ) => {
 
-            if(!(job.date in jobsDates))
-                jobsDates[job.date] = [];
+            if(!(job.date in this.jobsDates))
+                this.jobsDates[job.date] = {};
 
-            if(!(job.departName in jobsDates[job.date]))
-                jobsDates[job.date][job.departName] = [];
+            if(!(job.departName in this.jobsDates[job.date]))
+                this.jobsDates[job.date][job.departName] = {};
 
-            if(!(job.empName in jobsDates[job.date][job.departName])){
-                jobsDates[job.date][job.departName][job.empName] = [];
-                jobsDates[job.date][job.departName][job.empName]['hours']
-                    = this.calcurateHours(0, 0);
+            if(!(job.empName in this.jobsDates[job.date][job.departName])){
+                this.jobsDates[job.date][job.departName][job.empName] = {};
+                this.jobsDates[job.date][job.departName][job.empName]['hours']
+                    = this.calculateHours(0, 0);
             }
 
-            if(!(job.empName in jobsPeople))
-                jobsPeople[job.empName] = [];
+            if(!(job.empName in this.jobsPeople))
+                this.jobsPeople[job.empName] = {};
 
-            if(!(job.date in jobsPeople[job.empName]))
-                jobsPeople[job.empName][job.date] = [];
+            if(!(job.date in this.jobsPeople[job.empName]))
+                this.jobsPeople[job.empName][job.date] = {};
 
-            if(!(job.departName in jobsPeople[job.empName][job.date])){
-                jobsPeople[job.empName][job.date][job.departName] = [];
-                jobsPeople[job.empName][job.date][job.departName]['hours']
-                    = this.calcurateHours(0, 0);
+            if(!(job.departName in this.jobsPeople[job.empName][job.date])){
+                this.jobsPeople[job.empName][job.date][job.departName] = {};
+                this.jobsPeople[job.empName][job.date][job.departName]['hours']
+                    = this.calculateHours(0, 0);
             }
 
-            let hoursResult = jobsPeople[job.empName][job.date][job.departName]['hours'];
+            let hoursResult = this.jobsPeople[job.empName][job.date][job.departName]['hours'];
             for(let key in hoursResult){
-                let newHours = this.calcurateHours(job.startN, job.endN);
+                let newHours = this.calculateHours(job.startN, job.endN);
                 hoursResult[key] += newHours[key];
             }
 
-            jobsDates[job.date][job.departName][job.empName]['hours'] = hoursResult;
-            jobsPeople[job.empName][job.date][job.departName]['hours'] = hoursResult;
+            this.jobsDates[job.date][job.departName][job.empName]['hours'] = hoursResult;
+            this.jobsPeople[job.empName][job.date][job.departName]['hours'] = hoursResult;
 
         });
 
-        console.log('jobsDates: ', jobsDates);
-        console.log('jobsPeople: ', jobsPeople);
+        console.log('jobsDates: ', this.jobsDates);
+        console.log('jobsPeople: ', this.jobsPeople);
 
 
     }
 
-    calcurateHours(startN: number, endN: number): Object{
-        console.log('calcurateHours: start: ', startN, 'end: ', endN);
+    calculateHours(startN: number, endN: number): Object{
+        // console.log('calcurateHours: start: ', startN, 'end: ', endN);
         let hourObj: Object = {};
 
         for( var zone in this.timeZones){
             let zst = this.timeZones[zone].startT.timeNum;
             let zet = this.timeZones[zone].endT.timeNum;
-            console.log('zone: start: ', zst, 'end: ', zet);
+            // console.log('zone: start: ', zst, 'end: ', zet);
 
             let calS: number, calE: number, calR: number;
 
@@ -130,7 +131,7 @@ export class ReviewComponent implements OnInit {
                 hourObj[zone] = 0;
 
         }
-        console.log('hourObj: ', hourObj);
+        // console.log('hourObj: ', hourObj);
         return hourObj;
     }
 

@@ -5,9 +5,9 @@ import { ReviewComponent } from "./review/review.component";
 import { InputComponent } from "./input/input.component";
 import { Routes } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { DatePickerComponent } from "../core/datepicker/ng2-datepicker";
+// import { DatePickerComponent } from "../core/datepicker/ng2-datepicker";
 import { ShareModule } from "../core/Share.module";
-// import { MapToIterable } from "../core/maptoIterable.pipe";
+
 
 @NgModule({
     declarations: [
