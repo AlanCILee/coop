@@ -78,31 +78,33 @@ export class ReviewComponent implements OnInit {
                     = this.calculateHours(0, 0);
             }
 
-            if(!(job.empName in this.jobsDates[job.date][job.departName])){
-                this.jobsDates[job.date][job.departName][job.empName] = {};
+            if(!(job.empId in this.jobsDates[job.date][job.departName])){
+                this.jobsDates[job.date][job.departName][job.empId] = {};
+                this.jobsDates[job.date][job.departName][job.empId]['name'] = job.empName;
  
-                this.jobsDates[job.date][job.departName][job.empName]['tip'] = {};
-                this.jobsDates[job.date][job.departName][job.empName]['wage'] = {};
-                this.jobsDates[job.date][job.departName][job.empName]['hour']
+                this.jobsDates[job.date][job.departName][job.empId]['tip'] = {};
+                this.jobsDates[job.date][job.departName][job.empId]['wage'] = {};
+                this.jobsDates[job.date][job.departName][job.empId]['hour']
                     = this.calculateHours(0, 0);
             }
 
-            if(!(job.empName in this.jobsPeople))
-                this.jobsPeople[job.empName] = {};
+            if(!(job.empId in this.jobsPeople))
+                this.jobsPeople[job.empId] = {};
 
-            if(!(job.date in this.jobsPeople[job.empName]))
-                this.jobsPeople[job.empName][job.date] = {};
+            if(!(job.date in this.jobsPeople[job.empId]))
+                this.jobsPeople[job.empId][job.date] = {};
 
-            if(!(job.departName in this.jobsPeople[job.empName][job.date])){
-                this.jobsPeople[job.empName][job.date][job.departName] = {};
+            if(!(job.departName in this.jobsPeople[job.empId][job.date])){
+                this.jobsPeople[job.empId][job.date][job.departName] = {};
+                this.jobsPeople[job.empId][job.date][job.departName]['name'] = job.empName;
 
-                this.jobsPeople[job.empName][job.date][job.departName]['tip'] = {};
-                this.jobsPeople[job.empName][job.date][job.departName]['wage'] = {};
-                this.jobsPeople[job.empName][job.date][job.departName]['hour']
+                this.jobsPeople[job.empId][job.date][job.departName]['tip'] = {};
+                this.jobsPeople[job.empId][job.date][job.departName]['wage'] = {};
+                this.jobsPeople[job.empId][job.date][job.departName]['hour']
                     = this.calculateHours(0, 0);
             }
 
-            let empHours = this.jobsDates[job.date][job.departName][job.empName]['hour'];
+            let empHours = this.jobsDates[job.date][job.departName][job.empId]['hour'];
             let depHours = this.dailyHours[job.date][job.departName]['hour'];
             
             console.log(job.date, job.departName, job.empName);
@@ -114,8 +116,8 @@ export class ReviewComponent implements OnInit {
                 depHours[zone] += newHours[zone];
             });
 
-            this.jobsDates[job.date][job.departName][job.empName]['hour'] = empHours;
-            this.jobsPeople[job.empName][job.date][job.departName]['hour'] = empHours;
+            this.jobsDates[job.date][job.departName][job.empId]['hour'] = empHours;
+            this.jobsPeople[job.empId][job.date][job.departName]['hour'] = empHours;
             this.dailyHours[job.date][job.departName]['hour'] = depHours;
         });
 
@@ -134,11 +136,11 @@ export class ReviewComponent implements OnInit {
                 let departTime = this.dailyHours[date][depart]['hour'];
                 let departTip = this.dailyHours[date][depart]['tip'];
                 
-                Object.keys(this.jobsDates[date][depart]).forEach((emp)=>{
+                Object.keys(this.jobsDates[date][depart]).forEach((empId)=>{
                     
                     Object.keys(departTip).forEach((zone)=>{
-                        this.jobsDates[date][depart][emp]['tip'][zone]
-                            = this.jobsDates[date][depart][emp]['hour'][zone] *
+                        this.jobsDates[date][depart][empId]['tip'][zone]
+                            = this.jobsDates[date][depart][empId]['hour'][zone] *
                                 departTip[zone] / departTime[zone];
                         
                     });
