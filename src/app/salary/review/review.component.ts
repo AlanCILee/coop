@@ -120,12 +120,33 @@ export class ReviewComponent implements OnInit {
         });
 
         this.calculateDepartTips();
+        this.calculateEmpTipsAndWages();
         
         console.log('jobsDates: ', this.jobsDates);
         console.log('jobsPeople: ', this.jobsPeople);
         console.log('dailyHours: ', this.dailyHours);
     }
 
+    calculateEmpTipsAndWages(): void{
+        Object.keys(this.jobsDates).forEach((date)=>{
+            
+            Object.keys(this.jobsDates[date]).forEach((depart)=>{
+                let departTime = this.dailyHours[date][depart]['hour'];
+                let departTip = this.dailyHours[date][depart]['tip'];
+                
+                Object.keys(this.jobsDates[date][depart]).forEach((emp)=>{
+                    
+                    Object.keys(departTip).forEach((zone)=>{
+                        this.jobsDates[date][depart][emp]['tip'][zone]
+                            = this.jobsDates[date][depart][emp]['hour'][zone] *
+                                departTip[zone] / departTime[zone];
+                        
+                    });
+                });
+            });
+        });
+    }
+    
     calculateDepartTips():void{
         Object.keys(this.jobsDates).forEach((date) => {
             let dayTipAmount = this.dailyT[date];
