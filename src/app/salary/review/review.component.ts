@@ -25,7 +25,9 @@ export class ReviewComponent implements OnInit {
     timeZones: Object =[];
     jobsDates: any = {};
     jobsPeople: any = {};
-
+    dailyHours: any = {};
+    dailyT : Object = {};
+    
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private scheduleObj: Schedule,
@@ -38,7 +40,7 @@ export class ReviewComponent implements OnInit {
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
-
+        this.dailyT = this.tipObj.dailyT;
         this.form = this.fb.group({
             date: [ '' ],
         });
@@ -56,20 +58,32 @@ export class ReviewComponent implements OnInit {
     }
 
     show(): void {
+        // let hoursResult = this.calculateHours(0, 0);
 
         console.log("show():", this.timeZones);
 
         this.sJobs.forEach(( job ) => {
 
-            if(!(job.date in this.jobsDates))
+            if(!(job.date in this.jobsDates)){
                 this.jobsDates[job.date] = {};
+                this.dailyHours[job.date] = {};
+            }
 
-            if(!(job.departName in this.jobsDates[job.date]))
+            if(!(job.departName in this.jobsDates[job.date])){
                 this.jobsDates[job.date][job.departName] = {};
+                
+                this.dailyHours[job.date][job.departName] = {};
+                this.dailyHours[job.date][job.departName]['tip'] = {};
+                this.dailyHours[job.date][job.departName]['hour']
+                    = this.calculateHours(0, 0);
+            }
 
             if(!(job.empName in this.jobsDates[job.date][job.departName])){
                 this.jobsDates[job.date][job.departName][job.empName] = {};
-                this.jobsDates[job.date][job.departName][job.empName]['hours']
+ 
+                this.jobsDates[job.date][job.departName][job.empName]['tip'] = {};
+                this.jobsDates[job.date][job.departName][job.empName]['wage'] = {};
+                this.jobsDates[job.date][job.departName][job.empName]['hour']
                     = this.calculateHours(0, 0);
             }
 
@@ -81,27 +95,56 @@ export class ReviewComponent implements OnInit {
 
             if(!(job.departName in this.jobsPeople[job.empName][job.date])){
                 this.jobsPeople[job.empName][job.date][job.departName] = {};
-                this.jobsPeople[job.empName][job.date][job.departName]['hours']
+
+                this.jobsPeople[job.empName][job.date][job.departName]['tip'] = {};
+                this.jobsPeople[job.empName][job.date][job.departName]['wage'] = {};
+                this.jobsPeople[job.empName][job.date][job.departName]['hour']
                     = this.calculateHours(0, 0);
             }
 
-            let hoursResult = this.jobsPeople[job.empName][job.date][job.departName]['hours'];
-            for(let key in hoursResult){
+            let empHours = this.jobsDates[job.date][job.departName][job.empName]['hour'];
+            let depHours = this.dailyHours[job.date][job.departName]['hour'];
+            
+            console.log(job.date, job.departName, job.empName);
+            console.log('hourResult', empHours);
+           
+            Object.keys(empHours).forEach((zone)=>{
                 let newHours = this.calculateHours(job.startN, job.endN);
-                hoursResult[key] += newHours[key];
-            }
+                empHours[zone] += newHours[zone];
+                depHours[zone] += newHours[zone];
+            });
 
-            this.jobsDates[job.date][job.departName][job.empName]['hours'] = hoursResult;
-            this.jobsPeople[job.empName][job.date][job.departName]['hours'] = hoursResult;
-
+            this.jobsDates[job.date][job.departName][job.empName]['hour'] = empHours;
+            this.jobsPeople[job.empName][job.date][job.departName]['hour'] = empHours;
+            this.dailyHours[job.date][job.departName]['hour'] = depHours;
         });
 
+        this.calculateDepartTips();
+        
         console.log('jobsDates: ', this.jobsDates);
         console.log('jobsPeople: ', this.jobsPeople);
-
-
+        console.log('dailyHours: ', this.dailyHours);
     }
 
+    calculateDepartTips():void{
+        Object.keys(this.jobsDates).forEach((date) => {
+            let dayTipAmount = this.dailyT[date];
+            let totalRatio: number = 0;
+            let departRatio = {};
+
+            Object.keys(this.jobsDates[date]).forEach((depart)=>{
+                departRatio[depart] = this.departmentsObj.getDepartRatio(depart);
+                totalRatio += departRatio[depart];
+            });
+
+            Object.keys(this.jobsDates[date]).forEach((depart)=>{
+                Object.keys(dayTipAmount).forEach((zone) => {
+                    this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart] / totalRatio;
+                });
+            });
+        });
+    }
+    
     calculateHours(startN: number, endN: number): Object{
         // console.log('calcurateHours: start: ', startN, 'end: ', endN);
         let hourObj: Object = {};

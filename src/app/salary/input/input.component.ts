@@ -35,7 +35,6 @@ export class InputComponent implements OnInit {
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         this.timeZones = this.timeObj.timeZones;
-        this.tipObj.loadMockTips();
 
 	    let group:any ={};
 

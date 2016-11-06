@@ -46,6 +46,17 @@ export class Departments {
 
         return departName;
     }
+    
+    getDepartRatio(departName: string): number{
+        let departRatio: number = 0;
+        
+        this.departments.forEach((depart) => {
+            if(depart.departName == departName)
+                departRatio = depart.departRatio;
+        });
+        
+        return departRatio;
+    }
 }
 
 export class Department {

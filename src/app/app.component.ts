@@ -5,6 +5,7 @@ import { Employees } from "./model/employee";
 import { Departments } from "./model/department";
 import { TimeTable } from "./model/time";
 import { Schedule } from "./model/schedule";
+import { TipModel } from "./model/tip";
 
 @Component({
     selector: 'my-app',
@@ -16,6 +17,7 @@ export class AppComponent implements OnInit {
                 private departments: Departments,
                 private schedule : Schedule,
                 private timeObj: TimeTable,
+                private tipObj: TipModel,
                 private time: TimeTable) {
         
     }
@@ -26,7 +28,7 @@ export class AppComponent implements OnInit {
         this.schedule.loadSchedule();
         this.time.createTimeTable();
         this.timeObj.loadMockTimeZone();
-
+        this.tipObj.loadMockTips();
         // let a1 = new A(1);
         // let a2 = new A(2);
         // let a3 = new A(3);
