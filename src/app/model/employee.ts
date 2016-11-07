@@ -56,18 +56,16 @@ export class Employees {
             return employee.empName;
     }
 
-	//
-	// getEmployee(employeeId: number){
-    //         console.log('getEmployee :'+ employeeId);
-    //         let employee: Employee = null;
-    //
-    //         this.employees.forEach((emp) => {
-    //             if(emp.empId == employeeId)
-    //                 employee = emp;
-    //         });
-    //
-    //         return employee;
-    // }
+	getEmployee(employeeId: number): Employee{
+            console.log('getEmployee :'+ employeeId);
+            let employee: Employee = null;
+
+            this.employees.forEach((emp) => {
+                if(emp.empId == employeeId)
+                    employee = emp;
+            });
+            return employee;
+    }
 }
 
 
@@ -108,6 +106,11 @@ export class Employee {
 		let retWage = wagesClone.find((wage)=>{
 			return wage.date <= date;
 		});
+
+		if(!retWage){
+			console.log('wage setting was missing when someone started to work');
+			return wagesClone[0];   //return latest wage
+		}
 
 		console.log('current Wage: ', date, retWage);
 		return retWage;

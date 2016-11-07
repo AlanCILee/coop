@@ -140,7 +140,14 @@ export class ReviewComponent implements OnInit {
                         this.jobsDates[date][depart][empId]['tip'][zone]
                             = this.jobsDates[date][depart][empId]['hour'][zone] *
                                 departTip[zone] / departTime[zone];
-                        
+
+                        this.jobsDates[date][depart][empId]['wage'][zone]
+                            = this.jobsDates[date][depart][empId]['hour'][zone] *
+                                this.employeesObj.getEmployee(Number(empId)).getCurrentWage(date).wage
+                                / 60;
+
+                        console.log('empId: ',empId, 'date:',date, 'wage: ',
+                            this.employeesObj.getEmployee(Number(empId)).getCurrentWage(date));//.wage);
                     });
                 });
             });
