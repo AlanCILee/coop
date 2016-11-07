@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { Job, Schedule } from "../../model/schedule";
 import { FormBuilder, FormGroup } from "@angular/forms";
-import {TipModel} from "../../model/tip";
-import {TimeTable} from "../../model/time";
+import { TipModel } from "../../model/tip";
+import { TimeTable } from "../../model/time";
+
 // import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 
@@ -27,7 +28,10 @@ export class ReviewComponent implements OnInit {
     jobsPeople: any = {};
     dailyHours: any = {};
     dailyT : Object = {};
-    
+    // tableContents: string = "";
+
+    @ViewChild('tableData') tableData: ElementRef;
+
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private scheduleObj: Schedule,
@@ -121,12 +125,73 @@ export class ReviewComponent implements OnInit {
 
         this.calculateDepartTips();
         this.calculateEmpTipsAndWages();
+        this.createDispFormat();
         
         console.log('jobsDates: ', this.jobsDates);
         console.log('jobsPeople: ', this.jobsPeople);
         console.log('dailyHours: ', this.dailyHours);
     }
 
+    createDispFormat(): void{
+        let table: string =``;
+
+        Object.keys(this.jobsDates).forEach((date) => {
+            table += `<table border="1">`;
+            table += `<tr><td>${date}</td></tr>`;
+            table += `<tr><td>Department</td>
+                        <td>Name</td>
+                        <td>Category</td>`;
+            Object.keys(this.timeZones).forEach((zone) => {
+                table += `<td>${zone}</td>`;
+            });
+            table += `<td>Sum</td></tr>`;
+
+            Object.keys(this.jobsDates[date]).forEach((depart) => {
+
+                Object.keys(this.jobsDates[date][depart]).forEach((emp) => {
+                    let employee = this.jobsDates[date][depart][emp];
+
+                    table += `<tr><td>${depart}</td>
+                                <td>${employee['name']}</td>`;
+                    table += `<td>Hour</td>`;
+
+                    let sum: number = 0;
+                    Object.keys(employee['hour']).forEach((zone) => {
+                        sum += employee['hour'][zone];
+                        table += `<td>${ employee['hour'][zone]}</td>`;
+                    });
+                    table += `<td>${sum}</td>`;
+                    table += `</tr>`;
+
+                    table += `<tr><td></td><td></td>`;
+                    table += `<td>Tip</td>`;
+                    sum = 0;
+                    Object.keys(employee['tip']).forEach((zone) => {
+                        sum += employee['tip'][zone];
+                        table += `<td>${employee['tip'][zone]}</td>`;
+                    });
+                    table += `<td>${sum}</td>`;
+                    table += `</tr>`;
+
+                    table += `<tr><td></td><td></td>`;
+                    table += `<td>Wage</td>`;
+                    sum = 0;
+                    Object.keys(employee['wage']).forEach((zone) => {
+                        sum += employee['wage'][zone];
+                        table += `<td>${ employee['wage'][zone]}</td>`;
+                    });
+                    table += `<td>${sum}</td>`;
+                    table += `</tr>`;
+                });
+            });
+            table += `</table>`;
+        });
+
+        console.log('Table: ',table);
+
+        this.tableData.nativeElement.innerHTML = table;
+
+    }
     calculateEmpTipsAndWages(): void{
         Object.keys(this.jobsDates).forEach((date)=>{
             
@@ -204,6 +269,10 @@ export class ReviewComponent implements OnInit {
         }
         // console.log('hourObj: ', hourObj);
         return hourObj;
+    }
+
+    getNameofEmp(id: number): string{
+        return this.employeesObj.getEmployeeName(id);
     }
 
 
