@@ -44,8 +44,6 @@ export class ReviewComponent implements OnInit {
         this.form = this.fb.group({
             date: [ '' ],
         });
-
-
     }
 
     dateChanged(str: string){

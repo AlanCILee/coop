@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-
+import * as moment from 'moment';
 
 @Component({
     selector: 'employees',
@@ -50,8 +50,13 @@ export class EmployeesComponent implements OnInit {
     
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
+        let now = moment().format('YYYY-MM-DD');
+
+        let newWage: Wage[] = [];
+        newWage.push(new Wage(form.wage, now));
+
         this.employeesObj.addEmployee(form.eId,
-            form.name, form.department, form.phone, form.wage);
+            form.name, form.department, form.phone, newWage);
         this.clearInput();
     }
 
@@ -62,7 +67,8 @@ export class EmployeesComponent implements OnInit {
             name: emp.empName,
             department: emp.departId,
             phone: emp.empPhone,
-            wage: emp.wages.wage
+            // wage: emp.wages.wage
+            wage: emp.getLatestWage().wage,
         });
         this.editItem = emp;
     }
