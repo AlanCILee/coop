@@ -84,15 +84,34 @@ export class Employee {
 		let wagesClone = this.wages.slice();
 
         wagesClone.sort((wageA, wageB)=>{
-			if(wageA.date > wageB.date)
+			if(wageA.date < wageB.date)
 				return 1;
-	        if(wageA.date < wageB.date)
+	        if(wageA.date > wageB.date)
 	        	return -1;
 	        return 0;
         });
 		console.log('After sorting: ', wagesClone);
-	    return wagesClone[wagesClone.length-1];
+	    return wagesClone[0];
     }
+
+	getCurrentWage(date: string): Wage{
+		let wagesClone = this.wages.slice();
+
+		wagesClone.sort((wageA, wageB)=>{
+			if(wageA.date < wageB.date)
+				return 1;
+			if(wageA.date > wageB.date)
+				return -1;
+			return 0;
+		});
+
+		let retWage = wagesClone.find((wage)=>{
+			return wage.date <= date;
+		});
+
+		console.log('current Wage: ', date, retWage);
+		return retWage;
+	}
 }
 
 export class Wage {
