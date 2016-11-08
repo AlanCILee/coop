@@ -2,7 +2,7 @@ import { Component, Input, OnInit, EventEmitter }  from '@angular/core';
 import { Job } from "../../model/schedule";
 import { Department, Departments } from "../../model/department";
 
-declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
+// declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 
 @Component({
 	selector: 'schedule',
@@ -14,7 +14,8 @@ declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exp
 export class DispScheduleComponent implements OnInit {
 
 	@Input() sJobs: Job[];
-	
+
+	Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 	// department: string;
 	departJobs: Object[] =[];
 	departments: string[]=[];
@@ -31,7 +32,8 @@ export class DispScheduleComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
+		// Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
+		// Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 
 	}
 	
@@ -175,7 +177,7 @@ export class DispScheduleComponent implements OnInit {
 		
 		let width = HOURW * HOURS + OFFSET,
 		height = this.dispEmpNum * 30 + this.departCnt * 30 + 30,
-	    container = Snap('#svgContainer');
+	    container = this.Snap('#svgContainer');
 
 		container.attr({ width: width, height: height });
 		container.rect(0, 0, width, height).attr({fill: '#ababab'});
