@@ -35,6 +35,12 @@ const Server = function(options) {
             });
         });
 
+        app.post('/login', function(req, res){
+            console.log('post login req:',req);
+            res.send("Success");
+        });
+
+
     };
 
     this.createServer = function () {

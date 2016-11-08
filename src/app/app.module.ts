@@ -18,6 +18,7 @@ import { SetupComponent } from "./setup/setup.component";
 import { SetupModule } from "./setup/setup.module";
 import { SalaryModule } from "./salary/salary.module";
 import { TipModel } from "./model/tip";
+import { ShareModule } from "./core/Share.module";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import { TipModel } from "./model/tip";
         ReactiveFormsModule,
         MainmenuModule,
         SetupModule,
-        SalaryModule
+        SalaryModule,
+        // ShareModule,
     ],
     declarations: [
         AppComponent,

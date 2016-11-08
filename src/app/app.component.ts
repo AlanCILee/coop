@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from "@angular/forms";
+import { Http, Response} from "@angular/http";
 
 import '../../public/css/styles.css';
 import { Employees } from "./model/employee";
@@ -6,6 +8,7 @@ import { Departments } from "./model/department";
 import { TimeTable } from "./model/time";
 import { Schedule } from "./model/schedule";
 import { TipModel } from "./model/tip";
+import { HttpComponent } from "./core/http.component";
 
 @Component({
     selector: 'my-app',
@@ -13,12 +16,17 @@ import { TipModel } from "./model/tip";
     styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+    form: FormGroup;
+
     constructor(private employees: Employees,
                 private departments: Departments,
                 private schedule : Schedule,
                 private timeObj: TimeTable,
                 private tipObj: TipModel,
-                private time: TimeTable) {
+                private time: TimeTable,
+                private fb: FormBuilder,
+                private httpComp: HttpComponent,
+    ) {
         
     }
     
@@ -29,29 +37,26 @@ export class AppComponent implements OnInit {
         this.time.createTimeTable();
         this.timeObj.loadMockTimeZone();
         this.tipObj.loadMockTips();
-        // let a1 = new A(1);
-        // let a2 = new A(2);
-        // let a3 = new A(3);
-        // let a4 = new A(4);
-        // let a5 = new A(5);
-        // let a6 = new A(6);
-        //
-        // let n1 = new Node(a1);
-        // let n2 = new Node(a2);
-        // let n3 = new Node(a3);
-        // let n4 = new Node(a4);
-        // let n5 = new Node(a5);
-        // let n6 = new Node(a6);
-        //
-        // let bst = new BinarySearchTree();
-        // bst.addNode(n3, bst.root);
-        // bst.addNode(n5, bst.root);
-        // bst.addNode(n2, bst.root);
-        // bst.addNode(n6, bst.root);
-        // bst.addNode(n1, bst.root);
-        // bst.addNode(n4, bst.root);
-        //
-        // bst.inOrderTraversal(bst.root);
+        this.form = this.fb.group({
+            id: [ '' ],
+            password: [ '' ],
+        });
+    }
+
+    onSubmit(form: any): void {
+        console.log('you submitted value: ', form);
+        // this.httpComp.makeRequest('/login').subscribe((res : Response) => {
+        //         // this.data = res.json();
+        //         // this.loading = false;
+        //         console.log('HttpComponent : ',res);
+        //     });
+        let body = `id=${form.id}&password=${form.password}`;
+        this.httpComp.makePostRequest('/login',body).subscribe((res : Response) => {
+                // this.data = res.json();
+                // this.loading = false;
+                console.log('HttpComponent : ',res);
+            });
+
     }
 }
 

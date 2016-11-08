@@ -1,4 +1,17 @@
 
+    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+
+        <label>ID</label>
+        <input type="text" formControlName="id">
+
+        <label>Password</label>
+        <input type="password" formControlName="password">
+
+        <button type="submit">Submit</button>
+
+    </form>
+
+    <hr>
     <ul>
         <li><a [routerLink]="['home']">Schedule Management</a></li>
         <li><a [routerLink]="['pay']">Wage Management</a></li>

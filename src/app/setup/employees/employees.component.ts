@@ -30,7 +30,7 @@ export class EmployeesComponent implements OnInit {
             department: [ '' ],
             phone: [ '' ],
             wage: [ '' ],
-        })
+        });
     }
 
     getDepartName(departId: number){
