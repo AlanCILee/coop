@@ -134,6 +134,7 @@ export class ReviewComponent implements OnInit {
 
     createDispFormat(): void{
         let table: string =``;
+        let currency = new Intl.NumberFormat('en-US', {style: 'currency', currency:'USD'});
 
         Object.keys(this.jobsDates).forEach((date) => {
             table += `<table border="1">`;
@@ -145,6 +146,10 @@ export class ReviewComponent implements OnInit {
                 table += `<td>${zone}</td>`;
             });
             table += `<td>Sum</td></tr>`;
+
+            let dailyTip = 0;
+            let dailyHour = 0;
+            let dailyWage = 0;
 
             Object.keys(this.jobsDates[date]).forEach((depart) => {
 
@@ -162,29 +167,35 @@ export class ReviewComponent implements OnInit {
                     });
                     table += `<td>${sum}</td>`;
                     table += `</tr>`;
+                    dailyHour += sum;
 
                     table += `<tr><td></td><td></td>`;
                     table += `<td>Tip</td>`;
                     sum = 0;
                     Object.keys(employee['tip']).forEach((zone) => {
                         sum += employee['tip'][zone];
-                        table += `<td>${employee['tip'][zone]}</td>`;
+                        table += `<td>${ currency.format(employee['tip'][zone]) }</td>`;
                     });
-                    table += `<td>${sum}</td>`;
+                    table += `<td>${ currency.format(sum) }</td>`;
                     table += `</tr>`;
-
+                    dailyTip += sum;
+                    
                     table += `<tr><td></td><td></td>`;
                     table += `<td>Wage</td>`;
                     sum = 0;
                     Object.keys(employee['wage']).forEach((zone) => {
                         sum += employee['wage'][zone];
-                        table += `<td>${ employee['wage'][zone]}</td>`;
+                        table += `<td>${ currency.format(employee['wage'][zone]) }</td>`;
                     });
-                    table += `<td>${sum}</td>`;
+                    table += `<td>${ currency.format(sum) }</td>`;
                     table += `</tr>`;
+                    dailyWage += sum;
                 });
             });
             table += `</table>`;
+            table += `<p>Daily Total, Hour: ${dailyHour}
+                    , Tip: ${ currency.format(dailyTip) }
+                    , Wage: ${ currency.format(dailyWage) }</p>`;
         });
 
         console.log('Table: ',table);
