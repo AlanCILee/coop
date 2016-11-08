@@ -31,6 +31,7 @@ export class ReviewComponent implements OnInit {
     // tableContents: string = "";
 
     @ViewChild('tableData') tableData: ElementRef;
+    @ViewChild('summary') summary: ElementRef;
 
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
@@ -135,6 +136,9 @@ export class ReviewComponent implements OnInit {
     createDispFormat(): void{
         let table: string =``;
         let currency = new Intl.NumberFormat('en-US', {style: 'currency', currency:'USD'});
+        let periodTip = 0;
+        let periodHour = 0;
+        let periodWage = 0;
 
         Object.keys(this.jobsDates).forEach((date) => {
             table += `<table border="1">`;
@@ -196,13 +200,18 @@ export class ReviewComponent implements OnInit {
             table += `<p>Daily Total, Hour: ${dailyHour}
                     , Tip: ${ currency.format(dailyTip) }
                     , Wage: ${ currency.format(dailyWage) }</p>`;
+
+            periodHour += dailyHour;
+            periodTip += dailyTip;
+            periodWage += dailyWage;
         });
 
-        console.log('Table: ',table);
-
         this.tableData.nativeElement.innerHTML = table;
-
+        this.summary.nativeElement.innerHTML = `<p>Period Total, Hour: ${periodHour}
+                    , Tip: ${ currency.format(periodTip) }
+                    , Wage: ${ currency.format(periodWage) }</p>`;
     }
+
     calculateEmpTipsAndWages(): void{
         Object.keys(this.jobsDates).forEach((date)=>{
             

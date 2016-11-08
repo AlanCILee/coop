@@ -4,68 +4,11 @@
 
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-        <!--<span *ngFor = "let val of zoneStr">-->
-			<!--<label>{{ val }}</label>-->
-			<!--<input type="text" formControlName= "{{ val }}" >-->
-		<!--</span>-->
-
         <button type="submit">Submit</button>
-        <!--<button type="button" (click)="clearInput()">Clear</button>-->
-        <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>-->
-
     </form>
     <br>
 
-    <!--<svg width="100%" height="100%" id="svgContainer"> </svg>-->
-        <!--jobsDates[job.date][job.departName][job.empName]['hours'] = hoursResult;-->
-        <!--jobsPeople[job.empName][job.date][job.departName]['hours'] = hoursResult;-->
-    <!--<div *ngFor="let date of jobsDates | mapToIterable">-->
-    <div #tableData>
-        <!--<table>-->
-            <!--<tr>-->
-                <!--<td>{{ date.key }}</td>-->
-            <!--</tr>-->
-            <!--<div *ngFor="let dep of jobsDates[date.key] | mapToIterable">-->
-                <!--<tr>-->
-                    <!--<td>{{ dep.key }}</td>-->
-                <!--</tr>-->
-
-                <!--<tr>-->
-                    <!--<td>Name</td>-->
-                    <!--<td>Category</td>-->
-                    <!--<td *ngFor="let zn of timeZones | mapToIterable ">-->
-                        <!--{{ zn.key }}</td>-->
-                    <!--<td>Sum</td>-->
-                <!--</tr>-->
-                <!--<tr *ngFor="let id of jobsDates[date.key][dep.key] | mapToIterable">-->
-                    <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-                        <!--<td>{{ getNameofEmp(id.key) }}({{ id.key }})</td>-->
-                        <!--<td>Hours</td>-->
-                        <!--<td *ngFor="let zone of jobsDates[date.key][dep.key][id.key]['hour'] | mapToIterable">-->
-                            <!--{{ zone.val / 60 | number:'1.2-2'}}-->
-                        <!--</td>-->
-                        <!--<td></td>-->
-                    <!--</tr>-->
-                    <!--<tr>-->
-
-                        <!--<td></td>-->
-                        <!--<td>Tip</td>-->
-                        <!--<td *ngFor="let zone of jobsDates[date.key][dep.key][id.key]['tip'] | mapToIterable">-->
-                            <!--{{ zone.val | currency:'USD':true:'1.2-2' }}-->
-                        <!--</td>-->
-
-                    <!--</tr>-->
-                    <!--<tr>-->
-                        <!--<td></td>-->
-                        <!--<td>Wage</td>-->
-                        <!--<td *ngFor="let zone of jobsDates[date.key][dep.key][id.key]['wage'] | mapToIterable">-->
-                            <!--{{ zone.val | currency:'USD':true:'1.2-2' }}-->
-                        <!--</td>-->
-                    <!--</tr>-->
-                <!--</tr>-->
-
-            <!--</div>-->
-        <!--</table>-->
-    </div>
+    <div #summary></div>
+    <div #tableData></div>
 
 </div>
