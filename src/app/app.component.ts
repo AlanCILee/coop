@@ -50,8 +50,10 @@ export class AppComponent implements OnInit {
         //         // this.loading = false;
         //         console.log('HttpComponent : ',res);
         //     });
-        let body = `id=${form.id}&password=${form.password}`;
-        this.httpComp.makePostRequest('/login',body).subscribe((res : Response) => {
+        console.log(form);
+        // let body = `id=${form.id}&password=${form.password}`;
+        // this.httpComp.makePostRequest('/login',body).subscribe((res : Response) => {
+        this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
                 // this.data = res.json();
                 // this.loading = false;
                 console.log('HttpComponent : ',res);

@@ -22,13 +22,15 @@ export class HttpComponent {
         // });
     }
 
-    makePostRequest(url: string, body: string): Observable<Response> {
+    makePostRequest(url: string, body: Object): Observable<Response> {
         console.log('makePostRequest url :', url, 'body: ', body);
-        // this.loading = true;
+        
         let headers = new Headers();
-        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        // headers.append('Content-Type', 'application/x-www-form-urlencoded');
+        headers.append('Content-Type', 'application/json');
 
-        return this.http.post(url, body, { headers: headers });
+        return this.http.post(url, JSON.stringify(body), { headers: headers });
+        // return this.http.post(url, body, { headers: headers });
         // this.http.get('http://localhost:3000/emp').subscribe((res : Response) => {
         //     this.data = res.json();
         //     this.loading = false;

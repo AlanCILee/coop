@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express'),
         app = express(),
+        bodyParser = require('body-parser'),
         fs = require('fs');
 
 
@@ -12,6 +13,8 @@ const Server = function(options) {
         // app.get('/', function (req, res) {
         //     res.send('Hello home page');
         // });
+        app.use(bodyParser.json()); // for parsing application/json
+        app.use(bodyParser.urlencoded({ extended: true }));
 
         app.get('/route', function(req, res){
             fs.readFile( './dist/index.html', (err, data) => {
@@ -36,7 +39,10 @@ const Server = function(options) {
         });
 
         app.post('/login', function(req, res){
-            console.log('post login req:',req);
+            console.log('post login req:',req.body);
+
+            // console.log('post login req:',req.body.id);
+            // console.log('post login req:',req.body.password);
             res.send("Success");
         });
 
