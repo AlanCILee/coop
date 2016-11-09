@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 // import { MapToIterable } from "../core/maptoIterable.pipe";
 import { DepartmentComponent } from "./department/department.component";
 import { ShareModule } from "../core/Share.module";
+import { AuthGuard } from "../core/authguard";
 
 
 @NgModule({
@@ -35,8 +36,8 @@ export class SetupModule { }
 
 export const setupRoutes: Routes = [
 	{ path: '', },
-	{ path: 'department', component: DepartmentComponent },
-	{ path: 'employee', component: EmployeesComponent },
-	{ path: 'timezone', component: TimezoneComponent },
+	{ path: 'department', component: DepartmentComponent, canActivate: [AuthGuard] },
+	{ path: 'employee', component: EmployeesComponent, canActivate: [AuthGuard] },
+	{ path: 'timezone', component: TimezoneComponent, canActivate: [AuthGuard] },
 ];
 

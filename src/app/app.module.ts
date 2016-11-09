@@ -19,6 +19,7 @@ import { SetupModule } from "./setup/setup.module";
 import { SalaryModule } from "./salary/salary.module";
 import { TipModel } from "./model/tip";
 import { ShareModule } from "./core/Share.module";
+import { AuthGuard } from "./core/authguard";
 
 @NgModule({
     imports: [
@@ -45,6 +46,7 @@ import { ShareModule } from "./core/Share.module";
         TimeTable,
         Schedule,
         TipModel,
+        AuthGuard,
     ],
     bootstrap: [ AppComponent ]
 })

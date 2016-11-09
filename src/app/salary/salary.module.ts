@@ -7,6 +7,7 @@ import { Routes } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 // import { DatePickerComponent } from "../core/datepicker/ng2-datepicker";
 import { ShareModule } from "../core/Share.module";
+import { AuthGuard } from "../core/authguard";
 
 
 
@@ -22,13 +23,16 @@ import { ShareModule } from "../core/Share.module";
         ReactiveFormsModule,
         ShareModule,
     ],
-    providers: [ HttpComponent ],
+    providers: [
+        HttpComponent,
+        AuthGuard,
+    ],
 })
 
 export class SalaryModule { }
 
 export const salaryRoutes: Routes = [
     { path: '', },
-    { path: 'input', component: InputComponent },
-    { path: 'review', component: ReviewComponent },
+    { path: 'input', component: InputComponent, canActivate: [AuthGuard] },
+    { path: 'review', component: ReviewComponent, canActivate: [AuthGuard] },
 ];

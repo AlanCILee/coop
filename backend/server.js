@@ -3,12 +3,14 @@ const express = require('express'),
         app = express(),
         bodyParser = require('body-parser'),
         session = require('express-session'),
+        sha = require('sha256'),
         fs = require('fs');
 
 
 const Server = function(options) {
     const server = this;
     const mysql = options.mysql;
+
     // const server = this;
 
     const setRoute = function(){
@@ -50,7 +52,7 @@ const Server = function(options) {
                 }else {
                     console.log('', rows);
                     if (rows.length > 0) {
-                        if(userId == rows[0].name && password == rows[0].password) {
+                        if(userId === rows[0].name && password === rows[0].password) {
                             console.log('LOGIN START');
                             req.session.viewname = rows[0].viewname;
                             // res.redirect('/welcome');
@@ -66,7 +68,7 @@ const Server = function(options) {
 
         app.get('/logout', function(req, res){
             console.log('user ', req.session.viewname, 'logout');
-            req.session.viewname = null;
+            delete req.session.viewname;
             res.send(req.session);
         });
     };

@@ -65,6 +65,7 @@ export class AppComponent implements OnInit {
                 if(response.viewname){
                     console.log('correct user');
                     this.viewname = response.viewname;
+                    localStorage.setItem('currentUser', this.viewname);
                 }
             });
 
@@ -78,6 +79,7 @@ export class AppComponent implements OnInit {
             if(!response.viewname){
                 console.log('user ', this.viewname, 'logout');
                 this.viewname = null;
+                localStorage.removeItem('currentUser');
             }
         });
 
