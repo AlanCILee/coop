@@ -56,7 +56,13 @@ export class AppComponent implements OnInit {
         this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
                 // this.data = res.json();
                 // this.loading = false;
-                console.log('HttpComponent : ',res);
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+                // console.log('response[0].id : ',response[0].id);
+                // console.log('response[0].password : ',response[0].password);
+
+                if(response[0].name == form.id)
+                    console.log('correct user');
             });
 
     }

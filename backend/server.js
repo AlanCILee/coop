@@ -41,12 +41,12 @@ const Server = function(options) {
 
             mysql.sendQuery( database, query, function(err, rows, fields){
                 if(err){
-                   console.log('sendQuery fail: ', err);
+                    console.log('sendQuery fail: ', err);
                 }else {
-                   console.log('', rows);
+                    console.log('', rows);
+                    res.json(rows);
                 }
             });
-            res.send("Success");
         });
     };
 

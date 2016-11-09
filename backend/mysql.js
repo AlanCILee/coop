@@ -37,7 +37,6 @@ const Mysql = function () {
             }
             disconnectDb();
         });
-
     };
 };
 
