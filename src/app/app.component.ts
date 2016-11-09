@@ -17,6 +17,7 @@ import { HttpComponent } from "./core/http.component";
 })
 export class AppComponent implements OnInit {
     form: FormGroup;
+    viewname: string = null;
 
     constructor(private employees: Employees,
                 private departments: Departments,
@@ -61,10 +62,29 @@ export class AppComponent implements OnInit {
                 // console.log('response[0].id : ',response[0].id);
                 // console.log('response[0].password : ',response[0].password);
 
-                if(response[0].name == form.id)
+                if(response.viewname){
                     console.log('correct user');
+                    this.viewname = response.viewname;
+                }
             });
 
+    }
+
+    logout(): void{
+        this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
+            let response = res.json();
+            console.log('HttpComponent : ',response);
+
+            if(!response.viewname){
+                console.log('user ', this.viewname, 'logout');
+                this.viewname = null;
+            }
+        });
+
+        this.form.patchValue({
+            id : '',
+            password : '',
+        });
     }
 }
 

@@ -2,6 +2,7 @@
 const express = require('express'),
         app = express(),
         bodyParser = require('body-parser'),
+        session = require('express-session'),
         fs = require('fs');
 
 
@@ -16,7 +17,11 @@ const Server = function(options) {
         // });
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({ extended: true }));
-
+        app.use(session({
+            secret: '12345%$#@!qazXSW',
+            resave: false,
+            saveUninitialized: true
+        }));
         // app.get('/route', function(req, res){
         //     fs.readFile( './dist/index.html', (err, data) => {
         //         if (err) {
@@ -44,9 +49,25 @@ const Server = function(options) {
                     console.log('sendQuery fail: ', err);
                 }else {
                     console.log('', rows);
-                    res.json(rows);
+                    if (rows.length > 0) {
+                        if(userId == rows[0].name && password == rows[0].password) {
+                            console.log('LOGIN START');
+                            req.session.viewname = rows[0].viewname;
+                            // res.redirect('/welcome');
+                        }
+                    }else{
+
+                    }
+
                 }
+                res.send(req.session);
             });
+        });
+
+        app.get('/logout', function(req, res){
+            console.log('user ', req.session.viewname, 'logout');
+            req.session.viewname = null;
+            res.send(req.session);
         });
     };
 
