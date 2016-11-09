@@ -2,44 +2,47 @@
 
 const mysql = require('mysql');
 
-const Mysql = function (db) {
-    // const database = 'company';
-    const database = db;
+const Mysql = function () {
+    let conn = null;
 
-    this.conn = mysql.createConnection({
-        // host: 'localhost',
-        host: '127.0.0.1',
-        user: 'root',
-        password: '',
-        database: database,
-        port: '3306'
-    });
-    //
-    // this.sendQuery = function ( query, callback){
-    //     console.log('send query : '+query);
-    //
-    //     conn.query( query, function(err,rows,fields){
-    //         if(err) {
-    //             console.log(err);
-    //             throw err;
-    //         }
-    //         console.log('Data received from Db:\n');
-    //         console.log(rows);
-    //         return callback(rows,fields);
-    //     });
-    // };
+    const connectDb = function (database, callback){
+        conn = mysql.createConnection({
+            host: '127.0.0.1',
+            user: 'root',
+            password: '',
+            database: database,
+            port: '3306'
+        });
 
-    this.conn.connect(function (err) {
-        if (!err) {
-            console.log("Database is connected ... \n\n");
-        } else {
-            console.log("Error connecting database ... \n\n"+err);
-        }
-    });
+        conn.connect(function(err){
+            return callback(err);
+        });
+    };
+
+    const disconnectDb = function(){
+        console.log('disconnect DB ');
+        conn.end();
+    };
+
+    this.sendQuery = function (database, query, callback){
+        console.log('send query : ', query, 'on :', database);
+
+        connectDb(database, function(err) {
+            if(err){
+                console.log('Connect DB Error :', err);
+            }else{
+                conn.query( query, function(err, rows, fields){
+                    return callback(err, rows, fields);
+                });
+            }
+            disconnectDb();
+        });
+
+    };
 };
 
-Mysql.start = function(db){
-    return new Mysql(db);
+Mysql.start = function(){
+    return new Mysql();
 };
 
 module.exports = Mysql;

@@ -6,7 +6,8 @@ const express = require('express'),
 
 
 const Server = function(options) {
-    const mysqlClient = options.mysqlClient;
+    const server = this;
+    const mysql = options.mysql;
     // const server = this;
 
     const setRoute = function(){
@@ -16,83 +17,37 @@ const Server = function(options) {
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({ extended: true }));
 
-        app.get('/route', function(req, res){
-            fs.readFile( './dist/index.html', (err, data) => {
-                if (err) {
-                    console.log( err );
-                    // emit the error
-                    // return callback(err, `<h2>File Read Error: ${err.message}</h2>`);
-                }
-
-                let text = data.toString();
-                res.send(text);
-            });
-
-        });
-
-        app.get('/emp', function(req, res){
-            // let feedback = {'alan': 'lee'};
-
-            console.log('get emp route :');
-
-        });
+        // app.get('/route', function(req, res){
+        //     fs.readFile( './dist/index.html', (err, data) => {
+        //         if (err) {
+        //             console.log( err );
+        //         }
+        //         let text = data.toString();
+        //         res.send(text);
+        //     });
+        // });
+        //
+        // app.get('/emp', function(req, res){
+        //     console.log('get emp route :');
+        // });
 
         app.post('/login', function(req, res){
             let userId = req.body.id;
             let password = req.body.password;
-
             console.log('post login req:',userId, ':', password);
 
-            const mysql = require('mysql');
-
-                const database = 'client';
-
-                let conn = mysql.createConnection({
-                    // host: 'localhost',
-                    host: '127.0.0.1',
-                    user: 'root',
-                    password: '',
-                    database: database,
-                    port: '3306'
-                });
-
-                conn.connect(function (err) {
-                    if (!err) {
-                        console.log("Database is connected ... \n\n");
             let query = `SELECT * FROM clients WHERE name = "${userId}" AND password = "${password}"`;
-            console.log(query);
-            conn.query(query,
-                function(err,result,fields){
-                    console.log('post login err:',err);
-                    console.log('post login result:',result);
-                    // console.log('post login fields:',fields);
-                });
-                    } else {
-                        console.log("Error connecting database ... \n\n"+err);
-                    }
-                });
+            let database = 'client';
 
-            // conn.query( `SELECT * FROM clients WHERE name = "${userId}" AND password = "${password}"`,
-            // console.log('post login req:',req.body.password);
-
-
-            // conn.query( query, function(err,rows,fields){
-                //         if(err) {
-                //             console.log(err);
-                //             throw err;
-                //         }
-                //         console.log('Data received from Db:\n');
-                //         console.log(rows);
-                //         return callback(rows,fields);
-                //     });
-
-
-
-
+            mysql.sendQuery( database, query, function(err, rows, fields){
+                if(err){
+                   console.log('sendQuery fail: ', err);
+                }else {
+                   console.log('', rows);
+                }
+            });
             res.send("Success");
         });
-
-
     };
 
     this.createServer = function () {
