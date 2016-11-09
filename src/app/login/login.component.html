@@ -1,0 +1,12 @@
+<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+
+        <!--<span *ngIf="!viewname">-->
+            <label>ID</label>
+            <input type="text" formControlName="id">
+
+            <label>Password</label>
+            <input type="password" formControlName="password">
+
+            <button type="submit">Submit</button>
+        <!--</span>-->
+</form>

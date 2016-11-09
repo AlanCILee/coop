@@ -20,6 +20,7 @@ import { SalaryModule } from "./salary/salary.module";
 import { TipModel } from "./model/tip";
 import { ShareModule } from "./core/Share.module";
 import { AuthGuard } from "./core/authguard";
+import { LoginComponent } from "./login/login.component";
 
 @NgModule({
     imports: [
@@ -38,6 +39,7 @@ import { AuthGuard } from "./core/authguard";
         // EmployeesComponent,
         SalaryComponent,
         SetupComponent,
+        LoginComponent,
     ],
     providers: [
         HttpComponent,

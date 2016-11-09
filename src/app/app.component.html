@@ -2,27 +2,28 @@
     <label *ngIf="viewname">Welcom {{ viewname }}</label>
     <button *ngIf="viewname" type="button" (click)="logout()">LogOut</button>
 
-    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+    <!--<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">-->
 
-        <span *ngIf="!viewname">
-            <label>ID</label>
-            <input type="text" formControlName="id">
+        <!--<span *ngIf="!viewname">-->
+            <!--<label>ID</label>-->
+            <!--<input type="text" formControlName="id">-->
 
-            <label>Password</label>
-            <input type="password" formControlName="password">
+            <!--<label>Password</label>-->
+            <!--<input type="password" formControlName="password">-->
 
-            <button type="submit">Submit</button>
-        </span>
-    </form>
-    <hr>
+            <!--<button type="submit">Submit</button>-->
+        <!--</span>-->
+    <!--</form>-->
+    <!--<hr>-->
 
     <!--<div *ngIf="viewname">-->
         <ul>
-            <li><a [routerLink]="['home']">Schedule Management</a></li>
-            <li><a [routerLink]="['pay']">Wage Management</a></li>
-            <li><a [routerLink]="['setup']">Setup</a></li>
+            <!--<li><a [routerLink]="['home']">Schedule Management</a></li>-->
+            <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
+            <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
         </ul>
         <hr/>
+
         <div>
             <router-outlet></router-outlet>
         </div>
