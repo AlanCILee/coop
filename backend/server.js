@@ -6,7 +6,7 @@ const express = require('express'),
 
 
 const Server = function(options) {
-    const mysql = options.mysql;
+    const mysqlClient = options.mysqlClient;
     // const server = this;
 
     const setRoute = function(){
@@ -32,17 +32,63 @@ const Server = function(options) {
 
         app.get('/emp', function(req, res){
             // let feedback = {'alan': 'lee'};
+
             console.log('get emp route :');
-            mysql.sendQuery( 'SELECT * FROM employees', function(rows){
-                res.send(rows);
-            });
+
         });
 
         app.post('/login', function(req, res){
-            console.log('post login req:',req.body);
+            let userId = req.body.id;
+            let password = req.body.password;
 
-            // console.log('post login req:',req.body.id);
+            console.log('post login req:',userId, ':', password);
+
+            const mysql = require('mysql');
+
+                const database = 'client';
+
+                let conn = mysql.createConnection({
+                    // host: 'localhost',
+                    host: '127.0.0.1',
+                    user: 'root',
+                    password: '',
+                    database: database,
+                    port: '3306'
+                });
+
+                conn.connect(function (err) {
+                    if (!err) {
+                        console.log("Database is connected ... \n\n");
+            let query = `SELECT * FROM clients WHERE name = "${userId}" AND password = "${password}"`;
+            console.log(query);
+            conn.query(query,
+                function(err,result,fields){
+                    console.log('post login err:',err);
+                    console.log('post login result:',result);
+                    // console.log('post login fields:',fields);
+                });
+                    } else {
+                        console.log("Error connecting database ... \n\n"+err);
+                    }
+                });
+
+            // conn.query( `SELECT * FROM clients WHERE name = "${userId}" AND password = "${password}"`,
             // console.log('post login req:',req.body.password);
+
+
+            // conn.query( query, function(err,rows,fields){
+                //         if(err) {
+                //             console.log(err);
+                //             throw err;
+                //         }
+                //         console.log('Data received from Db:\n');
+                //         console.log(rows);
+                //         return callback(rows,fields);
+                //     });
+
+
+
+
             res.send("Success");
         });
 

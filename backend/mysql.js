@@ -2,33 +2,34 @@
 
 const mysql = require('mysql');
 
-const Mysql = function () {
-    // const sql = this;
+const Mysql = function (db) {
+    // const database = 'company';
+    const database = db;
 
-    let conn = mysql.createConnection({
+    this.conn = mysql.createConnection({
         // host: 'localhost',
         host: '127.0.0.1',
         user: 'root',
         password: '',
-        database: 'company',
+        database: database,
         port: '3306'
     });
+    //
+    // this.sendQuery = function ( query, callback){
+    //     console.log('send query : '+query);
+    //
+    //     conn.query( query, function(err,rows,fields){
+    //         if(err) {
+    //             console.log(err);
+    //             throw err;
+    //         }
+    //         console.log('Data received from Db:\n');
+    //         console.log(rows);
+    //         return callback(rows,fields);
+    //     });
+    // };
 
-    this.sendQuery = function ( query, callback ){
-        console.log('send query : '+query);
-
-        conn.query( query, function(err,rows){
-            if(err) {
-                console.log(err);
-                throw err;
-            }
-            console.log('Data received from Db:\n');
-            console.log(rows);
-            return callback(rows);
-        });
-    };
-
-    conn.connect(function (err) {
+    this.conn.connect(function (err) {
         if (!err) {
             console.log("Database is connected ... \n\n");
         } else {
@@ -37,8 +38,8 @@ const Mysql = function () {
     });
 };
 
-Mysql.start = function(){
-    return new Mysql();
+Mysql.start = function(db){
+    return new Mysql(db);
 };
 
 module.exports = Mysql;

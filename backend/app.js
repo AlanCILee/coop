@@ -4,7 +4,8 @@ const server = require('./Server');
 const mysql = require('./Mysql');
 
 
-const sqlObj = mysql.start();
-const options = { mysql: sqlObj};
+const sqlCompany = mysql.start('company');
+const sqlClient = mysql.start('client');
+const options = { mysqlClient: sqlClient};
 
 server.startServer(options);
