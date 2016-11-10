@@ -22,8 +22,8 @@ const APP_ROUTES: Routes = [
     // { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
     { path: 'home', component: HomeComponent },
     { path: 'schedule', component: MainMenuComponent },
-    { path: 'pay', component: SalaryComponent },
-    { path: 'setup', component: SetupComponent },
+    { path: 'pay', component: SalaryComponent, children: salaryRoutes },
+    { path: 'setup', component: SetupComponent, children: setupRoutes },
     { path: '', redirectTo: '/home', pathMatch: 'full'},
     { path: '**', redirectTo: '/schedule', pathMatch: 'full'},
 ];
