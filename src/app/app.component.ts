@@ -47,8 +47,10 @@ export class AppComponent implements OnInit {
 
 
     getUserName(): string{
-        if(localStorage.getItem('currentUser'))
-            return localStorage.getItem('currentUser');
+        if(sessionStorage.getItem('currentUser'))
+            return sessionStorage.getItem('currentUser');
+        else
+            return null;
     }
     // onSubmit(form: any): void {
     //     console.log('you submitted value: ', form);

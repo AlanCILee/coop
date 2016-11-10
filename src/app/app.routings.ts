@@ -21,11 +21,11 @@ const APP_ROUTES: Routes = [
     // { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
     // { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
     { path: 'home', component: HomeComponent },
-    { path: 'schedule', component: MainMenuComponent },
-    { path: 'pay', component: SalaryComponent, children: salaryRoutes },
-    { path: 'setup', component: SetupComponent, children: setupRoutes },
+    { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard]  },
+    { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]  },
+    { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard]  },
     { path: '', redirectTo: '/home', pathMatch: 'full'},
-    { path: '**', redirectTo: '/schedule', pathMatch: 'full'},
+    { path: '**', redirectTo: '/home', pathMatch: 'full'},
 ];
 
 export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES, {useHash: true});

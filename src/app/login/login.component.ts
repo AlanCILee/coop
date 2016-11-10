@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
 			if('viewname' in response){
 				console.log('correct user :', response.viewname);
-				localStorage.setItem('currentUser', response.viewname);
+				sessionStorage.setItem('currentUser', response.viewname);
 				this.router.navigate(['/']);
 			}else{
 				console.log('invalid user :');
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
 			if(!response.viewname){
 				console.log('user ', this.viewname, 'logout');
 				this.viewname = null;
-				localStorage.removeItem('currentUser');
+				sessionStorage.removeItem('currentUser');
 				this.router.navigate(['/']);
 			}
 
@@ -68,8 +68,10 @@ export class LoginComponent implements OnInit {
 	}
 
 	getUserName(): string{
-		if(localStorage.getItem('currentUser'))
-			return localStorage.getItem('currentUser');
+		if(sessionStorage.getItem('currentUser'))
+			return sessionStorage.getItem('currentUser');
+		else
+			return null;
 	}
 
 }
