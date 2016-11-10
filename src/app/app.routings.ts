@@ -13,14 +13,19 @@ import { HomeComponent } from "./home/home.component";
 import { HomeRoutes } from "./home/home.routings";
 
 const APP_ROUTES: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full'},
     // { path: '', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard]},
-    { path: 'login', component: LoginComponent },
-    { path: 'home', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard] },
+    // { path: 'login', component: LoginComponent },
+    // { path: 'home', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard] },
     // { path: 'home', component: MainMenuComponent, canActivate: [AuthGuard] },
+    // { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard] },
     // { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
     // { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
-    // { path: 'setup', component: SetupComponent },
+    { path: 'home', component: HomeComponent },
+    { path: 'schedule', component: MainMenuComponent },
+    { path: 'pay', component: SalaryComponent },
+    { path: 'setup', component: SetupComponent },
+    { path: '', redirectTo: '/home', pathMatch: 'full'},
+    { path: '**', redirectTo: '/schedule', pathMatch: 'full'},
 ];
 
 export const APP_ROUTING: ModuleWithProviders = RouterModule.forRoot(APP_ROUTES, {useHash: true});

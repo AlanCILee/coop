@@ -38,12 +38,18 @@ export class AppComponent implements OnInit {
         this.time.createTimeTable();
         this.timeObj.loadMockTimeZone();
         this.tipObj.loadMockTips();
+        // localStorage.removeItem('currentUser');
         // this.form = this.fb.group({
         //     id: [ '' ],
         //     password: [ '' ],
         // });
     }
 
+
+    getUserName(): string{
+        if(localStorage.getItem('currentUser'))
+            return localStorage.getItem('currentUser');
+    }
     // onSubmit(form: any): void {
     //     console.log('you submitted value: ', form);
     //     // this.httpComp.makeRequest('/login').subscribe((res : Response) => {

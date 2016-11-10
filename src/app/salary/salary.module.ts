@@ -12,11 +12,6 @@ import { AuthGuard } from "../core/authguard";
 
 
 @NgModule({
-    declarations: [
-        InputComponent,
-        ReviewComponent,
-        // MapToIterable,
-    ],
     imports: [
         CommonModule,
         FormsModule,
@@ -26,6 +21,11 @@ import { AuthGuard } from "../core/authguard";
     providers: [
         HttpComponent,
         AuthGuard,
+    ],
+    declarations: [
+        InputComponent,
+        ReviewComponent,
+        // MapToIterable,
     ],
 })
 

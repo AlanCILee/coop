@@ -1,4 +1,8 @@
-<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+<span *ngIf = "getUserName()">
+    <label>Welcome {{ getUserName() }}</label>
+    <button type="button" (click)="logout()">LogOut</button>
+</span>
+<form *ngIf = "!getUserName()" [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
 
         <!--<span *ngIf="!viewname">-->
             <label>ID</label>

@@ -12,12 +12,20 @@ import { AppComponent } from "../app.component";
 import {HomeComponent} from "./home.component";
 
 export const HomeRoutes: Routes = [
-    { path: '', redirectTo: 'schedule', pathMatch: 'full'},
-    // { path: '', component: HomeComponent, canActivate: [AuthGuard]},
-    { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard] },
-    { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
-    { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
-    // { path: 'setup', component: SetupComponent },
+    // { path: '', redirectTo: 'schedule', pathMatch: 'full'},
+    { path: '', component: HomeComponent, canActivate: [AuthGuard]},
+    { path: 'schedule', outlet:'test', component: MainMenuComponent, canActivate: [AuthGuard] },
+    { path: 'pay', outlet:'test',component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
+    { path: 'setup', outlet:'test',component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
+
+
+    // { path: '',
+    //     children: [
+    //     { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard] },
+    //     { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard] },
+    //     { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard]} ,
+    //     ]
+    // }
 ];
 
-export const HOME_ROUTING: ModuleWithProviders = RouterModule.forRoot(HomeRoutes, {useHash: true});
+export const HOME_ROUTING: ModuleWithProviders = RouterModule.forChild (HomeRoutes);

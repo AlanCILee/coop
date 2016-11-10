@@ -1,29 +1,15 @@
-
-
-    <!--<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">-->
-
-        <!--<span *ngIf="!viewname">-->
-            <!--<label>ID</label>-->
-            <!--<input type="text" formControlName="id">-->
-
-            <!--<label>Password</label>-->
-            <!--<input type="password" formControlName="password">-->
-
-            <!--<button type="submit">Submit</button>-->
-        <!--</span>-->
-    <!--</form>-->
-    <!--<hr>-->
-
-    <!--<div *ngIf="getUserName()">-->
+    <div>
         <!--<label>Welcome {{ getUserName() }}</label>-->
         <!--<button type="button" (click)="logout()">LogOut</button>-->
-        <!--<ul>-->
-            <!--<li><a [routerLink]="['home']">Schedule Management</a></li>-->
-            <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
-            <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
-        <!--</ul>-->
         <!--<hr/>-->
-    <!--</div>-->
+        <login></login>
+        <ul *ngIf ="getUserName()">
+            <li><a [routerLink]="['schedule']">Schedule Management</a></li>
+            <li><a [routerLink]="['pay']">Wage Management</a></li>
+            <li><a [routerLink]="['setup']">Setup</a></li>
+        </ul>
+        <hr/>
+    </div>
 
     <div>
         <router-outlet></router-outlet>
