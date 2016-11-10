@@ -9,15 +9,17 @@ import { salaryRoutes } from "./salary/salary.module";
 import { AuthGuard } from "./core/authguard";
 import { LoginComponent } from "./login/login.component";
 import { AppComponent } from "./app.component";
+import { HomeComponent } from "./home/home.component";
+import { HomeRoutes } from "./home/home.routings";
 
 const APP_ROUTES: Routes = [
-    // { path: '', redirectTo: 'login', pathMatch: 'full'},
-    { path: '', component: AppComponent, canActivate: [AuthGuard]},
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
+    // { path: '', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard]},
     { path: 'login', component: LoginComponent },
-    { path: 'home', component: MainMenuComponent, canActivate: [AuthGuard] },
-    // { path: 'emp', component: EmployeesComponent },
-    { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
-    { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
+    { path: 'home', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard] },
+    // { path: 'home', component: MainMenuComponent, canActivate: [AuthGuard] },
+    // { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
+    // { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
     // { path: 'setup', component: SetupComponent },
 ];
 

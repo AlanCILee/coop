@@ -1,6 +1,4 @@
 
-    <label *ngIf="viewname">Welcom {{ viewname }}</label>
-    <button *ngIf="viewname" type="button" (click)="logout()">LogOut</button>
 
     <!--<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">-->
 
@@ -16,15 +14,17 @@
     <!--</form>-->
     <!--<hr>-->
 
-    <!--<div *ngIf="viewname">-->
-        <ul>
+    <!--<div *ngIf="getUserName()">-->
+        <!--<label>Welcome {{ getUserName() }}</label>-->
+        <!--<button type="button" (click)="logout()">LogOut</button>-->
+        <!--<ul>-->
             <!--<li><a [routerLink]="['home']">Schedule Management</a></li>-->
             <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
             <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
-        </ul>
-        <hr/>
-
-        <div>
-            <router-outlet></router-outlet>
-        </div>
+        <!--</ul>-->
+        <!--<hr/>-->
     <!--</div>-->
+
+    <div>
+        <router-outlet></router-outlet>
+    </div>

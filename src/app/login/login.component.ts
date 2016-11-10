@@ -31,21 +31,25 @@ export class LoginComponent implements OnInit {
 	onSubmit(form: any): void {
 		console.log('you submitted value: ', form);
 
-		this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
+		// this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
+		this.httpComp.makePostRequest('http://localhost:3000/login',form).subscribe((res : Response) => {
 			let response = res.json();
 			console.log('HttpComponent : ',response);
 
-			if(response.viewname){
-				console.log('correct user');
-				this.viewname = response.viewname;
-				localStorage.setItem('currentUser', this.viewname);
-				this.router.navigate(['']);
+			if('viewname' in response){
+				console.log('correct user :', response.viewname);
+				localStorage.setItem('currentUser', response.viewname);
+				this.router.navigate(['/home']);
+			}else{
+				console.log('invalid user :');
+				this.router.navigate(['/login']);
 			}
 		});
 	}
 
 	logout(): void{
-		this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
+		// this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
+		this.httpComp.makeRequest('http://localhost:3000/logout').subscribe((res : Response) => {
 			let response = res.json();
 			console.log('HttpComponent : ',response);
 
@@ -55,11 +59,6 @@ export class LoginComponent implements OnInit {
 				localStorage.removeItem('currentUser');
 				this.router.navigate(['/login']);
 			}
-		});
-
-		this.form.patchValue({
-			id : '',
-			password : '',
 		});
 	}
 }

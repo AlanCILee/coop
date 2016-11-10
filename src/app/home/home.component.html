@@ -1,0 +1,12 @@
+<div>
+	<label>Welcome {{ getUserName() }}</label>
+	<button type="button" (click)="logout()">LogOut</button>
+	<hr/>
+	<ul>
+		<li><a [routerLink]="['schedule']">Schedule Management</a></li>
+		<li><a [routerLink]="['pay']">Wage Management</a></li>
+		<li><a [routerLink]="['setup']">Setup</a></li>
+	</ul>
+	<hr/>
+</div>
+<router-outlet></router-outlet>

@@ -38,56 +38,57 @@ export class AppComponent implements OnInit {
         this.time.createTimeTable();
         this.timeObj.loadMockTimeZone();
         this.tipObj.loadMockTips();
-        this.form = this.fb.group({
-            id: [ '' ],
-            password: [ '' ],
-        });
+        // this.form = this.fb.group({
+        //     id: [ '' ],
+        //     password: [ '' ],
+        // });
     }
 
-    onSubmit(form: any): void {
-        console.log('you submitted value: ', form);
-        // this.httpComp.makeRequest('/login').subscribe((res : Response) => {
-        //         // this.data = res.json();
-        //         // this.loading = false;
-        //         console.log('HttpComponent : ',res);
-        //     });
-        console.log(form);
-        // let body = `id=${form.id}&password=${form.password}`;
-        // this.httpComp.makePostRequest('/login',body).subscribe((res : Response) => {
-        this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
-                // this.data = res.json();
-                // this.loading = false;
-                let response = res.json();
-                console.log('HttpComponent : ',response);
-                // console.log('response[0].id : ',response[0].id);
-                // console.log('response[0].password : ',response[0].password);
+    // onSubmit(form: any): void {
+    //     console.log('you submitted value: ', form);
+    //     // this.httpComp.makeRequest('/login').subscribe((res : Response) => {
+    //     //         // this.data = res.json();
+    //     //         // this.loading = false;
+    //     //         console.log('HttpComponent : ',res);
+    //     //     });
+    //     console.log(form);
+    //     // let body = `id=${form.id}&password=${form.password}`;
+    //     // this.httpComp.makePostRequest('/login',body).subscribe((res : Response) => {
+    //     this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
+    //             // this.data = res.json();
+    //             // this.loading = false;
+    //             let response = res.json();
+    //             console.log('HttpComponent : ',response);
+    //             // console.log('response[0].id : ',response[0].id);
+    //             // console.log('response[0].password : ',response[0].password);
+    //
+    //             if(response.viewname){
+    //                 console.log('correct user');
+    //                 this.viewname = response.viewname;
+    //                 localStorage.setItem('currentUser', this.viewname);
+    //             }
+    //         });
+    //
+    // }
+    //
+    // logout(): void{
+    //     this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
+    //         let response = res.json();
+    //         console.log('HttpComponent : ',response);
+    //
+    //         if(!response.viewname){
+    //             console.log('user ', this.viewname, 'logout');
+    //             this.viewname = null;
+    //             localStorage.removeItem('currentUser');
+    //         }
+    //     });
+    //
+    //     this.form.patchValue({
+    //         id : '',
+    //         password : '',
+    //     });
+    // }
 
-                if(response.viewname){
-                    console.log('correct user');
-                    this.viewname = response.viewname;
-                    localStorage.setItem('currentUser', this.viewname);
-                }
-            });
-
-    }
-
-    logout(): void{
-        this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
-            let response = res.json();
-            console.log('HttpComponent : ',response);
-
-            if(!response.viewname){
-                console.log('user ', this.viewname, 'logout');
-                this.viewname = null;
-                localStorage.removeItem('currentUser');
-            }
-        });
-
-        this.form.patchValue({
-            id : '',
-            password : '',
-        });
-    }
 }
 
 // class Node<T extends Comparable<T>> {

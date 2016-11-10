@@ -21,6 +21,8 @@ import { TipModel } from "./model/tip";
 import { ShareModule } from "./core/Share.module";
 import { AuthGuard } from "./core/authguard";
 import { LoginComponent } from "./login/login.component";
+import { HomeModule } from "./home/home.module";
+import { HomeComponent } from "./home/home.component";
 
 @NgModule({
     imports: [
@@ -29,17 +31,20 @@ import { LoginComponent } from "./login/login.component";
         APP_ROUTING,
         FormsModule,
         ReactiveFormsModule,
-        MainmenuModule,
-        SetupModule,
-        SalaryModule,
+        HomeModule,
+        // MainmenuModule,
+        // SetupModule,
+        // SalaryModule,
+        // HomeModule,
         // ShareModule,
     ],
     declarations: [
         AppComponent,
         // EmployeesComponent,
-        SalaryComponent,
-        SetupComponent,
+        // SalaryComponent,
+        // SetupComponent,
         LoginComponent,
+        HomeComponent,
     ],
     providers: [
         HttpComponent,
@@ -49,6 +54,7 @@ import { LoginComponent } from "./login/login.component";
         Schedule,
         TipModel,
         AuthGuard,
+        LoginComponent,
     ],
     bootstrap: [ AppComponent ]
 })
