@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Response } from "@angular/http";
+import { HttpComponent } from "../../core/http.component";
+
 import * as moment from 'moment';
 
 @Component({
@@ -18,6 +21,7 @@ export class EmployeesComponent implements OnInit {
 
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
+            private httpComp: HttpComponent,
             private fb: FormBuilder){
     };
 
@@ -51,12 +55,54 @@ export class EmployeesComponent implements OnInit {
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
         let now = moment().format('YYYY-MM-DD');
+        let wage : Object = { wage: form.wage, date: now};
 
-        let newWage: Wage[] = [];
-        newWage.push(new Wage(form.wage, now));
+        // let newWage: Wage[] = [];
+        // newWage.push(new Wage(form.wage, now));
+        //
+        // this.employeesObj.addEmployee(form.eId,
+        //     form.name, form.department, form.phone, newWage);
 
-        this.employeesObj.addEmployee(form.eId,
-            form.name, form.department, form.phone, newWage);
+
+
+
+        console.log('employee form result: ',form);
+
+        if( form.dId > 0){  // update case
+            this.httpComp.makePostRequest('http://localhost:3000/upEmployee',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('Http response : ',response);
+                //
+                // if( Number(response.changedRows) > 0){
+                //     console.log('update successfully :', response.changedRows );
+                //     this.employeesObj.addEmployee(form.eId,
+                //         form.name, form.department, form.phone, newWage);
+                // }else{
+                //     console.log('invalid user :');
+                // }
+            });
+        }else {             // insert case
+            form.date = now;
+
+            this.httpComp.makePostRequest('http://localhost:3000/newEmployee',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('Http response : ',response);
+
+                if( Number(response.insertId) > 0){
+                    console.log('insert successfully :', response.insertId );
+
+                    // this.httpComp.makePostRequest('http://localhost:3000/newEmployee/wage',wage).subscribe((res2 : Response) => {
+                    //
+                    //
+                    // });
+                    // this.employeesObj.addEmployee(response.insertId,
+                    //     form.name, form.department, form.phone, newWage);
+                }else{
+                    console.log('invalid user :');
+                }
+            });
+        }
+
         this.clearInput();
     }
 

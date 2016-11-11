@@ -127,6 +127,44 @@ const Server = function(options) {
             });
         });
 
+
+        // this.employeesObj.addEmployee(form.eId,
+        //     form.name, form.department, form.phone, newWage);
+
+        app.post('/newEmployee', function(req, res){
+            let employeeName = req.body.name;
+            let employeeDepart = req.body.department;
+            let employeePhone = req.body.phone;
+            let employeeWage = req.body.wage;
+            let wagedate = req.body.date;
+            let database = req.session.company || 'bluelasso';
+
+            console.log('newEmployee req:', req.body, 'for', database);
+
+            let query = `INSERT INTO employees (name, phone, departId) 
+                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}")`;
+
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('sendQuery fail: ', err);
+                    res.send({ insertId : -1 });
+                }else {
+                    console.log('Insert new employee', result);
+
+
+
+
+
+
+
+
+
+                    res.send({ insertId : result.insertId });
+                }
+            });
+        });
+
+
         app.get('/logout', function(req, res){
             console.log('user logout', req.session);
             // delete req.session.viewname;
