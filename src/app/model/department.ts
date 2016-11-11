@@ -5,17 +5,30 @@ export class Departments {
     departments: Department[] =[];
 
     addDepartment(departId: number, departName: string, ratio: number): void{
+        let update = false;
+
         console.log('addDepartment : ',departId, departName, ratio);
-        if(departId < 0)
-            this.departments.push(new Department( this.departments.length, departName, ratio ));
-        else{
-            this.departments.forEach((dep)=>{
-                if(dep.departId == departId){
-                    dep.departName = departName;
-                    dep.departRatio = ratio;
-                }
-            });
-        }
+        // if(departId < 0)
+        //     this.departments.push(new Department( this.departments.length, departName, ratio ));
+        // else{
+        //     this.departments.forEach((dep)=>{
+        //         if(dep.departId == departId){
+        //             dep.departName = departName;
+        //             dep.departRatio = ratio;
+        //         }
+        //     });
+        // }
+
+        this.departments.forEach((dep)=>{
+            if(dep.departId == departId){
+                dep.departName = departName;
+                dep.departRatio = ratio;
+                update = true;
+            }
+        });
+
+        if(!update)
+            this.departments.push(new Department( departId, departName, ratio ));
     }
 
     removeDepartment(depart: Department): void{
@@ -67,8 +80,8 @@ export class Department {
 }
 
 const mockDepartments = [
-    { departId: -1, departName: 'Software', ratio: 10},
-    { departId: -1, departName: 'Sales', ratio: 20},
-    { departId: -1, departName: 'HR', ratio: 30 },
-    { departId: -1, departName: 'QA', ratio: 40 },
+    { departId: 1, departName: 'Software', ratio: 10},
+    { departId: 2, departName: 'Sales', ratio: 20},
+    { departId: 3, departName: 'HR', ratio: 30 },
+    { departId: 4, departName: 'QA', ratio: 40 },
 ];

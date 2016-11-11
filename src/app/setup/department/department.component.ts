@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Employees, Employee, Wage } from "../../model/employee";
 import { Department, Departments } from "../../model/department";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Response } from "@angular/http";
+import { HttpComponent } from "../../core/http.component";
 
 
 @Component({
@@ -16,6 +18,7 @@ export class DepartmentComponent implements OnInit {
     editItem: any = null;
 
     constructor(private departmentsObj: Departments,
+                private httpComp: HttpComponent,
                 private fb: FormBuilder){
     };
 
@@ -40,7 +43,32 @@ export class DepartmentComponent implements OnInit {
 
     onSubmit(form: any): void{
         console.log('department form result: ',form);
-        this.departmentsObj.addDepartment(form.dId, form.dName, Number(form.dRatio));
+
+        if( form.dId > 0){  // update case
+            this.httpComp.makePostRequest('http://localhost:3000/upDepartment',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+
+                if( Number(response.changedRows) > 0){
+                    console.log('update successfully :', response.changedRows );
+                    this.departmentsObj.addDepartment(form.dId, form.dName, Number(form.dRatio));
+                }else{
+                    console.log('invalid user :');
+                }
+            });
+        }else {             // insert case
+            this.httpComp.makePostRequest('http://localhost:3000/newDepartment',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+
+                if( Number(response.insertId) > 0){
+                    console.log('insert successfully :', response.insertId );
+                    this.departmentsObj.addDepartment(response.insertId, form.dName, Number(form.dRatio));
+                }else{
+                    console.log('invalid user :');
+                }
+            });
+        }
         this.clearInput();
     }
 

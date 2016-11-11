@@ -22,7 +22,8 @@ const Server = function(options) {
         app.use(session({
             secret: '12345%$#@!qazXSW',
             resave: false,
-            saveUninitialized: true
+            saveUninitialized: true,
+            cookie: { secure : false, httpOnly : false },
         }));
 
         let allowCrossDomain = function(req, res, next) {
@@ -53,8 +54,11 @@ const Server = function(options) {
             let password = req.body.password;
             console.log('post login req:',userId, ':', password);
 
-            let query = `SELECT * FROM clients WHERE name = "${userId}" AND password = "${password}"`;
-            let database = 'client';
+            let query = `SELECT * FROM managers  
+                INNER JOIN companies ON managers.companyId = companies.companyId 
+                WHERE name = "${userId}" AND password = "${password}"`;
+
+            let database = 'clients';
 
             mysql.sendQuery( database, query, function(err, rows, fields){
                 if(err){
@@ -63,8 +67,11 @@ const Server = function(options) {
                     console.log('', rows);
                     if (rows.length > 0) {
                         if(userId === rows[0].name && password === rows[0].password) {
-                            console.log('LOGIN START');
+                            console.log('LOGIN START:', req.session);
                             req.session.viewname = rows[0].viewname;
+                            req.session.company = rows[0].companyName;
+                            req.session.save();
+                            console.log('session: ', req.session);
                             // res.redirect('/welcome');
                         }
                     }else{
@@ -76,9 +83,53 @@ const Server = function(options) {
             });
         });
 
+        app.post('/newDepartment', function(req, res){
+            let departName = req.body.dName;
+            let departRatio = req.body.dRatio;
+            let database = req.session.company || 'bluelasso';
+
+            console.log('department req:',departName, ':', departRatio, 'for', database);
+
+            let query = `INSERT INTO department (departName, departRatio) 
+                VALUES ("${departName}", "${departRatio}")`;
+
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('sendQuery fail: ', err);
+                    res.send({ insertId : -1 });
+                }else {
+                    console.log('Insert new department', result);
+                    res.send({ insertId : result.insertId });
+                }
+            });
+        });
+
+        app.post('/upDepartment', function(req, res){
+            let departId = req.body.dId;
+            let departName = req.body.dName;
+            let departRatio = req.body.dRatio;
+            let database = req.session.company || 'bluelasso';
+
+            console.log('department req:',departName, ':', departRatio, 'for', database);
+
+            let query = `UPDATE department SET 
+                departName = "${departName}", departRatio = "${departRatio}"               
+                WHERE departId = "${departId}"`;
+
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('sendQuery fail: ', err);
+                    res.send({ changedRows : 0 });
+                }else {
+                    console.log('Update new department', result);
+                    res.send({ changedRows : result.changedRows });
+                }
+            });
+        });
+
         app.get('/logout', function(req, res){
-            console.log('user ', req.session.viewname, 'logout');
-            delete req.session.viewname;
+            console.log('user logout', req.session);
+            // delete req.session.viewname;
             res.send(req.session);
         });
     };
