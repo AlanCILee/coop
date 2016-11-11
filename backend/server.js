@@ -119,18 +119,16 @@ const Server = function(options) {
             mysql.sendQuery( database, query, function(err, result){
                 if(err){
                     console.log('sendQuery fail: ', err);
-                    res.send({ changedRows : 0 });
+                    res.send({ affectedRows : -1 });
                 }else {
                     console.log('Update new department', result);
-                    res.send({ changedRows : result.changedRows });
+                    res.send({ affectedRows : result.affectedRows });
                 }
             });
         });
 
 
-        // this.employeesObj.addEmployee(form.eId,
-        //     form.name, form.department, form.phone, newWage);
-
+        
         app.post('/newEmployee', function(req, res){
             let employeeName = req.body.name;
             let employeeDepart = req.body.department;
@@ -140,7 +138,7 @@ const Server = function(options) {
             let database = req.session.company || 'bluelasso';
 
             console.log('newEmployee req:', req.body, 'for', database);
-
+            
             let query = `INSERT INTO employees (name, phone, departId) 
                 VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}")`;
 
@@ -149,21 +147,68 @@ const Server = function(options) {
                     console.log('sendQuery fail: ', err);
                     res.send({ insertId : -1 });
                 }else {
-                    console.log('Insert new employee', result);
-
-
-
-
-
-
-
-
-
-                    res.send({ insertId : result.insertId });
+                    console.log('Inserted new employee', result);
+    
+                    query = `INSERT INTO wage (wage, empId, date) 
+                        VALUES ("${employeeWage}", "${result.insertId}", "${wagedate}")`;
+    
+                    mysql.sendQuery( database, query, function(err, result2){
+                        if(err){
+                            console.log('sendQuery fail: ', err);
+                            res.send({ insertId : -1 });
+                        }else{
+                            console.log('Inserted new employee wage', result2);
+                            res.send({ insertId : result.insertId });
+                        }
+                        
+                    });
                 }
             });
         });
-
+    
+    
+        // this.employeesObj.addEmployee(form.eId,
+        //     form.name, form.department, form.phone, newWage);
+        app.post('/upEmployee', function(req, res){
+            let employeeId = req.body.eId;
+            let employeeName = req.body.name;
+            let employeeDepart = req.body.department;
+            let employeePhone = req.body.phone;
+            let employeeWage = req.body.wage;
+            let wagedate = req.body.date;
+            let database = req.session.company || 'bluelasso';
+        
+            console.log('upEmployee req:', req.body, 'for', database);
+    
+            let query = `UPDATE employees SET 
+                name = "${employeeName}", phone = "${employeePhone}", departId= "${employeeDepart}"               
+                WHERE empId = "${employeeId}"`;
+            
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('sendQuery fail: ', err);
+                    res.send({ affectedRows : -1 });
+                }else {
+                    console.log('update new employee', result);
+                
+                    if( wagedate ){
+                        query = `INSERT INTO wage (wage, empId, date) 
+                            VALUES ("${employeeWage}", "${employeeId}", "${wagedate}")`;
+                        mysql.sendQuery( database, query, function(err, result2){
+                            if(err){
+                                console.log('sendQuery fail: ', err);
+                                res.send({ affectedRows : -1 });
+                            }else{
+                                console.log('Inserted new employee wage', result2);
+                                res.send({ affectedRows : result2.affectedRows });
+                            }
+                        });
+                    }else{
+                        res.send({ affectedRows : result.affectedRows });
+                    }
+                }
+            });
+        });
 
         app.get('/logout', function(req, res){
             console.log('user logout', req.session);

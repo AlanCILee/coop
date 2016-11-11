@@ -34,8 +34,8 @@
             <td>{{ emp.empName }}</td>
             <td>{{ getDepartName(emp.departId) }}</td>
             <td>{{ emp.empPhone }}</td>
-            <td>{{ emp.wages.wage }}</td>
-            <td>{{ emp.wages.date }}</td>
+            <td>{{ emp.getLatestWage().wage }}</td>
+            <td>{{ emp.getLatestWage().date }}</td>
         </tr>
     </table>
 </main>

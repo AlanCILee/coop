@@ -49,7 +49,7 @@ export class DepartmentComponent implements OnInit {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
-                if( Number(response.changedRows) > 0){
+                if( Number(response.affectedRows) > 0){
                     console.log('update successfully :', response.changedRows );
                     this.departmentsObj.addDepartment(form.dId, form.dName, Number(form.dRatio));
                 }else{
