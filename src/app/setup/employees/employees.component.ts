@@ -54,7 +54,7 @@ export class EmployeesComponent implements OnInit {
     
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
-        let now = moment().format('YYYY-MM-DD');
+        let now = moment().format('YYYY-MM-DD HH:mm:ss');
         let wage : Object = { wage: form.wage, date: now};
         form.date = now;
 
