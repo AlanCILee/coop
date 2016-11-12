@@ -91,7 +91,19 @@ export class TimezoneComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.timeObj.removeTimeZone(this.editItem.key);
-        this.clearInput();
+        this.httpComp.makePostRequest('http://localhost:3000/rmTimeZone',{ zoneId: this.editItem.val.zoneId }).subscribe((res : Response) => {
+            let response = res.json();
+            console.log('HttpComponent : ',response);
+        
+            if( Number(response.affectedRows) > 0){
+                console.log('update successfully :', this.editItem.val.zoneId );
+                // this.timeObj.addTimeZone(this.editItem.val.zoneId, this.editItem.val.zoneName, this.editItem.val.startT, this.editItem.val.endT, false);
+                this.timeObj.removeTimeZone(this.editItem.val.zoneId, this.editItem.val.zoneName);
+            }else{
+                console.log('invalid zone :');
+            }
+            this.clearInput();
+        });
+        
     }
 }

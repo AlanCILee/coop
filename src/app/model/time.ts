@@ -68,9 +68,12 @@ export class TimeTable {
 		console.log('addTimeZone: ', this.timeZonesHistory);
 	}
 
-	removeTimeZone(key: string): void{
-		console.log('removeTimeZone : ', key);
-		delete this.timeZones[key];
+	removeTimeZone(zoneId: number, zoneName: string): void{
+		this.timeZonesHistory[zoneId].valid = false;
+		
+		
+		delete this.timeZones[zoneName];
+		console.log('removeTimeZone : ', zoneName);
 	}
 
 	loadMockTimeZone(): void{
