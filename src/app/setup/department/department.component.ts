@@ -57,6 +57,7 @@ export class DepartmentComponent implements OnInit {
                     console.log('department update fail');
                 }
             });
+            this.clearInput();
         }else {             // insert case
             this.httpComp.makePostRequest('http://localhost:3000/newDepartment',form).subscribe((res : Response) => {
                 let response = res.json();
@@ -69,8 +70,8 @@ export class DepartmentComponent implements OnInit {
                     console.log('department insert fail');
                 }
             });
+            this.clearInput();
         }
-        this.clearInput();
     }
 
     depBtn( dep: Department): void {

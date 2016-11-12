@@ -163,13 +163,13 @@ const Server = function(options) {
             let employeeDepart = req.body.department;
             let employeePhone = req.body.phone;
             let employeeWage = req.body.wage;
-            let wagedate = req.body.date;
+            // let wagedate = req.body.date;
             let database = req.session.company || 'bluelasso';
 
             console.log('newEmployee req:', req.body, 'for', database);
-            
-            let query = `INSERT INTO employees (name, phone, departId) 
-                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}")`;
+    
+            let query = `INSERT INTO employees (name, phone, departId, wage) 
+                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}", "${employeeWage}")`;
 
             mysql.sendQuery( database, query, function(err, result){
                 if(err){
@@ -177,68 +177,153 @@ const Server = function(options) {
                     res.send({ insertId : -1 });
                 }else {
                     console.log('Inserted new employee', result);
+                    res.send({ insertId : result.insertId });
     
-                    query = `INSERT INTO wage (wage, empId, date) 
-                        VALUES ("${employeeWage}", "${result.insertId}", "${wagedate}")`;
-    
-                    mysql.sendQuery( database, query, function(err, result2){
-                        if(err){
-                            console.log('sendQuery fail: ', err);
-                            res.send({ insertId : -1 });
-                        }else{
-                            console.log('Inserted new employee wage', result2);
-                            res.send({ insertId : result.insertId });
-                        }
-                        
-                    });
+                    // query = `INSERT INTO wage (wage, empId, date)
+                    //     VALUES ("${employeeWage}", "${result.insertId}", "${wagedate}")`;
+                    //
+                    // mysql.sendQuery( database, query, function(err, result2){
+                    //     if(err){
+                    //         console.log('sendQuery fail: ', err);
+                    //         res.send({ insertId : -1 });
+                    //     }else{
+                    //         console.log('Inserted new employee wage', result2);
+                    //         res.send({ insertId : result.insertId });
+                    //     }
+                    //
+                    // });
                 }
             });
         });
-    
-    
-        // this.employeesObj.addEmployee(form.eId,
-        //     form.name, form.department, form.phone, newWage);
+
         app.post('/upEmployee', function(req, res){
             let employeeId = req.body.eId;
             let employeeName = req.body.name;
             let employeeDepart = req.body.department;
             let employeePhone = req.body.phone;
             let employeeWage = req.body.wage;
-            let wagedate = req.body.date;
+            // let wagedate = req.body.date;
             let database = req.session.company || 'bluelasso';
         
             console.log('upEmployee req:', req.body, 'for', database);
     
-            let query = `UPDATE employees SET 
-                name = "${employeeName}", phone = "${employeePhone}", departId= "${employeeDepart}"               
-                WHERE empId = "${employeeId}"`;
+            let query = `INSERT INTO employees (name, phone, departId, wage) 
+                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}", "${employeeWage}")`;
+    
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('update employee : new insert fail ', err);
+                    res.send({ insertId : -1 });
+                }else {
+                    console.log('Inserted new employee', result);
+    
+                    query = `UPDATE employees SET valid = "false"               
+                        WHERE empId = "${employeeId}"`;
+                    
+                    mysql.sendQuery( database, query, function(err, result2){
+                        if(err){
+                            console.log('update employee : old employee invalid fail: ', err);
+                            res.send({ insertId : -1 });
+                        }else{
+                            console.log('update employee success', result2);
+                            res.send({ insertId : result.insertId });
+                        }
+                    });
+                }
+            });
             
+            //
+            // let query = `UPDATE employees SET valid = "false"
+            //             WHERE empId = "${employeeId}"`;
+            //
+            // mysql.sendQuery( database, query, function(err, result){
+            //     if(err){
+            //         console.log('sendQuery fail: ', err);
+            //         res.send({ affectedRows : -1 });
+            //     }else {
+            //         console.log('update new employee', result);
+            //
+            //         let query = `INSERT INTO employees (name, phone, departId)
+            //                     VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}")`;
+            //
+            //         mysql.sendQuery( database, query, function(err, result){
+            //             if(err){
+            //                 console.log('sendQuery fail: ', err);
+            //                 res.send({ insertId : -1 });
+            //             }else {
+            //                 console.log('Inserted new employee', result);
+            //
+            //                 if( wagedate ){
+            //                     query = `INSERT INTO wage (wage, empId, date)
+            //                         VALUES ("${employeeWage}", "${employeeId}", "${wagedate}")`;
+            //                     mysql.sendQuery( database, query, function(err, result2){
+            //                         if(err){
+            //                             console.log('sendQuery fail: ', err);
+            //                             res.send({ affectedRows : -1 });
+            //                         }else{
+            //                             console.log('Inserted new employee wage', result2);
+            //                             res.send({ affectedRows : result2.affectedRows });
+            //                         }
+            //                     });
+            //                 }else{
+            //                     res.send({ affectedRows : result.affectedRows });
+            //                 }
+            //             }
+            //         });
+            //     }
+            // });
+            
+            // let query = `UPDATE employees SET
+            //     name = "${employeeName}", phone = "${employeePhone}", departId= "${employeeDepart}"
+            //     WHERE empId = "${employeeId}"`;
+            //
+            // mysql.sendQuery( database, query, function(err, result){
+            //     if(err){
+            //         console.log('sendQuery fail: ', err);
+            //         res.send({ affectedRows : -1 });
+            //     }else {
+            //         console.log('update new employee', result);
+            //
+            //         if( wagedate ){
+            //             query = `INSERT INTO wage (wage, empId, date)
+            //                 VALUES ("${employeeWage}", "${employeeId}", "${wagedate}")`;
+            //             mysql.sendQuery( database, query, function(err, result2){
+            //                 if(err){
+            //                     console.log('sendQuery fail: ', err);
+            //                     res.send({ affectedRows : -1 });
+            //                 }else{
+            //                     console.log('Inserted new employee wage', result2);
+            //                     res.send({ affectedRows : result2.affectedRows });
+            //                 }
+            //             });
+            //         }else{
+            //             res.send({ affectedRows : result.affectedRows });
+            //         }
+            //     }
+            // });
+        });
+    
+        app.post('/rmEmployee', function(req, res){
+            let employeeId = req.body.eId;
+            let database = req.session.company || 'bluelasso';
+        
+            console.log('employee delete req:', employeeId );
+        
+            let query = `UPDATE employees SET valid = "false"               
+                        WHERE empId = "${employeeId}"`;
+        
             mysql.sendQuery( database, query, function(err, result){
                 if(err){
                     console.log('sendQuery fail: ', err);
                     res.send({ affectedRows : -1 });
                 }else {
-                    console.log('update new employee', result);
-                
-                    if( wagedate ){
-                        query = `INSERT INTO wage (wage, empId, date) 
-                            VALUES ("${employeeWage}", "${employeeId}", "${wagedate}")`;
-                        mysql.sendQuery( database, query, function(err, result2){
-                            if(err){
-                                console.log('sendQuery fail: ', err);
-                                res.send({ affectedRows : -1 });
-                            }else{
-                                console.log('Inserted new employee wage', result2);
-                                res.send({ affectedRows : result2.affectedRows });
-                            }
-                        });
-                    }else{
-                        res.send({ affectedRows : result.affectedRows });
-                    }
+                    console.log('deleted department', result);
+                    res.send({ affectedRows : result.affectedRows });
                 }
             });
         });
-            
+        
+        
         app.post('/upTimeZone', function(req, res){
             let zoneId = req.body.zoneId;
             let zoneName = req.body.zoneName;

@@ -31,11 +31,12 @@
     </div>
     <table>
         <tr *ngFor="let emp of employees" (click)="empBtn( emp )">
-            <td>{{ emp.empName }}</td>
-            <td>{{ getDepartName(emp.departId) }}</td>
-            <td>{{ emp.empPhone }}</td>
-            <td>{{ emp.getLatestWage().wage }}</td>
-            <td>{{ emp.getLatestWage().date }}</td>
+            <span *ngIf="emp.valid">
+                <td>{{ emp.empName }}</td>
+                <td>{{ getDepartName(emp.departId) }}</td>
+                <td>{{ emp.empPhone }}</td>
+                <td>{{ emp.wage }}</td>
+            </span>
         </tr>
     </table>
 </main>
