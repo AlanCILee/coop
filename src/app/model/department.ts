@@ -4,32 +4,31 @@ import { Injectable } from "@angular/core";
 export class Departments {
     departments: Department[] =[];
 
-    addDepartment(departId: number, departName: string, ratio: number): void{
-        let update = false;
-
-        console.log('addDepartment : ',departId, departName, ratio);
-
-        this.departments.forEach((dep)=>{
-            if(dep.departId == departId){
-                dep.departName = departName;
-                dep.departRatio = ratio;
-                update = true;
-            }
-        });
-
-        if(!update)
-            this.departments.push(new Department( departId, departName, ratio ));
+    addDepartment(departId: number, departName: string, ratio: number, valid: boolean): void{
+        if(valid){
+            this.departments.push(new Department( departId, departName, ratio, true ));
+        }else{
+            this.departments.forEach((dep)=>{
+                if(dep.departId == departId){
+                    dep.valid = false;
+                }
+            });
+        }
+        console.log('addDepartment : ', this.departments);
     }
 
     removeDepartment(depart: Department): void{
-        console.log('removeDepartment : ', depart);
-        let index = this.departments.indexOf(depart);
-        this.departments.splice( index, 1 );
+        this.departments.forEach((dep)=>{
+            if(dep.departId == depart.departId){
+                dep.valid = false;
+            }
+        });
+        console.log('removeDepartment result: ', this.departments);
     }
 
     loadDepartments(departments: Object[]): void {
         departments.forEach(( depart ) => {
-            this.addDepartment( depart['departId'], depart['departName'], depart['ratio']);
+            this.addDepartment( depart['departId'], depart['departName'], depart['ratio'], true);
         });
     }
 
@@ -65,7 +64,8 @@ export class Departments {
 export class Department {
     constructor(public departId: number,
                 public departName: string,
-                public departRatio: number) {
+                public departRatio: number,
+                public valid: boolean) {
     }
 }
 

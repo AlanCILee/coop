@@ -20,8 +20,10 @@
     </div>
     <table>
         <tr *ngFor="let dep of departments" (click)="depBtn( dep )">
-            <td>{{ dep.departName }}</td>
-            <td>{{ dep.departRatio }}</td>
+            <span *ngIf="dep.valid">
+                <td>{{ dep.departName }}</td>
+                <td>{{ dep.departRatio }}</td>
+            </span>
         </tr>
     </table>
 </main>

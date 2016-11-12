@@ -15,7 +15,7 @@ import { HttpComponent } from "../../core/http.component";
 export class DepartmentComponent implements OnInit {
     departments: Department[];
     form: FormGroup;
-    editItem: any = null;
+    editItem: Department = null;
 
     constructor(private departmentsObj: Departments,
                 private httpComp: HttpComponent,
@@ -49,11 +49,12 @@ export class DepartmentComponent implements OnInit {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
-                if( Number(response.affectedRows) > 0){
-                    console.log('update successfully :', response.changedRows );
-                    this.departmentsObj.addDepartment(form.dId, form.dName, Number(form.dRatio));
+                if( Number(response.insertId) > 0){
+                    console.log('update successfully :', response.insertId );
+                    this.departmentsObj.addDepartment(form.dId, form.dName, Number(form.dRatio), false);
+                    this.departmentsObj.addDepartment(response.insertId, form.dName, Number(form.dRatio), true);
                 }else{
-                    console.log('invalid user :');
+                    console.log('department update fail');
                 }
             });
         }else {             // insert case
@@ -63,9 +64,9 @@ export class DepartmentComponent implements OnInit {
 
                 if( Number(response.insertId) > 0){
                     console.log('insert successfully :', response.insertId );
-                    this.departmentsObj.addDepartment(response.insertId, form.dName, Number(form.dRatio));
+                    this.departmentsObj.addDepartment(response.insertId, form.dName, Number(form.dRatio), true);
                 }else{
-                    console.log('invalid user :');
+                    console.log('department insert fail');
                 }
             });
         }
@@ -84,7 +85,17 @@ export class DepartmentComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.departmentsObj.removeDepartment(this.editItem);
-        this.clearInput();
+        this.httpComp.makePostRequest('http://localhost:3000/rmDepartment',{ dId: this.editItem.departId} ).subscribe((res : Response) => {
+            let response = res.json();
+            console.log('deleteItem : ', response);
+        
+            if( Number(response.affectedRows) > 0){
+                this.departmentsObj.removeDepartment(this.editItem);
+                console.log('delete successfully :', this.editItem );
+            }else{
+                console.log('department update fail');
+            }
+            this.clearInput();
+        });
     }
 }

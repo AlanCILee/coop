@@ -112,9 +112,8 @@ const Server = function(options) {
 
             console.log('department req:',departName, ':', departRatio, 'for', database);
 
-            let query = `UPDATE department SET 
-                departName = "${departName}", departRatio = "${departRatio}"               
-                WHERE departId = "${departId}"`;
+            let query = `UPDATE department SET valid = "false"               
+                        WHERE departId = "${departId}"`;
 
             mysql.sendQuery( database, query, function(err, result){
                 if(err){
@@ -122,12 +121,42 @@ const Server = function(options) {
                     res.send({ affectedRows : -1 });
                 }else {
                     console.log('Update new department', result);
+    
+                    let query = `INSERT INTO department (departName, departRatio) 
+                                VALUES ("${departName}", "${departRatio}")`;
+    
+                    mysql.sendQuery( database, query, function(err, result){
+                        if(err){
+                            console.log('sendQuery fail: ', err);
+                            res.send({ insertId : -1 });
+                        }else {
+                            console.log('Insert new department', result);
+                            res.send({ insertId : result.insertId });
+                        }
+                    });
+                }
+            });
+        });
+    
+        app.post('/rmDepartment', function(req, res){
+            let departId = req.body.dId;
+            let database = req.session.company || 'bluelasso';
+        
+            console.log('department delete req:', departId );
+        
+            let query = `UPDATE department SET valid = "false"               
+                        WHERE departId = "${departId}"`;
+        
+            mysql.sendQuery( database, query, function(err, result){
+                if(err){
+                    console.log('sendQuery fail: ', err);
+                    res.send({ affectedRows : -1 });
+                }else {
+                    console.log('deleted department', result);
                     res.send({ affectedRows : result.affectedRows });
                 }
             });
         });
-
-
         
         app.post('/newEmployee', function(req, res){
             let employeeName = req.body.name;
