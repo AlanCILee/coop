@@ -1,6 +1,8 @@
 import { Component, OnInit, Pipe } from '@angular/core';
 import { TimeTable, Time, TimeZone } from "../../model/time";
 import { FormBuilder, FormGroup } from "@angular/forms";
+import { HttpComponent } from "../../core/http.component";
+import { Response } from "@angular/http";
 
 @Component({
     selector: 'timezone',
@@ -13,9 +15,11 @@ export class TimezoneComponent implements OnInit {
     timeTable: Time[] = [];
     form: FormGroup;
     timeZones: Object =[];
+    timeZonesHistory: Object =[];
     editItem: any = null;
 
     constructor(private timeObj: TimeTable,
+                private httpComp: HttpComponent,
                 private fb: FormBuilder){
     }
 
@@ -23,7 +27,9 @@ export class TimezoneComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         // this.timeObj.loadMockTimeZone();
         this.timeZones = this.timeObj.timeZones;
+        this.timeZonesHistory = this.timeObj.timeZonesHistory;
         this.form = this.fb.group({
+            zoneId: [ -1 ],
             zoneName: [ '' ],
             startT: [ '00:00' ],
             endT: [ '00:00' ],
@@ -34,14 +40,41 @@ export class TimezoneComponent implements OnInit {
 
     onSubmit(form: any): any{
         console.log('timezone form result: ',form);
-        this.timeObj.addTimeZone(form.zoneName, form.startT, form.endT);
+    
+        if( form.zoneId > 0){  // update case
+            this.httpComp.makePostRequest('http://localhost:3000/upTimeZone',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+            
+                if( Number(response.insertId) > 0){
+                    console.log('update successfully :', response.insertId );
+                    this.timeObj.addTimeZone(form.zoneId, form.zoneName, form.startT, form.endT, false);
+                    this.timeObj.addTimeZone(response.insertId, form.zoneName, form.startT, form.endT, true);
+                }else{
+                    console.log('invalid zone :');
+                }
+            });
+        }else {             // insert case
+            this.httpComp.makePostRequest('http://localhost:3000/newTimeZone',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+            
+                if( Number(response.insertId) > 0){
+                    console.log('insert successfully :', response.insertId );
+                    this.timeObj.addTimeZone(response.insertId, form.zoneName, form.startT, form.endT, true);
+                }else{
+                    console.log('invalid zone :', response.insertId);
+                }
+            });
+        }
         this.clearInput();
     }
 
     zoneBtn(zone: any){
         console.log('click zoneBtn: ', zone);
         this.form.patchValue({
-            zoneName: zone.key,
+            zoneId: zone.val.zoneId,
+            zoneName: zone.val.zoneName,
             startT: zone.val.startT.timeStr,
             endT: zone.val.endT.timeStr,
         });

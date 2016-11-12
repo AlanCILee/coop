@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 @Injectable()
 export class TimeTable {
 	timeTable: Time[] = [];
-	timeZones: Object =[];
+	timeZonesHistory: Object = [];
+	timeZones: Object =[];              //current timezone
 	timestring: string = '';
 	time: number;
 
@@ -46,11 +47,25 @@ export class TimeTable {
 		return timeNumber;
 	}
 
-	addTimeZone(zName: string, sT: string, eT: string): void {
-		this.timeZones[zName] = new TimeZone(zName,
+	addTimeZone(zId: number, zName: string, sT: string, eT: string, valid: boolean): void {
+		this.timeZonesHistory[zId] = new TimeZone(
+			zId, zName,
 			new Time(sT, this.getTimeNumber(sT)),
-			new Time(eT, this.getTimeNumber(eT)));
-		//ToDo DB Backup
+			new Time(eT, this.getTimeNumber(eT)),
+			valid
+		);
+		
+		if(valid){
+			this.timeZones[zName] = new TimeZone(
+				zId, zName,
+				new Time(sT, this.getTimeNumber(sT)),
+				new Time(eT, this.getTimeNumber(eT)),
+				valid
+			);
+		}else{
+			delete this.timeZones[zName];
+		}
+		console.log('addTimeZone: ', this.timeZonesHistory);
 	}
 
 	removeTimeZone(key: string): void{
@@ -60,17 +75,21 @@ export class TimeTable {
 
 	loadMockTimeZone(): void{
 		mockTimeZone.forEach((zone) =>{
-			this.addTimeZone(zone.zoneName, zone.sT, zone.eT);
+			this.addTimeZone(zone.id, zone.zoneName, zone.sT, zone.eT, zone.valid );
 		});
 	}
 }
 
 export class TimeZone {
-	constructor (public zoneName: string,
-			public startT: Time,
-			public endT: Time){
+	constructor (
+		public zoneId: number,
+		public zoneName: string,
+		public startT: Time,
+		public endT: Time,
+		public valid: boolean){
 	}
 }
+
 export class Time {
 	constructor (public	timeStr: string,
 			public timeNum: number){
@@ -78,7 +97,7 @@ export class Time {
 }
 
 const mockTimeZone = [
-	{zoneName: 'Morning', sT:'08:00', eT:'14:00'},
-	{zoneName: 'Afternoon', sT:'14:00', eT:'22:00'},
+	{id: 1, zoneName: 'Morning', sT:'08:00', eT:'14:00', valid: true},
+	{id: 2, zoneName: 'Afternoon', sT:'14:00', eT:'22:00', valid: true},
 ];
 

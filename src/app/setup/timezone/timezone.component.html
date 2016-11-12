@@ -2,7 +2,9 @@
 
 <div>
 	<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+		
 		<label>TimeZone</label>
+		<input type="hidden" formControlName="zoneId">
 		<input type="text" formControlName="zoneName">
 
 		<label>Start Time </label>
@@ -22,10 +24,17 @@
 		<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
 	</form>
 	<table>
-		<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">
-			<td>{{ zone.val.zoneName}}</td>
-			<td>{{ zone.val.startT.timeStr }}</td>
-			<td>{{ zone.val.endT.timeStr }}</td>
+		<!--<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">-->
+			<!--<td>{{ zone.val.zoneName}}</td>-->
+			<!--<td>{{ zone.val.startT.timeStr }}</td>-->
+			<!--<td>{{ zone.val.endT.timeStr }}</td>-->
+		<!--</tr>-->
+		<tr *ngFor="let zone of timeZonesHistory | mapToIterable" (click)="zoneBtn( zone )">
+			<span *ngIf="zone.val.valid">
+				<td>{{ zone.val.zoneName}}</td>
+				<td>{{ zone.val.startT.timeStr }}</td>
+				<td>{{ zone.val.endT.timeStr }}</td>
+			</span>
 		</tr>
 	</table>
 </div>
