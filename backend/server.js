@@ -48,7 +48,9 @@ const Server = function(options) {
         app.post('/newEmployee', employeeServiceObj.newEmployeeDb);
         app.post('/upEmployee', employeeServiceObj.upEmployeeDb);
         app.post('/rmEmployee', employeeServiceObj.rmEmployeeDb);
-                
+        app.get('/getEmployee', employeeServiceObj.getEmployeeDb);
+        app.get('/getWage', employeeServiceObj.getWageDb);
+        
         app.post('/upTimeZone', timezoneServiceObj.upTimezoneDb);
         app.post('/newTimeZone', timezoneServiceObj.newTimezoneDb);
         app.post('/rmTimeZone', timezoneServiceObj.rmTimezoneDb);

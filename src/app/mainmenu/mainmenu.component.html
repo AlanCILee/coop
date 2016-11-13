@@ -14,14 +14,17 @@
 
 			<label>Name </label>
 			<select formControlName="name">
-				<option *ngFor="let employee of employees" value="{{ employee.empId }}">{{ employee.empName }}</option>
+				<ng-container *ngFor="let employee of employees">
+					<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>
+				</ng-container>
 			</select>
-
-
+			
 			<label>Working Department </label>
 
 			<select formControlName="department">
-				<option *ngFor="let depart of departments">{{ depart.departName }}</option>
+				<ng-container *ngFor="let depart of departments">
+					<option *ngIf="depart.valid">{{ depart.departName }}</option>
+				</ng-container>
 			</select>
 
 			<label>Start Time </label>

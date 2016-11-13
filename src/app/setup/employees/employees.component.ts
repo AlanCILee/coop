@@ -23,7 +23,7 @@ export class EmployeesComponent implements OnInit {
             private departmentsObj: Departments,
             private httpComp: HttpComponent,
             private fb: FormBuilder){
-    };
+    }
 
     ngOnInit(){
         this.employees = this.employeesObj.employees;
@@ -35,8 +35,23 @@ export class EmployeesComponent implements OnInit {
             phone: [ '' ],
             wage: [ '' ],
         });
+        // this.loadEmployees();
     }
 
+    loadEmployees(): void{
+        this.httpComp.makeRequest('http://localhost:3000/getEmployee').subscribe((res : Response) => {
+            let response = res.json();
+            console.log('Http response : ',response);
+        
+            if ( response.err ) {
+                console.log('loadEmployees Fail :');
+            }else{
+                console.log('loadEmployees :', response);
+            }
+            this.clearInput();
+        });
+    }
+    
     getDepartName(departId: number){
         return this.departmentsObj.getDepartmentName(departId);
     }

@@ -1,22 +1,21 @@
 import { Injectable } from "@angular/core";
+import { HttpComponent } from "../core/http.component";
+import { Response } from "@angular/http";
 
 @Injectable()
 export class Employees {
     employees: Employee[] = [];
-
+	
+	constructor(
+	            private httpComp: HttpComponent,
+	            ){}
+	
     addEmployee(empId: number,
                 empName: string,
                 departId: number,
                 empPhone: string,
                 wage: Wage,
-                // wage: number,
                 ): void{
-	    //
-    	// if(empId < 0){
-    	// 	this.employees.push(
-    	// 		new Employee(empId, empName, departId, empPhone, wages, true)
-		 //    );
-	    // }else {
 	    
 	    let updateEmp: boolean = false;
 	    
@@ -27,11 +26,6 @@ export class Employees {
 		        emp.empPhone = empPhone;
 	            if(wage)
 		            emp.wages.push(wage);
-		        // let latestWage: number = emp.getLatestWage().wage;
-		        // if(latestWage != wage.wage){
-                 //    emp.wages.push(wage);
-		        // }
-		        // emp.valid = valid;
 	            updateEmp = true;
 	        }
 	    });
@@ -42,17 +36,6 @@ export class Employees {
 	            new Employee(empId, empName, departId, empPhone, wages, true)
 	        );
 	    }
-    		//
-		// if(valid){
-         //    this.employees.push( new Employee(empId,
-	     //        empName, departId, empPhone, wage, true));
-		// }else{
-		//     this.employees.forEach((employee)=> {
-		// 	    if (employee.empId == empId) {
-		// 		    employee.valid = false;
-		// 	    }
-		//     });
-		// }
         console.log('after addedEmployee: ', this.employees);
     }
 
@@ -63,9 +46,6 @@ export class Employees {
 				employee.valid = false;
 			}
 		});
-		//
-		// let index = this.employees.indexOf(emp);
-		// this.employees.splice( index, 1 );
 	}
 
     loadEmployee(employees: Object[]): void {
@@ -79,10 +59,42 @@ export class Employees {
 	        this.employees.push(
 		        new Employee( emp['empid'], emp['name'], emp['depart'], emp['phone'], wages, true)
 	        );
-	        // this.addEmployee( emp['empid'], emp['name'], emp['depart'], emp['phone'], emp['wage'], true);
         });
-	    
-	    console.log('loadEmployee: ', employees);
+
+	    this.httpComp.makeRequest('http://localhost:3000/getEmployee').subscribe((res : Response) => {
+		    let response = res.json();
+		    let response2: any;
+		
+		    if ( response.err ) {
+			    console.log('loadEmployees Fail :');
+		    }else{
+			    console.log('loadEmployees from DB :', response);
+	            this.httpComp.makeRequest('http://localhost:3000/getWage').subscribe((res2 : Response) => {
+		            response2 = res2.json();
+		            console.log('load wages', response2);
+	            	if ( response2.err ) {
+			            console.log(response.err);
+	                }else {
+	                	response.forEach((emp:any)=>{
+				            let wages: Wage[] = [];
+			                response2.forEach((wage:any) => {
+					            if(wage['empId'] == emp['empId']){
+						            wages.push(new Wage(wage['empId'], wage['date']));
+					            }
+				            });
+			                
+			                if(wages.length == 0)
+			                    wages.push(new Wage(1, '1999-12-31 00:00:00'));
+				
+				            this.employees.push(
+					            new Employee( emp['empid'], emp['name'], emp['departId'], emp['phone'], wages, emp['valid'])
+				            );
+			            });
+	                    console.log('loadEmployee: ', this.employees);
+	                }
+	            });
+		    }
+        });
     }
 
     initEmployee(){

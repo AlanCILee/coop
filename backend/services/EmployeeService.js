@@ -68,7 +68,7 @@ const EmployeeService = function(options) {
                              VALUES ("${employeeWage}", "${employeeId}", "${wageDate}")`;
 					mysql.sendQuery(database, query, function (err, result2) {
 						if (err) {
-							console.log('sendQuery fail: ', err);
+							console.log('upEmployeeDb fail: ', err);
 							res.send({affectedRows: -1});
 						} else {
 							console.log('Inserted new employee wage', result2);
@@ -115,11 +115,45 @@ const EmployeeService = function(options) {
 	
 		mysql.sendQuery( database, query, function(err, result){
 			if(err){
-				console.log('sendQuery fail: ', err);
+				console.log('rmEmployeeDb fail: ', err);
 				res.send({ affectedRows : -1 });
 			}else {
 				console.log('deleted department', result);
 				res.send({ affectedRows : result.affectedRows });
+			}
+		});
+	};
+	
+	this.getEmployeeDb = function(req, res){
+		console.log('employee list req');
+		let database = req.session.company || 'bluelasso';
+		
+		let query = `SELECT * FROM employees`;
+		
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getEmployeeDb fail: ', err);
+				res.send({ err : 'getEmployeeDb fail' });
+			}else {
+				console.log('getEmployeeDb', results);
+				res.send(results);
+			}
+		});
+	};
+	
+	this.getWageDb = function(req, res){
+		console.log('employee list req');
+		let database = req.session.company || 'bluelasso';
+		
+		let query = `SELECT * FROM wage`;
+		
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getWageDb fail: ', err);
+				res.send({ err : 'getWageDb fail' });
+			}else {
+				console.log('getWageDb', results);
+				res.send(results);
 			}
 		});
 	};
