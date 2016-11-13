@@ -87,7 +87,7 @@ export class Employees {
 			                    wages.push(new Wage(1, '1999-12-31 00:00:00'));
 				
 				            this.employees.push(
-					            new Employee( emp['empid'], emp['name'], emp['departId'], emp['phone'], wages, emp['valid'])
+					            new Employee( emp['empId'], emp['name'], emp['departId'], emp['phone'], wages, emp['valid'])
 				            );
 			            });
 	                    console.log('loadEmployee: ', this.employees);

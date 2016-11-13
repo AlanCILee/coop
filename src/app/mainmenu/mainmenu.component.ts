@@ -44,11 +44,11 @@ export class MainMenuComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         
         this.form = this.fb.group({
-        	jobId: [ '' ],
+        	jobId: [ -1 ],
             name: [ '' ],
             department: [ '' ],
-            startT: [ '' ],
-            endT: [ '' ],
+            startT: [ '00:00' ],
+            endT: [ '00:00' ],
             date: [ '' ],
         });
     }

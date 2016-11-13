@@ -23,10 +23,10 @@
 
 			<select formControlName="department">
 				<ng-container *ngFor="let depart of departments">
-					<option *ngIf="depart.valid">{{ depart.departName }}</option>
+					<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>
 				</ng-container>
 			</select>
-
+			
 			<label>Start Time </label>
 
 			<select formControlName="startT">
