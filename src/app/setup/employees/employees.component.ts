@@ -55,30 +55,52 @@ export class EmployeesComponent implements OnInit {
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
         let now = moment().format('YYYY-MM-DD HH:mm:ss');
-        // let wage : Object = { wage: form.wage, date: now};
-        // form.date = now;
+        let wage : Object = { wage: form.wage, date: now};
+        form.date = now;
 
-        let newWage: Wage[] = [];
-        newWage.push(new Wage(form.wage, now));
+        // let newWage: Wage[] = [];
+        // newWage.push(new Wage(form.wage, now));
+        let newWage: Wage = new Wage(form.wage, now);
 
         console.log('employee form result: ',form);
 
         if( form.eId > 0){  // update case
-            this.httpComp.makePostRequest('http://localhost:3000/upEmployee',form).subscribe((res : Response) => {
+	        let emp = this.employeesObj.getEmployee(form.eId);
+	        if (form.wage == emp.getLatestWage()) {
+		        console.log('emp.getLatestWage():', emp.getLatestWage());
+		        form.date = null;
+	        }
+	
+	        this.httpComp.makePostRequest('http://localhost:3000/upEmployee',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('Http response : ',response);
-
-                if( Number(response.insertId) > 0){
-                    console.log('update successfully :', response.changedRows );
-                    this.employeesObj.addEmployee(form.eId,
-                        form.name, form.department, form.phone, form.wage, false);
-                    this.employeesObj.addEmployee(response.insertId,
-                        form.name, form.department, form.phone, form.wage, true);
-                }else{
-                    console.log('upEmployee fail');
-                }
+		
+		        if (Number(response.affectedRows) > 0) {
+			        console.log('update successfully :', response.changedRows);
+			        if (form.date) {
+				        this.employeesObj.addEmployee(form.eId,
+					        form.name, form.department, form.phone, newWage);
+			        } else {
+				        this.employeesObj.addEmployee(form.eId,
+					        form.name, form.department, form.phone, null);
+			        }
+		        } else {
+			        console.log('invalid user :');
+		        }
+		
+		        //
+                // if( Number(response.insertId) > 0){
+                //     console.log('update successfully :', response.changedRows );
+                //     this.employeesObj.addEmployee(form.eId,
+                //         form.name, form.department, form.phone, form.wage, false);
+                //     this.employeesObj.addEmployee(response.insertId,
+                //         form.name, form.department, form.phone, form.wage, true);
+                // }else{
+                //     console.log('upEmployee fail');
+                // }
                 this.clearInput();
             });
+	        
         }else {             // insert case
             this.httpComp.makePostRequest('http://localhost:3000/newEmployee',form).subscribe((res : Response) => {
                 let response = res.json();
@@ -87,7 +109,7 @@ export class EmployeesComponent implements OnInit {
                 if( Number(response.insertId) > 0){
                     console.log('insert successfully :', response.insertId );
                     this.employeesObj.addEmployee(response.insertId,
-                        form.name, form.department, form.phone, form.wage, true);
+                        form.name, form.department, form.phone, newWage);
                 }else{
                     console.log('newEmployee fail');
                 }
@@ -103,8 +125,8 @@ export class EmployeesComponent implements OnInit {
             name: emp.empName,
             department: emp.departId,
             phone: emp.empPhone,
-            wage: emp.wage
-            // wage: emp.getLatestWage().wage,
+            // wage: emp.wage
+            wage: emp.getLatestWage().wage,
         });
         this.editItem = emp;
     }
