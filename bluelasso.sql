@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 16-11-12 05:10
+-- Generation Time: 16-11-14 00:01
 -- 서버 버전: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -68,39 +68,35 @@ CREATE TABLE IF NOT EXISTS `employees` (
   `name` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `departId` int(50) DEFAULT NULL,
-  `wage` float NOT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`empId`),
   KEY `Foreign_department` (`departId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- 테이블의 덤프 데이터 `employees`
 --
 
-INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `wage`, `valid`) VALUES
-(6, 'dfd', '12', 1, 0, 1),
-(7, 'jjj', '123', 2, 0, 1),
-(8, 'fgt', '333', 0, 0, 1),
-(9, 'ggg', '444', 2, 0, 1),
-(10, 'abc', '12', 2, 0, 1),
-(11, 'ggg', '111', 3, 0, 1),
-(12, 'bbb', '12', 1, 0, 1),
-(13, 'yt6', '7', 0, 0, 1),
-(14, 'hy', '9', 1, 0, 1),
-(15, 'qwe', '12', 1, 0, 1),
-(16, 'qaz', '12', 1, 0, 1),
-(17, 'qwe', '1', 2, 0, 1),
-(18, 'agde2', '12', 0, 0, 1),
-(19, 'eadc', '222', 2, 0, 1),
-(20, 'KKK', '123', 2, 21, 1),
-(21, 'rrr', '123', 2, 321, 0),
-(22, 'rrr', '123', 2, 21, 1),
-(23, 'ggg', '321', 3, 12, 0),
-(24, 'ggg', '321', 3, 23, 0),
-(25, 'tre', '12', 1, 1, 0),
-(26, 'tre', '12', 1, 13, 0),
-(27, 'gda', '123', 0, 21, 0);
+INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `valid`) VALUES
+(6, 'dfd', '12', 1, 1),
+(7, 'jjj', '123', 2, 1),
+(8, 'fgt', '333', 0, 1),
+(9, 'ggg', '444', 2, 1),
+(10, 'abc', '12', 2, 1),
+(11, 'ggg', '111', 3, 1),
+(12, 'bbb', '12', 1, 1),
+(13, 'yt6', '7', 0, 1),
+(14, 'hy', '9', 1, 1),
+(15, 'qwe', '12', 1, 1),
+(16, 'qaz', '12', 1, 1),
+(17, 'qwe', '1', 2, 1),
+(18, 'agde2', '12', 0, 1),
+(19, 'eadc', '222', 2, 1),
+(30, 'rew', '444', 3, 0),
+(31, 'zasa', '1', 1, 1),
+(32, 'rew', '444', 3, 1),
+(33, 'trew', '12', 2, 1),
+(34, 'trewq', '1', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -203,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `wage` (
   PRIMARY KEY (`wageId`),
   UNIQUE KEY `wageId` (`wageId`),
   KEY `empId` (`empId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
 
 --
 -- 테이블의 덤프 데이터 `wage`
@@ -229,7 +225,13 @@ INSERT INTO `wage` (`wageId`, `wage`, `empId`, `date`) VALUES
 (25, 29, 17, '2016-11-10 00:00:00'),
 (26, 31, 18, '2016-11-11 00:00:00'),
 (27, 33, 18, '2016-11-11 00:00:00'),
-(28, 32, 19, '2016-11-11 11:24:41');
+(28, 32, 19, '2016-11-11 11:24:41'),
+(29, 2, 31, '2016-11-13 11:17:56'),
+(30, 11, 32, '2016-11-13 11:41:39'),
+(31, 12, 30, '2016-11-13 11:46:35'),
+(32, 21, 33, '2016-11-13 11:49:30'),
+(33, 2, 34, '2016-11-13 11:53:10'),
+(34, 3, 34, '2016-11-13 11:53:29');
 
 --
 -- 덤프된 테이블의 제약사항
