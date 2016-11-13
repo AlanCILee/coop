@@ -118,8 +118,8 @@ const mockSchedule = [
 ];
 
 export class Job implements Comparable<Job>{
-	lDuration: number;
-	dDuration: number;
+	// lDuration: number;
+	// dDuration: number;
 	startN: number;
 	endN: number;
 
@@ -133,8 +133,8 @@ export class Job implements Comparable<Job>{
 		public endT: string,) {
 			this.startN = this.calTime(startT);
 			this.endN = this.calTime(endT);
-			this.lDuration = (16 * 60 - this.startN);
-			this.dDuration = (this.endN - 16 * 60);
+			// this.lDuration = (16 * 60 - this.startN);
+			// this.dDuration = (this.endN - 16 * 60);
 	}
 
 	calTime(timeStr: string): number {
@@ -154,33 +154,33 @@ export class Job implements Comparable<Job>{
 		else
 			return 0;
 	}
-	
-	calLDuration (startN:number, endN:number) : number{
-		let lDuration: number;
-		let setTime = 16 * 60;
-
-		if (startN >= setTime){
-			lDuration = 0;
-		}else if (endN <= setTime) {
-			lDuration = endN - startN;
-		}else{
-			lDuration = setTime - startN;
-		}
-		return lDuration;
-	}
-
-	calDDuration (startN:number, endN:number) : number{
-		let dDuration: number;
-		let setTime = 16 * 60;
-
-		if (endN <= setTime){
-			dDuration = 0;
-		}else if (startN >= setTime) {
-			dDuration = endN - startN;
-		}else{
-			dDuration = endN - setTime;
-		}
-		return dDuration;
-	}
+	//
+	// calLDuration (startN:number, endN:number) : number{
+	// 	let lDuration: number;
+	// 	let setTime = 16 * 60;
+	//
+	// 	if (startN >= setTime){
+	// 		lDuration = 0;
+	// 	}else if (endN <= setTime) {
+	// 		lDuration = endN - startN;
+	// 	}else{
+	// 		lDuration = setTime - startN;
+	// 	}
+	// 	return lDuration;
+	// }
+	//
+	// calDDuration (startN:number, endN:number) : number{
+	// 	let dDuration: number;
+	// 	let setTime = 16 * 60;
+	//
+	// 	if (endN <= setTime){
+	// 		dDuration = 0;
+	// 	}else if (startN >= setTime) {
+	// 		dDuration = endN - startN;
+	// 	}else{
+	// 		dDuration = endN - setTime;
+	// 	}
+	// 	return dDuration;
+	// }
 }
 
