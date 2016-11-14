@@ -112,7 +112,7 @@ export class DispScheduleComponent implements OnInit {
 			this.departmentsObj.departments.forEach((department)=> {
 
 				departJob = jobs.filter((job)=>{
-					return job.departName == department.departName;
+					return job.departId == department.departId;
 				});
 
 				if(departJob.length > 0) {

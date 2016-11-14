@@ -21,14 +21,14 @@ export class Schedule implements OnInit {
 			date: string,
 			empId: number,
             empName: string,
-			departName: string,
+			departId: number,
             startT: string,
             endT: string,
 	        ): void{
 
 		if(jobId <0 ) {     // ADD Case
 			jobId = this.jobs.length+1;
-			let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+			let job = new Job(jobId, date, empId, empName, departId, startT, endT);
 			this.jobs.push(job);
 			console.log("add new job :", job);
 		}else {
@@ -38,7 +38,7 @@ export class Schedule implements OnInit {
 				updateJob.date = date;
 				updateJob.empId = empId;
 				updateJob.empName = empName;
-				updateJob.departName = departName;
+				updateJob.departId = departId;
 				updateJob.startT = startT;
 				updateJob.endT = endT;
 				updateJob.startN = updateJob.calTime(startT);
@@ -46,7 +46,7 @@ export class Schedule implements OnInit {
 
 				console.log("update job :", updateJob);
 			} else {
-				let job = new Job(jobId, date, empId, empName, departName, startT, endT);
+				let job = new Job(jobId, date, empId, empName, departId, startT, endT);
 				this.jobs.push(job);
 				console.log("Import job :", job);
 			}
@@ -60,7 +60,7 @@ export class Schedule implements OnInit {
 		console.log('Initial Load schedule');
 		mockSchedule.forEach(( schedule ) => {
 			this.addJob( schedule['jobId'], schedule['date'], schedule['empId'], schedule['name'],
-				schedule['departName'], schedule['startT'], schedule['endT']);
+				schedule['departId'], schedule['startT'], schedule['endT']);
 		});
 	}
 
@@ -128,7 +128,7 @@ export class Job implements Comparable<Job>{
 		public date: string,
 		public empId: number,
 		public empName: string,
-		public departName: string,
+		public departId: number,
 		public startT: string,
 		public endT: string,) {
 			this.startN = this.calTime(startT);

@@ -90,7 +90,7 @@ export class MainMenuComponent implements OnInit {
 	    this.form.patchValue({
 		    jobId: job.jobId,
 		    name: job.empId,
-		    department: job.departName,
+		    department: job.departId,
 		    startT: job.startT,
 		    endT: job.endT,
 		    date: job.date
