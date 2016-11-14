@@ -32,11 +32,13 @@ export class AppComponent implements OnInit {
     }
     
     ngOnInit() {
+	    // this.employees.initEmployee()
+		    // .then(console.log, console.log);
         this.employees.initEmployee();
         this.departments.initDepartments();
+        this.timeObj.initTimeZone();
         this.schedule.loadSchedule();
         this.time.createTimeTable();
-        this.timeObj.loadMockTimeZone();
         this.tipObj.loadMockTips();
         // localStorage.removeItem('currentUser');
         // this.form = this.fb.group({

@@ -97,10 +97,22 @@ export class Employees {
         });
     }
 
+    // initEmployee():Promise<string>{
+    	// return new Promise((resolve, reject)=> {
+	    //     console.log('start initEmployee Promise ===============');
+	    //     this.loadEmployee(mockEmployees);
+		 //    resolve('Finished Loading Employee Promise ==============');
+	    // });
     initEmployee(){
+	    this.loadEmployee(mockEmployees);
         console.log('initEmployee Loading Employee');
-        this.loadEmployee(mockEmployees);
     }
+
+	asyncfunction():Promise<string> {
+		return new Promise((resolve, reject)=>{
+			setTimeout(()=>resolve("Hello world!"), 1000);
+		});
+	}
 
     getEmployeeName(employeeId: number): string{
             console.log('getEmployeeName :'+ employeeId);
