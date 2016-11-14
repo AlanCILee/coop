@@ -44,7 +44,8 @@ const Server = function(options) {
         app.post('/newDepartment', departmentServiceObj.newDepartmentDb);
         app.post('/upDepartment', departmentServiceObj.upDepartmentDb);
         app.post('/rmDepartment', departmentServiceObj.rmDepartmentDb);
-                
+        app.get('/getDepartment', departmentServiceObj.getDepartmentDb);
+
         app.post('/newEmployee', employeeServiceObj.newEmployeeDb);
         app.post('/upEmployee', employeeServiceObj.upEmployeeDb);
         app.post('/rmEmployee', employeeServiceObj.rmEmployeeDb);
@@ -54,6 +55,7 @@ const Server = function(options) {
         app.post('/upTimeZone', timezoneServiceObj.upTimezoneDb);
         app.post('/newTimeZone', timezoneServiceObj.newTimezoneDb);
         app.post('/rmTimeZone', timezoneServiceObj.rmTimezoneDb);
+        app.get('/getTimeZone', timezoneServiceObj.getTimeZoneDb);
     };
 
     this.createServer = function () {

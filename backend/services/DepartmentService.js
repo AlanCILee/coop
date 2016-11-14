@@ -76,6 +76,23 @@ const DepartmentService = function(options) {
 			}
 		});
 	};
+
+	this.getDepartmentDb = function(req, res) {
+		console.log('department list req');
+		let database = req.session.company || 'bluelasso';
+
+		let query = `SELECT * FROM department`;
+
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getDepartmentDb fail: ', err);
+				res.send({ err : 'getEmployeeDb fail' });
+			}else {
+				console.log('getDepartmentDb', results);
+				res.send(results);
+			}
+		});
+	};
 }
 
 module.exports = DepartmentService;

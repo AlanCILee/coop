@@ -1,4 +1,6 @@
 import { Injectable } from "@angular/core";
+import { HttpComponent } from "../core/http.component";
+import { Response } from "@angular/http";
 
 @Injectable()
 export class TimeTable {
@@ -7,6 +9,9 @@ export class TimeTable {
 	timeZones: Object =[];              //current timezone
 	timestring: string = '';
 	time: number;
+
+	constructor(
+		private httpComp: HttpComponent,){}
 
 	createTimeTable(): void{
 		for (var hour =0; hour < 24; hour++){
@@ -80,6 +85,31 @@ export class TimeTable {
 		mockTimeZone.forEach((zone) =>{
 			this.addTimeZone(zone.id, zone.zoneName, zone.sT, zone.eT, zone.valid );
 		});
+	}
+
+	initTimeZone(){
+		this.loadMockTimeZone();
+
+		this.httpComp.makeRequest('http://localhost:3000/getTimeZone').subscribe((res : Response) => {
+			let response = res.json();
+			// let response2: any;
+
+			if ( response.err ) {
+				console.log('loadTimezone Fail :');
+			}else{
+				console.log('loadTimezone from DB :', response);
+				// this.departments.push(new Department( departId, departName, ratio, true ));
+				response.forEach((zone: any)=>{
+					this.timeZonesHistory[zone.zoneId] = new TimeZone(
+						zone.zoneId, zone.zoneName,
+						new Time(zone.startT, this.getTimeNumber(zone.startT,)),
+						new Time(zone.endT, this.getTimeNumber(zone.endT)),
+						zone.valid
+					);
+				});
+			}
+		});
+		console.log('initTimeZone Loading Timezone');
 	}
 }
 

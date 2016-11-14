@@ -30,12 +30,13 @@ const Mysql = function () {
         connectDb(database, function(err) {
             if(err){
                 console.log('Connect DB Error :', err);
+                disconnectDb();
             }else{
                 conn.query( query, function(err, rows, fields){
+                    disconnectDb();
                     return callback(err, rows, fields);
                 });
             }
-            disconnectDb();
         });
     };
 };

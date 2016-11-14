@@ -1,8 +1,13 @@
 import { Injectable } from "@angular/core";
+import { HttpComponent } from "../core/http.component";
+import { Response } from "@angular/http";
 
 @Injectable()
 export class Departments {
     departments: Department[] =[];
+
+    constructor(
+        private httpComp: HttpComponent,){}
 
     addDepartment(departId: number, departName: string, ratio: number, valid: boolean): void{
         if(valid){
@@ -35,6 +40,21 @@ export class Departments {
     initDepartments(){
         console.log('initDepartments Loading Departments');
         this.loadDepartments(mockDepartments);
+
+        this.httpComp.makeRequest('http://localhost:3000/getDepartment').subscribe((res : Response) => {
+            let response = res.json();
+            // let response2: any;
+
+            if ( response.err ) {
+                console.log('loadDepartments Fail :');
+            }else{
+                console.log('loadDepartments from DB :', response);
+                // this.departments.push(new Department( departId, departName, ratio, true ));
+                response.forEach((depart: any)=>{
+                    this.departments.push(new Department(depart.departId, depart.departName, depart.departRatio, depart.valid ));
+                });
+            }
+        });
     }
 
     getDepartmentName(departId: number): string{

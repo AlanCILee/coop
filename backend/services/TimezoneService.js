@@ -81,6 +81,22 @@ const TimezoneService = function(options) {
 	};
 
 
+	this.getTimeZoneDb = function(req, res) {
+		console.log('timezone list req');
+		let database = req.session.company || 'bluelasso';
+
+		let query = `SELECT * FROM timezone`;
+
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getTimeZoneDb fail: ', err);
+				res.send({ err : 'getTimeZoneDb fail' });
+			}else {
+				console.log('getTimeZoneDb', results);
+				res.send(results);
+			}
+		});
+	};
 }
 
 module.exports = TimezoneService;
