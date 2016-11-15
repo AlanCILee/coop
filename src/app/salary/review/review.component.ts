@@ -83,8 +83,10 @@ export class ReviewComponent implements OnInit {
 
             if(!(job.empId in this.jobsDates[job.date][job.departId])){
                 this.jobsDates[job.date][job.departId][job.empId] = {};
-                this.jobsDates[job.date][job.departId][job.empId]['name'] = job.empName;
- 
+                // this.jobsDates[job.date][job.departId][job.empId]['name'] = job.empName;
+                this.jobsDates[job.date][job.departId][job.empId]['name']
+                    = this.employeesObj.getEmployeeName(job.empId);
+
                 this.jobsDates[job.date][job.departId][job.empId]['tip'] = {};
                 this.jobsDates[job.date][job.departId][job.empId]['wage'] = {};
                 this.jobsDates[job.date][job.departId][job.empId]['hour']
@@ -99,7 +101,9 @@ export class ReviewComponent implements OnInit {
 
             if(!(job.departId in this.jobsPeople[job.empId][job.date])){
                 this.jobsPeople[job.empId][job.date][job.departId] = {};
-                this.jobsPeople[job.empId][job.date][job.departId]['name'] = job.empName;
+                // this.jobsPeople[job.empId][job.date][job.departId]['name'] = job.empName;
+                this.jobsPeople[job.empId][job.date][job.departId]['name']
+                    = this.employeesObj.getEmployeeName(job.empId);
 
                 this.jobsPeople[job.empId][job.date][job.departId]['tip'] = {};
                 this.jobsPeople[job.empId][job.date][job.departId]['wage'] = {};
@@ -110,7 +114,7 @@ export class ReviewComponent implements OnInit {
             let empHours = this.jobsDates[job.date][job.departId][job.empId]['hour'];
             let depHours = this.dailyHours[job.date][job.departId]['hour'];
             
-            console.log(job.date, job.departId, job.empName);
+            // console.log(job.date, job.departId, job.empName);
             console.log('hourResult', empHours);
            
             Object.keys(empHours).forEach((zone)=>{

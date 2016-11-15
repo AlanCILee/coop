@@ -37,7 +37,8 @@ export class AppComponent implements OnInit {
         this.employees.initEmployee();
         this.departments.initDepartments();
         this.timeObj.initTimeZone();
-        this.schedule.loadSchedule();
+        // this.schedule.loadSchedule();
+        this.schedule.initSchedule();
         this.time.createTimeTable();
         this.tipObj.loadMockTips();
         // localStorage.removeItem('currentUser');

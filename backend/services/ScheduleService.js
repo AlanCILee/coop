@@ -69,6 +69,26 @@ const ScheduleService = function(options) {
 			}
 		});
 	};
+
+	this.getScheduleDb = function (req, res) {
+		console.log('schedule list req');
+		let database = req.session.company || 'bluelasso';
+
+		let query = `SELECT * FROM schedule WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}"`;
+
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getScheduleDb fail: ', err);
+				res.send({ err : 'getScheduleDb fail' });
+			}else {
+				console.log('getScheduleDb', results);
+				res.send(results);
+			}
+		});
+
+
+
+	}
 }
 
 module.exports = ScheduleService;

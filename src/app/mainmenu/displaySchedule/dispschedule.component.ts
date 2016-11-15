@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, EventEmitter }  from '@angular/core';
 import { Job } from "../../model/schedule";
 import { Department, Departments } from "../../model/department";
+import { Employees } from "../../model/employee";
 
 // declare var Snap: any;// = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 
@@ -27,7 +28,8 @@ export class DispScheduleComponent implements OnInit {
 	private sendJob: EventEmitter<Job>;
 	jobsDatesDeparts: any[] = [];
 	
-	constructor(private departmentsObj: Departments) {
+	constructor(private departmentsObj: Departments,
+				private employeesObj: Employees) {
 		this.sendJob = new EventEmitter<Job>();
 	}
 
@@ -271,11 +273,14 @@ export class DispScheduleComponent implements OnInit {
 				
 				departJob.forEach((job) => {
 					// console.log('each job: ', job);
-					if (!empOffset[job.empName]) {
+					// if (!empOffset[job.empName]) {
+					if (!empOffset[job.empId]) {
 						this.hOffset += 20;
-						empOffset[job.empName] = this.hOffset;
-						
-						svg.text(0, empOffset[job.empName], job.empName).attr({
+						// empOffset[job.empName] = this.hOffset;
+						empOffset[job.empId] = this.hOffset;
+
+						// svg.text(0, empOffset[job.empName], job.empName).attr({
+						svg.text(0, empOffset[job.empId], this.employeesObj.getEmployeeName(job.empId)).attr({
 							font: "100 1em Source Sans Pro",
 							textAnchor: "left",
 							fill: "#FFF"
@@ -285,7 +290,8 @@ export class DispScheduleComponent implements OnInit {
 					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
 					let w = HOURW * (job.endN - job.startN) /60;
 					// console.log("x: ",x, "w: ",w );
-					svg.rect(x, empOffset[job.empName]-20, w, 20).attr({
+					// svg.rect(x, empOffset[job.empName]-20, w, 20).attr({
+					svg.rect(x, empOffset[job.empId]-20, w, 20).attr({
 						fill: "#FFF",
 						stroke: "#000",
 						strokeWidth: 1

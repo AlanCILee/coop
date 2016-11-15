@@ -2,25 +2,28 @@ import {Component, OnInit, Injectable } from '@angular/core';
 import { TimeTable } from './time';
 import { Comparable } from "../core/comparable";
 import * as moment from 'moment';
+import { HttpComponent } from "../core/http.component";
+import { Response } from "@angular/http";
+import { Employees } from "./employee";
 
 @Injectable()
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
 	// jobsBST: BinarySearchTree<Job>;
 
-	constructor(){
-		console.log('Schedule class constructor');
-	}
+	constructor(
+		private httpComp: HttpComponent,
+		private employeeObj: Employees,){}
 
 	ngOnInit (){
-		console.log("ngOnInit of Schdeul");
+		console.log("ngOnInit of Schedule");
 		// this.jobsBST = new BinarySearchTree<Job>();
 	}
 	
 	addJob( jobId: number,
 			date: string,
 			empId: number,
-            empName: string,
+            // empName: string,
 			departId: number,
             startT: string,
             endT: string,
@@ -28,7 +31,8 @@ export class Schedule implements OnInit {
 
 		if(jobId <0 ) {     // ADD Case
 			jobId = this.jobs.length+1;
-			let job = new Job(jobId, date, empId, empName, departId, startT, endT);
+			// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
+			let job = new Job(jobId, date, empId, departId, startT, endT);
 			this.jobs.push(job);
 			console.log("add new job :", job);
 		}else {
@@ -37,7 +41,7 @@ export class Schedule implements OnInit {
 			if (updateJob) {
 				updateJob.date = date;
 				updateJob.empId = empId;
-				updateJob.empName = empName;
+				// updateJob.empName = empName;
 				updateJob.departId = departId;
 				updateJob.startT = startT;
 				updateJob.endT = endT;
@@ -46,7 +50,8 @@ export class Schedule implements OnInit {
 
 				console.log("update job :", updateJob);
 			} else {
-				let job = new Job(jobId, date, empId, empName, departId, startT, endT);
+				// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
+				let job = new Job(jobId, date, empId, departId, startT, endT);
 				this.jobs.push(job);
 				console.log("Import job :", job);
 			}
@@ -59,11 +64,53 @@ export class Schedule implements OnInit {
 	loadSchedule(): void {
 		console.log('Initial Load schedule');
 		mockSchedule.forEach(( schedule ) => {
-			this.addJob( schedule['jobId'], schedule['date'], schedule['empId'], schedule['name'],
+			this.addJob( schedule['jobId'], schedule['date'], schedule['empId'],
 				schedule['departId'], schedule['startT'], schedule['endT']);
 		});
 	}
 
+	initSchedule(){
+		let now = moment();
+		let weekstart = moment().weekday(1).format('YYYY-MM-DD');
+		console.log("Now: ", weekstart);      // This monday
+		// now = moment().weekday(1);      // This monday
+		// console.log("Now: ", now.format('YYYY-MM-DD'));      // This monday
+		let until = now.add(7,'days').format('YYYY-MM-DD');
+		console.log("Until: ", until);      // This monday
+		let period: Object = {
+			startD: weekstart,
+			endD: until,
+		}
+
+		// let days: string[] = [];
+		// let listT: Object = {};
+		// let momentDay = moment(date);
+		//
+		// days.push(date);
+		//
+		// for(var i=0; i < day; i++){
+		// 	days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
+		// }
+
+
+		console.log('initSchedule Loading Schedules');
+		this.loadSchedule();
+
+		this.httpComp.makePostRequest('http://localhost:3000/getSchedule', period).subscribe((res : Response) => {
+			let response = res.json();
+
+			if ( response.err ) {
+				console.log('initSchedule Fail :');
+			}else{
+				console.log('initSchedule from DB :', response);
+				response.forEach((schedule: any)=>{
+					let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
+						schedule.departId, schedule.startT, schedule.endT);
+					this.jobs.push(job);
+				});
+			}
+		});
+	}
 
 	getJobs(date: string, day: number): Job[] {
 		let days: string[] = [];
@@ -127,7 +174,7 @@ export class Job implements Comparable<Job>{
 		public jobId: number,
 		public date: string,
 		public empId: number,
-		public empName: string,
+		// public empName: string,
 		public departId: number,
 		public startT: string,
 		public endT: string,) {

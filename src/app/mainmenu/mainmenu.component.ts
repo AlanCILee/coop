@@ -15,6 +15,7 @@ import { Schedule, Job } from "../model/schedule";
     templateUrl: './mainmenu.component.html',
     styleUrls: ['./mainmenu.component.css']
 })
+
 export class MainMenuComponent implements OnInit {
     departments: Department[];
     employees: Employee[];
@@ -69,8 +70,8 @@ export class MainMenuComponent implements OnInit {
                 if( Number(response.affectedRows) > 0){
                     console.log('update schedule successfully :', response.affectedRows );
                     this.dScheduleObj.addJob(form.jobId, form.date,
-                        form.empId, this.employeesObj.getEmployeeName(form.empId),
-                        form.department, form.startT, form.endT);
+                        // form.empId, this.employeesObj.getEmployeeName(form.empId),
+                        form.empId, form.department, form.startT, form.endT);
                 }else{
                     console.log('department insert fail');
                 }
@@ -85,8 +86,7 @@ export class MainMenuComponent implements OnInit {
                 if( Number(response.insertId) > 0){
                     console.log('insert schedule successfully :', response.insertId );
                     this.dScheduleObj.addJob(response.insertId, form.date,
-                        form.empId, this.employeesObj.getEmployeeName(form.empId),
-                        form.department, form.startT, form.endT);
+                        form.empId, form.department, form.startT, form.endT);
                 }else{
                     console.log('department insert fail');
                 }
