@@ -9,6 +9,8 @@ import { Employees } from "./employee";
 @Injectable()
 export class Schedule implements OnInit {
 	jobs: Job[] = [];
+	startD: string;
+	endD: string;
 	// jobsBST: BinarySearchTree<Job>;
 
 	constructor(
@@ -71,15 +73,12 @@ export class Schedule implements OnInit {
 
 	initSchedule(){
 		let now = moment();
-		let weekstart = moment().weekday(1).format('YYYY-MM-DD');
-		console.log("Now: ", weekstart);      // This monday
-		// now = moment().weekday(1);      // This monday
-		// console.log("Now: ", now.format('YYYY-MM-DD'));      // This monday
-		let until = now.add(7,'days').format('YYYY-MM-DD');
-		console.log("Until: ", until);      // This monday
+		this.startD = moment().weekday(1).format('YYYY-MM-DD');
+		this.endD = now.add(7,'days').format('YYYY-MM-DD');
+
 		let period: Object = {
-			startD: weekstart,
-			endD: until,
+			startD: this.startD,
+			endD: this.endD,
 		}
 
 		// let days: string[] = [];
@@ -112,19 +111,69 @@ export class Schedule implements OnInit {
 		});
 	}
 
-	getJobs(date: string, day: number): Job[] {
+	getJobs(date: string, dayOption: number): Job[] {
+		console.log('selected date: ',date, 'viewOption: ', dayOption);
 		let days: string[] = [];
 		let momentDay = moment(date);
+		let viewStart: string;
+		let viewEnd: string;
 
-		days.push(date);
+		// LIST_VIEW: string[] = [
+		// 	'Today',                // 0
+		// 	'This Week',            // 1
+		// 	'This Two Weeks',       // 2
+		// 	'This Month',           // 3
+		// 	'A Week from Today',    // 4
+		// 	'Two Weeks from Today', // 5
+		// 	'One Month from Today', // 6
+		// ];
 
-		for(var i=0; i < day; i++){
-			days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
+		switch(dayOption){
+			case 0:
+				viewStart = date;
+				viewEnd = date;
+				break;
+
+			case 1:
+				console.log('case 1');
+				viewStart = momentDay.weekday(1).format('YYYY-MM-DD');
+				viewEnd = momentDay.add(6,'days').format('YYYY-MM-DD');
+				break;
+
+			case 2:
+				viewStart = momentDay.weekday(1).format('YYYY-MM-DD');
+				viewEnd = momentDay.add(13,'days').format('YYYY-MM-DD');
+				break;
+
+			case 3:
+				viewStart = momentDay.date(1).format('YYYY-MM-DD');
+				viewEnd = momentDay.date(1).add(1,'month').add(-1,'days').format('YYYY-MM-DD');
+				break;
+
+			case 4:
+				viewStart = date;
+				viewEnd = momentDay.add(6,'days').format('YYYY-MM-DD');
+				break;
+
+			case 5:
+				viewStart = date;
+				viewEnd = momentDay.add(13,'days').format('YYYY-MM-DD');
+				break;
+
+			case 6:
+				viewStart = date;
+				viewEnd = momentDay.add(1,'month').add(-1,'days').format('YYYY-MM-DD');
+				break;
+
+			default:
+				console.log('default option case');
+				break;
 		}
 
+		console.log('viewStart: ', viewStart, ' viewEnd: ', viewEnd);
 
 		let jobList: Job[] = this.jobs.filter((job)=>{
-			return days.indexOf(job.date) >= 0;
+			return job.date >= viewStart && job.date <= viewEnd;
 		});
 
 		console.log('getJobs for: ', jobList, 'on', date);

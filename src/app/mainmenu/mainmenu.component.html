@@ -11,7 +11,12 @@
 
 			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 			<input type = "hidden" formControlName= "jobId">
-
+			<label>View Option </label>
+			<select (change)="onChange($event.target.value)">
+				<!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
+				<option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+			</select>
+			<hr>
 			<label>Name </label>
 			<select formControlName="empId">
 				<ng-container *ngFor="let employee of employees">

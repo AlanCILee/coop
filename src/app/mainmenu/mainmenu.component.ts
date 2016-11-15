@@ -28,8 +28,26 @@ export class MainMenuComponent implements OnInit {
     editDate: string;
     editItem: any = null;
 
-    LIST_DATE: number = 7;
+    LIST_DATE: number = 0;
+    // LIST_VIEW: Object = {
+    //     opt1: 'Today',
+    //     opt2: 'This Week',
+    //     opt3: 'This Two Weeks',
+    //     opt4: 'This Month',
+    //     opt5: 'A Week from Today',
+    //     opt6: 'Two Weeks from Today',
+    //     opt7: 'One Month from Today',
+    // };
 
+    LIST_VIEW: string[] = [
+        'Today',
+        'This Week',
+        'This Two Weeks',
+        'This Month',
+        'A Week from Today',
+        'Two Weeks from Today',
+        'One Month from Today',
+    ];
     // public currentDate: Date = new Date();
     
     constructor(private employeesObj: Employees,
@@ -46,6 +64,7 @@ export class MainMenuComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         
         this.form = this.fb.group({
+            view: ['opt1'],
         	jobId: [ -1 ],
             empId: [ '' ],
             department: [ '' ],
@@ -53,10 +72,6 @@ export class MainMenuComponent implements OnInit {
             endT: [ '00:00' ],
             date: [ '' ],
         });
-    }
-    
-    ngOnChange(): void {
-        console.log("Mainmenu ngOnChange");
     }
 
     onSubmit(form: any): any {
@@ -99,14 +114,19 @@ export class MainMenuComponent implements OnInit {
     }
 
     dateChanged(str: string){
-        // let departJobs: any[][] =[];
-        // let departName: string[] = [];
         this.editDate = str;
         console.log('got message from Calendar: ' + str);
-        this.sJobs = this.dScheduleObj.getJobs(str, this.LIST_DATE);
+        this.sJobs = this.dScheduleObj.getJobs(str, Number(this.LIST_DATE));
         console.log('ngOnInit() jobs:', this.sJobs);
 
     }
+
+    onChange(dateOption: number) {
+        console.log(dateOption);
+        this.LIST_DATE = dateOption;
+        this.sJobs = this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE));
+    }
+
     // Select job for edit
     selectJob(job: Job){
     	console.log('select Job: ', job);
