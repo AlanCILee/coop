@@ -80,7 +80,7 @@ export class Schedule implements OnInit {
 			return days.indexOf(job.date) >= 0;
 		});
 
-		console.log('getJobs for: ', jobList);
+		console.log('getJobs for: ', jobList, 'on', date);
 		return jobList;
 	}
 

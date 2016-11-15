@@ -13,7 +13,7 @@
 			<input type = "hidden" formControlName= "jobId">
 
 			<label>Name </label>
-			<select formControlName="name">
+			<select formControlName="empId">
 				<ng-container *ngFor="let employee of employees">
 					<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>
 				</ng-container>

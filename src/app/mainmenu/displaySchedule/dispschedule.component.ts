@@ -17,7 +17,7 @@ export class DispScheduleComponent implements OnInit {
 
 	Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 	// department: string;
-	departJobs: Object[] =[];
+	// departJobs: Object[] =[];
 	departments: string[]=[];
 	departCnt: number;
 	dispEmpNum: number;
@@ -45,8 +45,8 @@ export class DispScheduleComponent implements OnInit {
 	ngOnChanges(): void {
 		console.log("Schedule Disp : ngOnChange");
 		
-		this.departJobs = [];
-		this.departments = [];
+		// this.departJobs = [];
+		// this.departments = [];
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
 		this.hOffset = 0;
@@ -82,8 +82,8 @@ export class DispScheduleComponent implements OnInit {
 
 	alignJobs(sJobs: Job[]){
 		console.log('alignJobs sJobs:', sJobs);
+
 		let departJob: Job[] =[];
-		
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
 
@@ -101,13 +101,13 @@ export class DispScheduleComponent implements OnInit {
 			console.log('Add job date:', job.date, 'Add job: ',job);
 		});
 
-		console.log('aligh job by date: ', jobsDates);
+		console.log('align job by date: ', jobsDates);
 
-		for (var key in jobsDates ){
+		Object.keys(jobsDates).forEach((key)=>{     // key : date
 			let jobs: Job[] = jobsDates[key];
 
 			console.log('jobsDates[key] :', jobs);
-			this.departJobs = [];
+			// this.departJobs = [];
 
 			this.departmentsObj.departments.forEach((department)=> {
 
@@ -116,36 +116,71 @@ export class DispScheduleComponent implements OnInit {
 				});
 
 				if(departJob.length > 0) {
-					this.departJobs[department.departName] = [];
+					// this.departJobs[department.departName] = [];
 					this.jobsDatesDeparts[key][department.departName] = [];
 
-					this.departJobs[department.departName] =  departJob;
+					// this.departJobs[department.departName] =  departJob;
 					this.jobsDatesDeparts[key][department.departName] = departJob;
-					console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
+					// console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
 
-					this.departments.push(department.departName);
+					// this.departments.push(department.departName);
 					this.departCnt++;
 					this.dispEmpNum += this.getEmpNum(departJob);
 				}
 			});
+			//
+			// jobsDates[key] = [];
+			//
+			// console.log('align0 job by date & department: ', jobsDates);
+			// console.log('align0 job by date & department: ', this.departJobs);
 
-			jobsDates[key] = [];
 
-			console.log('align0 job by date & department: ', jobsDates);
-			console.log('align0 job by date & department: ', this.departJobs);
-		}
+		});
+
+
+		// for (var key in jobsDates ){
+		// 	let jobs: Job[] = jobsDates[key];
+		//
+		// 	console.log('jobsDates[key] :', jobs);
+		// 	this.departJobs = [];
+		//
+		// 	this.departmentsObj.departments.forEach((department)=> {
+		//
+		// 		departJob = jobs.filter((job)=>{
+		// 			return job.departId == department.departId;
+		// 		});
+		//
+		// 		if(departJob.length > 0) {
+		// 			this.departJobs[department.departName] = [];
+		// 			this.jobsDatesDeparts[key][department.departName] = [];
+		//
+		// 			this.departJobs[department.departName] =  departJob;
+		// 			this.jobsDatesDeparts[key][department.departName] = departJob;
+		// 			console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
+		//
+		// 			this.departments.push(department.departName);
+		// 			this.departCnt++;
+		// 			this.dispEmpNum += this.getEmpNum(departJob);
+		// 		}
+		// 	});
+		//
+		// 	jobsDates[key] = [];
+		//
+		// 	console.log('align0 job by date & department: ', jobsDates);
+		// 	console.log('align0 job by date & department: ', this.departJobs);
+		// }
 		
-		console.log('jobsDatesDeparts: ', this.jobsDatesDeparts);
-
-		for(var key in this.jobsDatesDeparts){
-			let arr = this.jobsDatesDeparts[key];
-			console.log('key1: ',key);
-
-			for(var key in arr){
-				console.log('key2: ',key);
-				console.log(arr[key]);
-			}
-		}
+		// console.log('jobsDatesDeparts: ', this.jobsDatesDeparts);
+		//
+		// for(var key in this.jobsDatesDeparts){
+		// 	let arr = this.jobsDatesDeparts[key];
+		// 	console.log('key1: ',key);
+		//
+		// 	for(var key in arr){
+		// 		console.log('key2: ',key);
+		// 		console.log(arr[key]);
+		// 	}
+		// }
 
 		// this.departmentsObj.departments.forEach((department)=>{
 		//
@@ -162,14 +197,15 @@ export class DispScheduleComponent implements OnInit {
 		// 	}
 		// });
 
-		console.log('alignJobs:', this.departJobs, 'dispDepart: ', this.departCnt,'dispEmpNumb:', this.dispEmpNum);
+		console.log('alignJob:',this.jobsDatesDeparts,'dispDepartNum: ', this.departCnt,'dispEmpNum:', this.dispEmpNum);
+
 	}
 	
 	createInitiativeBg(): void {
 		const HOURS = 17;
 		const START_HOUR = 8;
 		const OFFSET = 200;
-		const HOURW = 100;
+		const HOURW = 50;
 		
 		this.hOffset = 0;
 		
@@ -205,9 +241,10 @@ export class DispScheduleComponent implements OnInit {
 	showSchdule(): void{
 		let svg = this.container;
 		const OFFSET = 200;
-		const HOURW = 100;
+		const HOURW = 50;
 		const START_HOUR = 8;
-		
+
+
 		for(var date in this.jobsDatesDeparts) {
 			let dateJob = this.jobsDatesDeparts[date];
 			

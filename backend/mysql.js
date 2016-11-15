@@ -63,7 +63,7 @@ const Mysql = function () {
         //         });
         //     }
         // });
-    }
+    };
 };
 
 Mysql.start = function(){

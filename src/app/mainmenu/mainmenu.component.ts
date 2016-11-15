@@ -35,6 +35,7 @@ export class MainMenuComponent implements OnInit {
                 private departmentsObj: Departments,
                 private timeObj: TimeTable,
                 private dScheduleObj: Schedule,
+                private httpComp: HttpComponent,
                 private fb: FormBuilder,) {
     };
     
@@ -45,7 +46,7 @@ export class MainMenuComponent implements OnInit {
         
         this.form = this.fb.group({
         	jobId: [ -1 ],
-            name: [ '' ],
+            empId: [ '' ],
             department: [ '' ],
             startT: [ '00:00' ],
             endT: [ '00:00' ],
@@ -60,18 +61,40 @@ export class MainMenuComponent implements OnInit {
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
 
-        this.dScheduleObj.addJob(
-            form.jobId,
-            form.date,
-            form.name,      // empId
-            this.employeesObj.getEmployeeName(form.name),   // empName
-            form.department,
-            form.startT,
-            form.endT,
-        );
+        if( form.jobId > 0){    // update case
+            this.httpComp.makePostRequest('http://localhost:3000/upSchedule',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
 
-        this.clearInput();
-        this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+                if( Number(response.affectedRows) > 0){
+                    console.log('update schedule successfully :', response.affectedRows );
+                    this.dScheduleObj.addJob(form.jobId, form.date,
+                        form.empId, this.employeesObj.getEmployeeName(form.empId),
+                        form.department, form.startT, form.endT);
+                }else{
+                    console.log('department insert fail');
+                }
+                this.clearInput();
+                this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+            });
+        }else {                 // new Schedule case
+            this.httpComp.makePostRequest('http://localhost:3000/newSchedule',form).subscribe((res : Response) => {
+                let response = res.json();
+                console.log('HttpComponent : ',response);
+
+                if( Number(response.insertId) > 0){
+                    console.log('insert schedule successfully :', response.insertId );
+                    this.dScheduleObj.addJob(response.insertId, form.date,
+                        form.empId, this.employeesObj.getEmployeeName(form.empId),
+                        form.department, form.startT, form.endT);
+                }else{
+                    console.log('department insert fail');
+                }
+                this.clearInput();
+                this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+            });
+
+        }
         return false;
     }
 
@@ -112,12 +135,23 @@ export class MainMenuComponent implements OnInit {
 
     deleteItem(): void{
         console.log('Click delete Job');
-        this.dScheduleObj.deleteJob(this.editItem.jobId);
-        this.clearInput();
-        
-        this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
-        //ToDo
-        //DataBaseControl
+
+        this.httpComp.makePostRequest('http://localhost:3000/rmSchedule', {jobId: this.editItem.jobId}).subscribe((res : Response) => {
+            let response = res.json();
+            console.log('HttpComponent : ',response);
+
+            if( Number(response.affectedRows) > 0){
+                console.log('remove schedule successfully :', response.affectedRows );
+                this.dScheduleObj.deleteJob(this.editItem.jobId);
+                // this.dScheduleObj.addJob(response.insertId, form.date,
+                //     form.empId, this.employeesObj.getEmployeeName(form.empId),
+                //     form.department, form.startT, form.endT);
+            }else{
+                console.log('department insert fail');
+            }
+            this.clearInput();
+            this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+        });
     }
 }
 
