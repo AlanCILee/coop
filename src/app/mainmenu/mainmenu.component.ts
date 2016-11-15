@@ -91,7 +91,12 @@ export class MainMenuComponent implements OnInit {
                     console.log('department insert fail');
                 }
                 this.clearInput();
-                this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+                // this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+                this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+                    this.sJobs = list;
+                    console.log('ngOnInit() jobs:', this.sJobs);
+                    this.clearInput();
+                });
             });
         }else {                 // new Schedule case
             this.httpComp.makePostRequest('http://localhost:3000/newSchedule',form).subscribe((res : Response) => {
@@ -105,8 +110,12 @@ export class MainMenuComponent implements OnInit {
                 }else{
                     console.log('department insert fail');
                 }
-                this.clearInput();
-                this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+                // this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+                this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+                    this.sJobs = list;
+                    console.log('ngOnInit() jobs:', this.sJobs);
+                    this.clearInput();
+                });
             });
 
         }
@@ -116,15 +125,22 @@ export class MainMenuComponent implements OnInit {
     dateChanged(str: string){
         this.editDate = str;
         console.log('got message from Calendar: ' + str);
-        this.sJobs = this.dScheduleObj.getJobs(str, Number(this.LIST_DATE));
-        console.log('ngOnInit() jobs:', this.sJobs);
+        // this.sJobs = this.dScheduleObj.getJobs(str, Number(this.LIST_DATE));
+        this.dScheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
+            this.sJobs = list;
+            console.log('ngOnInit() jobs:', this.sJobs);
+        });
 
     }
 
     onChange(dateOption: number) {
         console.log(dateOption);
         this.LIST_DATE = dateOption;
-        this.sJobs = this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE));
+        // this.sJobs = this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE));
+        this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+            this.sJobs = list;
+            console.log('ngOnInit() jobs:', this.sJobs);
+        });
     }
 
     // Select job for edit
@@ -169,8 +185,12 @@ export class MainMenuComponent implements OnInit {
             }else{
                 console.log('department insert fail');
             }
-            this.clearInput();
-            this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+            // this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+            this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+                this.sJobs = list;
+                console.log('ngOnInit() jobs:', this.sJobs);
+                this.clearInput();
+            });
         });
     }
 }

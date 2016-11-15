@@ -63,37 +63,60 @@ export class Schedule implements OnInit {
 
     }
 
-	loadSchedule(): void {
-		console.log('Initial Load schedule');
-		mockSchedule.forEach(( schedule ) => {
-			this.addJob( schedule['jobId'], schedule['date'], schedule['empId'],
-				schedule['departId'], schedule['startT'], schedule['endT']);
-		});
+	loadSchedule(sDate:string, eDate:string, callback:any) {
+
+		console.log('loadSchedule start');
+
+		if(sDate < this.startD || eDate > this.endD){
+			this.startD = moment(sDate).date(1).add(-1,'month').format('YYYY-MM-DD');
+			this.endD = moment(eDate).add(1,'month').format('YYYY-MM-DD');
+
+			let period: Object = {
+				startD: this.startD,
+				endD: this.endD,
+			}
+
+			console.log('loadSchedule Loading Schedules', period);
+
+			this.httpComp.makePostRequest('http://localhost:3000/getSchedule', period).subscribe((res : Response) => {
+				let response = res.json();
+
+				if ( response.err ) {
+					console.log('loadSchedule Fail :');
+				}else{
+					console.log('loadSchedule from DB :', response);
+					this.jobs = [];
+					response.forEach((schedule: any)=>{
+						let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
+							schedule.departId, schedule.startT, schedule.endT);
+						this.jobs.push(job);
+					});
+
+					return callback();
+				}
+			});
+		}else{
+			console.log('schedule already loaded');
+			return callback();
+		}
+		// mockSchedule.forEach(( schedule ) => {
+		// 	this.addJob( schedule['jobId'], schedule['date'], schedule['empId'],
+		// 		schedule['departId'], schedule['startT'], schedule['endT']);
+		// });
 	}
 
 	initSchedule(){
-		let now = moment();
-		this.startD = moment().weekday(1).format('YYYY-MM-DD');
-		this.endD = now.add(7,'days').format('YYYY-MM-DD');
+		// let now = moment();
+		// this.startD = moment().weekday(1).format('YYYY-MM-DD');
+		this.startD = moment().date(1).add(-1,'month').format('YYYY-MM-DD');
+		this.endD = moment().add(1,'month').format('YYYY-MM-DD');
 
 		let period: Object = {
 			startD: this.startD,
 			endD: this.endD,
 		}
 
-		// let days: string[] = [];
-		// let listT: Object = {};
-		// let momentDay = moment(date);
-		//
-		// days.push(date);
-		//
-		// for(var i=0; i < day; i++){
-		// 	days.push(momentDay.add(1,'days').format('YYYY-MM-DD'));
-		// }
-
-
-		console.log('initSchedule Loading Schedules');
-		this.loadSchedule();
+		console.log('initSchedule Loading Schedules', period);
 
 		this.httpComp.makePostRequest('http://localhost:3000/getSchedule', period).subscribe((res : Response) => {
 			let response = res.json();
@@ -111,7 +134,7 @@ export class Schedule implements OnInit {
 		});
 	}
 
-	getJobs(date: string, dayOption: number): Job[] {
+	getJobs(date: string, dayOption: number, callback: any) {
 		console.log('selected date: ',date, 'viewOption: ', dayOption);
 		let days: string[] = [];
 		let momentDay = moment(date);
@@ -172,12 +195,14 @@ export class Schedule implements OnInit {
 
 		console.log('viewStart: ', viewStart, ' viewEnd: ', viewEnd);
 
-		let jobList: Job[] = this.jobs.filter((job)=>{
-			return job.date >= viewStart && job.date <= viewEnd;
-		});
+		this.loadSchedule(viewStart, viewEnd, ()=>{
+			let jobList: Job[] = this.jobs.filter((job)=>{
+				return job.date >= viewStart && job.date <= viewEnd;
+			});
 
-		console.log('getJobs for: ', jobList, 'on', date);
-		return jobList;
+			console.log('getJobs for: ', jobList, 'on', date);
+			return callback(jobList);
+		});
 	}
 
 	getJob(jobId: number): Job {

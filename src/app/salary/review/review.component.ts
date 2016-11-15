@@ -56,8 +56,12 @@ export class ReviewComponent implements OnInit {
         // let departName: string[] = [];
         console.log('dateChanged');
         this.editDate = str;
-        this.sJobs = this.scheduleObj.getJobs(str, this.LIST_DATE);
-        this.show();
+        // this.sJobs = this.scheduleObj.getJobs(str, this.LIST_DATE);
+        this.scheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
+            this.sJobs = list;
+            console.log('ngOnInit() jobs:', this.sJobs);
+            this.show();
+        });
     }
 
     show(): void {
