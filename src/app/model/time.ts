@@ -89,6 +89,7 @@ export class TimeTable {
 
 	initTimeZone(){
 		// this.loadMockTimeZone();
+		this.createTimeTable();
 
 		this.httpComp.makeRequest('http://localhost:3000/getTimeZone').subscribe((res : Response) => {
 			let response = res.json();
@@ -111,7 +112,6 @@ export class TimeTable {
 			}
 		});
 
-		this.createTimeTable();
 	}
 }
 

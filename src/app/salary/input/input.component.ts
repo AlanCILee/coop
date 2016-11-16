@@ -7,6 +7,7 @@ import { Department, Departments } from "../../model/department";
 import { TimeTable } from "../../model/time";
 import { TipModel } from "../../model/tip";
 import { HttpComponent } from "../../core/http.component";
+import { Router, ActivatedRoute }       from '@angular/router';
 
 @Component({
     selector: 'enter',
@@ -21,9 +22,8 @@ export class InputComponent implements OnInit {
     form : FormGroup;
     dailyTDisp: Object;
     editDate: string;
-
-    // LIST_DATE: number = 7;
-	zoneStr: string[] =[];
+	
+	zoneStr: string[] = null;
 	zoneId: string[] =[];
 	
 	LIST_DATE: number = 0;
@@ -41,6 +41,7 @@ export class InputComponent implements OnInit {
             private departmentsObj: Departments,
             private timeObj: TimeTable,
             private tipObj: TipModel,
+            private router: Router,
             private httpComp: HttpComponent,
             ){
     };
@@ -54,14 +55,19 @@ export class InputComponent implements OnInit {
 	    let group:any ={};
 
         // for(var key in this.timeZones){
-	    Object.keys(this.timeZones).forEach((zoneId)=>{
-	    	if(this.timeZones[zoneId].valid){
-	            this.zoneStr.push(this.timeZones[zoneId].zoneName);
-			    this.zoneId.push(zoneId);
-	            group[zoneId] = new FormControl('');
-		    }else{
-		    }
-	    });
+	    if(Object.keys(this.timeZones).length > 0) {
+		    this.zoneStr = [];
+		    Object.keys(this.timeZones).forEach((zoneId)=>{
+		        if(this.timeZones[zoneId].valid){
+		            this.zoneStr.push(this.timeZones[zoneId].zoneName);
+				    this.zoneId.push(zoneId);
+		            group[zoneId] = new FormControl('');
+			    }else{
+			    }
+		    });
+	    }else{
+		    this.router.navigate(['/home']);
+	    }
 	    group['date'] = new FormControl('');
         this.form = new FormGroup(group);
     }

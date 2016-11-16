@@ -14,7 +14,7 @@ export class TipModel implements OnInit{
 	constructor(private timeTableObj: TimeTable,
 	            private httpComp: HttpComponent,){
 	}
-
+	
 	ngOnInit(){
 		this.timeZones = this.timeTableObj.timeZones;
 
@@ -127,7 +127,6 @@ export class TipModel implements OnInit{
 				}
 			})
 			
-			console.log('getTips for: ', tipList, 'on', date);
 			return callback(tipList);
 		});
 		// days.push(date);

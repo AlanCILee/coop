@@ -17,6 +17,7 @@ import { HttpComponent } from "./core/http.component";
 })
 export class AppComponent implements OnInit {
     form: FormGroup;
+    initialize: boolean = false;
     viewname: string = null;
 
     constructor(private employees: Employees,
@@ -28,26 +29,15 @@ export class AppComponent implements OnInit {
                 private fb: FormBuilder,
                 private httpComp: HttpComponent,
     ) {
-        
     }
     
     ngOnInit() {
-	    // this.employees.initEmployee()
-		    // .then(console.log, console.log);
+        this.timeObj.initTimeZone();
         this.employees.initEmployee();
         this.departments.initDepartments();
-        this.timeObj.initTimeZone();
-        // this.schedule.loadSchedule();
         this.schedule.initSchedule();
         this.tipObj.initTip();
-        // this.time.createTimeTable();
-        // localStorage.removeItem('currentUser');
-        // this.form = this.fb.group({
-        //     id: [ '' ],
-        //     password: [ '' ],
-        // });
     }
-
 
     getUserName(): string{
         if(sessionStorage.getItem('currentUser'))

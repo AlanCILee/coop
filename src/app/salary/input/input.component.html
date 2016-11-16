@@ -5,16 +5,20 @@
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 	    <label>View Option </label>
+	    
 	    <select (change)="onChange($event.target.value)">
 		    <!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
 		    <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
 	    </select>
+	    
 	    <hr>
+	    
 	    <span *ngFor = "let val of zoneStr; let i = index">
 			<label>{{ val }}</label>
 			<input type="text" formControlName= "{{ zoneId[i] }}" >
 		</span>
-        <button type="submit">Submit</button>
+	    
+	    <button type="submit">Submit</button>
         <button type="button" (click)="clearInput()">Clear</button>
         <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
     </form>
@@ -26,5 +30,3 @@
         </tr>
     </table>
 </div>
-
-

@@ -1,21 +1,22 @@
-    <div>
-        <!--<label>Welcome {{ getUserName() }}</label>-->
-        <!--<button type="button" (click)="logout()">LogOut</button>-->
-        <!--<hr/>-->
-        <login></login>
-        <!--<ul *ngIf ="getUserName()">-->
-            <!--<li><a [routerLink]="['schedule']">Schedule Management</a></li>-->
-            <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
-            <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
-        <!--</ul>-->
-        <span *ngIf ="getUserName()">
-            <a [routerLink]="['schedule']">Schedule Management</a> |
-            <a [routerLink]="['pay']">Wage Management</a> |
-            <a [routerLink]="['setup']">Setup</a>
-        </span>
-        <hr/>
-    </div>
 
-    <div>
-        <router-outlet></router-outlet>
-    </div>
+<div>
+    <!--<label>Welcome {{ getUserName() }}</label>-->
+    <!--<button type="button" (click)="logout()">LogOut</button>-->
+    <!--<hr/>-->
+    <login></login>
+    <!--<ul *ngIf ="getUserName()">-->
+        <!--<li><a [routerLink]="['schedule']">Schedule Management</a></li>-->
+        <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
+        <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
+    <!--</ul>-->
+    <span *ngIf ="getUserName()">
+        <a [routerLink]="['schedule']">Schedule Management</a> |
+        <a [routerLink]="['pay']">Wage Management</a> |
+        <a [routerLink]="['setup']">Setup</a>
+    </span>
+    <hr/>
+</div>
+
+<div>
+    <router-outlet></router-outlet>
+</div>
