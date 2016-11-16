@@ -19,13 +19,24 @@ export class InputComponent implements OnInit {
     departments: Department[];
     timeZones: Object = [];
     form : FormGroup;
-    dailyT: Object;
+    dailyTDisp: Object;
     editDate: string;
 
-    LIST_DATE: number = 7;
+    // LIST_DATE: number = 7;
 	zoneStr: string[] =[];
 	zoneId: string[] =[];
-
+	
+	LIST_DATE: number = 0;
+	LIST_VIEW: string[] = [
+		'Today',
+		'This Week',
+		'This Two Weeks',
+		'This Month',
+		'A Week from Today',
+		'Two Weeks from Today',
+		'One Month from Today',
+	];
+	
     constructor(private employeesObj: Employees,
             private departmentsObj: Departments,
             private timeObj: TimeTable,
@@ -35,7 +46,6 @@ export class InputComponent implements OnInit {
     };
 
     ngOnInit(){
-    	console.log("Ng Oninit =====");
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
         // this.timeZones = this.timeObj.timeZones;
@@ -57,13 +67,32 @@ export class InputComponent implements OnInit {
     }
 
     dateChanged(str: string){
+        console.log('got message from Calendar: ' + str);
         this.editDate = str;
-        this.dailyT = this.tipObj.getTipList(str, this.LIST_DATE);
-        console.log('got message from Calendar: ' + str, 'dailyT: ', this.dailyT);
+	    // this.dScheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
+		 //    this.sJobs = list;
+		 //    console.log('ngOnInit() jobs:', this.sJobs);
+	    // });
+	    // this.dailyTDisp = this.tipObj.getTipList(str, this.LIST_DATE);
+	    this.tipObj.getTipList(this.editDate, Number(this.LIST_DATE), (list: Object) =>{
+		    this.dailyTDisp = list;
+		    console.log('Get dailyTDisp() :', this.dailyTDisp);
+	    });
     }
-
-    ngOnAfterViewInit(){
-    }
+	
+	onChange(dateOption: number) {
+		console.log(dateOption);
+		this.LIST_DATE = dateOption;
+		
+		this.tipObj.getTipList(this.editDate, Number(this.LIST_DATE), (list: Object) =>{
+			this.dailyTDisp = list;
+			console.log('Get dailyTDisp() :', this.dailyTDisp);
+		});
+		// this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+		// 	this.sJobs = list;
+		// 	console.log('ngOnInit() jobs:', this.sJobs);
+		// });
+	}
 
     clearInput(): void{
 	    // this.zoneStr.forEach((zone) =>{
@@ -75,9 +104,9 @@ export class InputComponent implements OnInit {
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
 	    let date = form.date;
-		console.log('dayilyT :',this.dailyT);
+		console.log('dayilyT :',this.dailyTDisp);
 
-	    if (date in this.dailyT){   // update case
+	    if (date in this.dailyTDisp){   // update case
 		    this.httpComp.makePostRequest('http://localhost:3000/upInput',form).subscribe((res : Response) => {
 			    let response = res.json();
 			    console.log('HttpComponent : ', response);
@@ -86,7 +115,11 @@ export class InputComponent implements OnInit {
 				    console.log('update input successfully :', response.affectedRows );
 				    delete form.date;
 			        this.tipObj.addDailyT(date, form );
-				    this.dailyT = this.tipObj.getTipList(date, this.LIST_DATE);
+				    // this.dailyTDisp = this.tipObj.getTipList(date, this.LIST_DATE);
+				    this.tipObj.getTipList(this.editDate, Number(this.LIST_DATE), (list: Object) =>{
+					    this.dailyTDisp = list;
+					    console.log('Get dailyTDisp() :', this.dailyTDisp);
+				    });
 			    }else{
 				    console.log('update insert fail');
 			    }
@@ -101,7 +134,10 @@ export class InputComponent implements OnInit {
 				    console.log('insert input successfully :', response.insertId );
 					delete form.date;
 			        this.tipObj.addDailyT(date, form );
-				    this.dailyT = this.tipObj.getTipList(this.editDate, this.LIST_DATE);
+				    this.tipObj.getTipList(this.editDate, Number(this.LIST_DATE), (list: Object) =>{
+					    this.dailyTDisp = list;
+					    console.log('Get dailyTDisp() :', this.dailyTDisp);
+				    });
 			    }else{
 				    console.log('input insert fail');
 			    }
@@ -114,8 +150,8 @@ export class InputComponent implements OnInit {
     tipSelect(tip: Object): void {
         console.log('click Tip : ', tip);
         for(var key in tip['val']){
-                console.log('tipBtn :', key, 'value :',tip['val'][key]);
-                this.form.patchValue({ [ key ]: tip['val'][key] });
+            console.log('tipBtn :', key, 'value :',tip['val'][key]);
+            this.form.patchValue({ [ key ]: tip['val'][key] });
         }
     }
 

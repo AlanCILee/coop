@@ -35,11 +35,11 @@ const InputService = function(options) {
 		let database = req.session.company || 'bluelasso';
 		console.log('input req:', req.body, 'for', database);
 
-		let zoneCnt = Object.keys(req.body).length;
-		let cnt = 0;
-
 		let date = req.body.date;
 		delete req.body.date;
+
+		let zoneCnt = Object.keys(req.body).length;
+		let cnt = 0;
 
 		Object.keys(req.body).forEach((zoneId)=>{
 			let query = `UPDATE tip SET tip = "${req.body[zoneId]}"
@@ -51,7 +51,7 @@ const InputService = function(options) {
 					res.send({affectedRows: -1});
 				} else {
 					cnt++;
-					console.log('Update new tips: ', cnt, result);
+					console.log('Update new tips: ', cnt, 'of', zoneCnt, result);
 					if(cnt >= zoneCnt){
 						res.send({affectedRows: result.affectedRows});
 					}
@@ -59,38 +59,17 @@ const InputService = function(options) {
 			});
 		});
 	};
-	//
-	// this.rmDepartmentDb = function (req, res) {
-	// 	let departId = req.body.dId;
-	// 	let database = req.session.company || 'bluelasso';
-	//
-	// 	console.log('department delete req:', departId);
-	//
-	// 	let query = `UPDATE department SET valid = "false"
-	//                         WHERE departId = "${departId}"`;
-	//
-	// 	mysql.sendQuery(database, query, function (err, result) {
-	// 		if (err) {
-	// 			console.log('sendQuery fail: ', err);
-	// 			res.send({affectedRows: -1});
-	// 		} else {
-	// 			console.log('deleted department', result);
-	// 			res.send({affectedRows: result.affectedRows});
-	// 		}
-	// 	});
-	// };
-	//
 
 	this.getInputDb = function (req, res) {
 		console.log('tip list req');
 		let database = req.session.company || 'bluelasso';
 
-		let query = `SELECT * FROM schedule WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}"`;
+		let query = `SELECT * FROM tip WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}"`;
 
 		mysql.sendQuery( database, query, function(err, results, fields){
 			if(err){
 				console.log('getInputDb fail: ', err);
-				res.send({ err : 'getScheduleDb fail' });
+				res.send({ err : 'getInputDb fail' });
 			}else {
 				console.log('getInputDb', results);
 				res.send(results);

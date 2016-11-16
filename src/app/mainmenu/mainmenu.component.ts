@@ -29,16 +29,6 @@ export class MainMenuComponent implements OnInit {
     editItem: any = null;
 
     LIST_DATE: number = 0;
-    // LIST_VIEW: Object = {
-    //     opt1: 'Today',
-    //     opt2: 'This Week',
-    //     opt3: 'This Two Weeks',
-    //     opt4: 'This Month',
-    //     opt5: 'A Week from Today',
-    //     opt6: 'Two Weeks from Today',
-    //     opt7: 'One Month from Today',
-    // };
-
     LIST_VIEW: string[] = [
         'Today',
         'This Week',
@@ -48,7 +38,6 @@ export class MainMenuComponent implements OnInit {
         'Two Weeks from Today',
         'One Month from Today',
     ];
-    // public currentDate: Date = new Date();
     
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
@@ -130,7 +119,6 @@ export class MainMenuComponent implements OnInit {
             this.sJobs = list;
             console.log('ngOnInit() jobs:', this.sJobs);
         });
-
     }
 
     onChange(dateOption: number) {

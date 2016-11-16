@@ -1,10 +1,16 @@
 
-<h3>Input Salary</h3>
+<script src="input.component.ts"></script><h3>Input Salary</h3>
 <div>
 
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-		<span *ngFor = "let val of zoneStr; let i = index">
+	    <label>View Option </label>
+	    <select (change)="onChange($event.target.value)">
+		    <!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
+		    <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+	    </select>
+	    <hr>
+	    <span *ngFor = "let val of zoneStr; let i = index">
 			<label>{{ val }}</label>
 			<input type="text" formControlName= "{{ zoneId[i] }}" >
 		</span>
@@ -14,7 +20,7 @@
     </form>
 	<br>
     <table>
-        <tr *ngFor="let dt of dailyT | mapToIterable" (click)="tipSelect( dt )">
+        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )">
             <td>{{ dt.key }}</td>
             <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
         </tr>
