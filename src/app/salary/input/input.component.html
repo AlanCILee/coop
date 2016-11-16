@@ -4,15 +4,13 @@
 
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-		<span *ngFor = "let val of zoneStr">
+		<span *ngFor = "let val of zoneStr; let i = index">
 			<label>{{ val }}</label>
-			<input type="text" formControlName= "{{ val }}" >
+			<input type="text" formControlName= "{{ zoneId[i] }}" >
 		</span>
-
         <button type="submit">Submit</button>
         <button type="button" (click)="clearInput()">Clear</button>
         <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
-
     </form>
 	<br>
     <table>

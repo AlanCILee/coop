@@ -9,7 +9,8 @@ const express = require('express'),
         DepartmentService = require('./services/DepartmentService'),
         TimezoneService = require('./services/TimezoneService'),
         LoginService = require('./services/LoginService'),
-        ScheduleService = require('./services/ScheduleService');
+        ScheduleService = require('./services/ScheduleService'),
+        InputService = require('./services/InputService');
 
 const Server = function(options) {
     const server = this;
@@ -23,6 +24,7 @@ const Server = function(options) {
             timezoneServiceObj = new TimezoneService(options),
             loginServiceObj = new LoginService(options),
             scheduleServiceObj = new ScheduleService(options),
+            inputServiceObj = new InputService(options),
             allowCrossDomain = function(req, res, next) {
             res.header('Access-Control-Allow-Origin', "*");
             res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
@@ -63,6 +65,8 @@ const Server = function(options) {
         app.post('/upSchedule', scheduleServiceObj.upScheduleDb);
         app.post('/rmSchedule', scheduleServiceObj.rmScheduleDb);
         app.post('/getSchedule', scheduleServiceObj.getScheduleDb);
+
+        app.post('/newInput', inputServiceObj.newInputDb);
 
 
     };

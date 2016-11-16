@@ -88,7 +88,7 @@ export class TimeTable {
 	}
 
 	initTimeZone(){
-		this.loadMockTimeZone();
+		// this.loadMockTimeZone();
 
 		this.httpComp.makeRequest('http://localhost:3000/getTimeZone').subscribe((res : Response) => {
 			let response = res.json();
@@ -107,9 +107,9 @@ export class TimeTable {
 						zone.valid
 					);
 				});
+				console.log('initTimeZone Loading Timezone',this.timeZonesHistory);
 			}
 		});
-		console.log('initTimeZone Loading Timezone');
 	}
 }
 
