@@ -42,7 +42,6 @@ export class ReviewComponent implements OnInit {
     ];
     
     
-    
     @ViewChild('tableData') tableData: ElementRef;
     @ViewChild('summary') summary: ElementRef;
 
@@ -82,7 +81,9 @@ export class ReviewComponent implements OnInit {
         // let hoursResult = this.calculateHours(0, 0);
 
         console.log("show():", this.timeZones);
-
+        this.jobsDates = {};
+        this.dailyHours = {};
+        
         this.sJobs.forEach(( job ) => {
 
             if(!(job.date in this.jobsDates)){
@@ -190,9 +191,10 @@ export class ReviewComponent implements OnInit {
                     let sum: number = 0;
                     Object.keys(employee['hour']).forEach((zone) => {
                         sum += employee['hour'][zone];
-                        table += `<td>${ employee['hour'][zone]}</td>`;
+                        table += `<td>${ employee['hour'][zone] }</td>`;
+                        // table += `<td>${ employee['hour'][zone]/60 }</td>`;
                     });
-                    table += `<td>${sum}</td>`;
+                    table += `<td>${sum /60}</td>`;
                     table += `</tr>`;
                     dailyHour += sum;
 
@@ -220,7 +222,7 @@ export class ReviewComponent implements OnInit {
                 });
             });
             table += `</table>`;
-            table += `<p>Daily Total, Hour: ${dailyHour}
+            table += `<p>Daily Total, Hour: ${dailyHour/60}
                     , Tip: ${ currency.format(dailyTip) }
                     , Wage: ${ currency.format(dailyWage) }</p>`;
 
@@ -293,7 +295,7 @@ export class ReviewComponent implements OnInit {
         for( var zone in this.timeZones){
             let zst = this.timeZones[zone].startT.timeNum;
             let zet = this.timeZones[zone].endT.timeNum;
-            console.log('zone: start: ', zst, 'end: ', zet);
+            // console.log('zone: start: ', zst, 'end: ', zet);
 
             let calS: number, calE: number, calR: number;
 
