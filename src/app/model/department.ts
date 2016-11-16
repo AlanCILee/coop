@@ -39,17 +39,15 @@ export class Departments {
 
     initDepartments(){
         console.log('initDepartments Loading Departments');
-        this.loadDepartments(mockDepartments);
+        // this.loadDepartments(mockDepartments);
 
         this.httpComp.makeRequest('http://localhost:3000/getDepartment').subscribe((res : Response) => {
             let response = res.json();
-            // let response2: any;
 
             if ( response.err ) {
                 console.log('loadDepartments Fail :');
             }else{
                 console.log('loadDepartments from DB :', response);
-                // this.departments.push(new Department( departId, departName, ratio, true ));
                 response.forEach((depart: any)=>{
                     this.departments.push(new Department(depart.departId, depart.departName, depart.departRatio, depart.valid ));
                 });
@@ -68,12 +66,23 @@ export class Departments {
 
         return departName;
     }
+    //
+    // getDepartRatio(departName: string): number{
+    //     let departRatio: number = 0;
+    //
+    //     this.departments.forEach((depart) => {
+    //         if(depart.departName == departName)
+    //             departRatio = depart.departRatio;
+    //     });
+    //
+    //     return departRatio;
+    // }
     
-    getDepartRatio(departName: string): number{
+    getDepartRatio(departId: number): number{
         let departRatio: number = 0;
         
         this.departments.forEach((depart) => {
-            if(depart.departName == departName)
+            if(depart.departId == departId)
                 departRatio = depart.departRatio;
         });
         
@@ -88,10 +97,10 @@ export class Department {
                 public valid: boolean) {
     }
 }
-
-const mockDepartments = [
-    { departId: 0, departName: 'Software', ratio: 10},
-    { departId: 1, departName: 'Sales', ratio: 20},
-    { departId: 2, departName: 'HR', ratio: 30 },
-    { departId: 3, departName: 'QA', ratio: 40 },
-];
+//
+// const mockDepartments = [
+//     { departId: 0, departName: 'Software', ratio: 10},
+//     { departId: 1, departName: 'Sales', ratio: 20},
+//     { departId: 2, departName: 'HR', ratio: 30 },
+//     { departId: 3, departName: 'QA', ratio: 40 },
+// ];

@@ -22,14 +22,27 @@ export class ReviewComponent implements OnInit {
     form : FormGroup;
     editItem: any = null;
     sJobs: Job[] = [];
-    LIST_DATE: number = 7;
+    // LIST_DATE: number = 7;
     timeZones: Object =[];
     jobsDates: any = {};
     jobsPeople: any = {};
     dailyHours: any = {};
     dailyT : Object = {};
     // tableContents: string = "";
-
+    
+    LIST_DATE: number = 0;
+    LIST_VIEW: string[] = [
+        'Today',
+        'This Week',
+        'This Two Weeks',
+        'This Month',
+        'A Week from Today',
+        'Two Weeks from Today',
+        'One Month from Today',
+    ];
+    
+    
+    
     @ViewChild('tableData') tableData: ElementRef;
     @ViewChild('summary') summary: ElementRef;
 
@@ -44,7 +57,8 @@ export class ReviewComponent implements OnInit {
     ngOnInit(){
         this.employees = this.employeesObj.employees;
         this.departments = this.departmentsObj.departments;
-        this.timeZones = this.timeObj.timeZones;
+        // this.timeZones = this.timeObj.timeZones;
+        this.timeZones = this.timeObj.timeZonesHistory;
         this.dailyT = this.tipObj.dailyT;
         this.form = this.fb.group({
             date: [ '' ],
@@ -154,8 +168,9 @@ export class ReviewComponent implements OnInit {
             table += `<tr><td>Department</td>
                         <td>Name</td>
                         <td>Category</td>`;
-            Object.keys(this.timeZones).forEach((zone) => {
-                table += `<td>${zone}</td>`;
+            // Object.keys(this.timeZones).forEach((zone) => {
+            Object.keys(this.timeZones).forEach((zoneId) => {
+                table += `<td>${ this.timeZones[zoneId].zoneName }</td>`;
             });
             table += `<td>Sum</td></tr>`;
 
@@ -168,7 +183,7 @@ export class ReviewComponent implements OnInit {
                 Object.keys(this.jobsDates[date][depart]).forEach((emp) => {
                     let employee = this.jobsDates[date][depart][emp];
 
-                    table += `<tr><td>${depart}</td>
+                    table += `<tr><td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>
                                 <td>${employee['name']}</td>`;
                     table += `<td>Hour</td>`;
 
@@ -230,9 +245,13 @@ export class ReviewComponent implements OnInit {
                 Object.keys(this.jobsDates[date][depart]).forEach((empId)=>{
                     
                     Object.keys(departTip).forEach((zone)=>{
-                        this.jobsDates[date][depart][empId]['tip'][zone]
-                            = this.jobsDates[date][depart][empId]['hour'][zone] *
-                                departTip[zone] / departTime[zone];
+                        if(departTime[zone] !=0 ) {
+                            this.jobsDates[date][depart][empId]['tip'][zone]
+                                = this.jobsDates[date][depart][empId]['hour'][zone] *
+                                    departTip[zone] / departTime[zone];
+                        }else{
+                            this.jobsDates[date][depart][empId]['tip'][zone] = 0;
+                        }
 
                         this.jobsDates[date][depart][empId]['wage'][zone]
                             = this.jobsDates[date][depart][empId]['hour'][zone] *
@@ -254,26 +273,27 @@ export class ReviewComponent implements OnInit {
             let departRatio = {};
 
             Object.keys(this.jobsDates[date]).forEach((depart)=>{
-                departRatio[depart] = this.departmentsObj.getDepartRatio(depart);
+                departRatio[depart] = this.departmentsObj.getDepartRatio(Number(depart));
                 totalRatio += departRatio[depart];
             });
-
+            
             Object.keys(this.jobsDates[date]).forEach((depart)=>{
                 Object.keys(dayTipAmount).forEach((zone) => {
                     this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart] / totalRatio;
                 });
             });
         });
+        console.log('calculateDepartTips :',this.dailyHours);
     }
     
     calculateHours(startN: number, endN: number): Object{
-        // console.log('calcurateHours: start: ', startN, 'end: ', endN);
+        console.log('calcurateHours: start: ', startN, 'end: ', endN);
         let hourObj: Object = {};
 
         for( var zone in this.timeZones){
             let zst = this.timeZones[zone].startT.timeNum;
             let zet = this.timeZones[zone].endT.timeNum;
-            // console.log('zone: start: ', zst, 'end: ', zet);
+            console.log('zone: start: ', zst, 'end: ', zet);
 
             let calS: number, calE: number, calR: number;
 
@@ -295,7 +315,7 @@ export class ReviewComponent implements OnInit {
                 hourObj[zone] = 0;
 
         }
-        // console.log('hourObj: ', hourObj);
+        console.log('hourObj: ', hourObj);
         return hourObj;
     }
 

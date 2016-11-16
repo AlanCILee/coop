@@ -199,6 +199,7 @@ export class Schedule implements OnInit {
 			let jobList: Job[] = this.jobs.filter((job)=>{
 				return job.date >= viewStart && job.date <= viewEnd;
 			});
+			console.log("after loadSchedule: ",jobList);
 			return callback(jobList);
 		});
 	}
