@@ -30,6 +30,11 @@ export class TipModel implements OnInit{
 		console.log('loadMockWages :', this.dailyT);
 	}
 
+	initTip(): void {
+
+
+	}
+
 	getTipList(date: string, day: number): Object {
 		let days: string[] = [];
 		let listT: Object = {};

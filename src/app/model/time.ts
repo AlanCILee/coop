@@ -110,6 +110,8 @@ export class TimeTable {
 				console.log('initTimeZone Loading Timezone',this.timeZonesHistory);
 			}
 		});
+
+		this.createTimeTable();
 	}
 }
 

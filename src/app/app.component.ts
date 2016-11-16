@@ -39,8 +39,8 @@ export class AppComponent implements OnInit {
         this.timeObj.initTimeZone();
         // this.schedule.loadSchedule();
         this.schedule.initSchedule();
-        this.time.createTimeTable();
-        this.tipObj.loadMockTips();
+        this.tipObj.initTip();
+        // this.time.createTimeTable();
         // localStorage.removeItem('currentUser');
         // this.form = this.fb.group({
         //     id: [ '' ],

@@ -80,22 +80,23 @@ const InputService = function(options) {
 	// 	});
 	// };
 	//
-	// this.getDepartmentDb = function(req, res) {
-	// 	console.log('department list req');
-	// 	let database = req.session.company || 'bluelasso';
-	//
-	// 	let query = `SELECT * FROM department`;
-	//
-	// 	mysql.sendQuery( database, query, function(err, results, fields){
-	// 		if(err){
-	// 			console.log('getDepartmentDb fail: ', err);
-	// 			res.send({ err : 'getEmployeeDb fail' });
-	// 		}else {
-	// 			console.log('getDepartmentDb', results);
-	// 			res.send(results);
-	// 		}
-	// 	});
-	// };
+
+	this.getInputDb = function (req, res) {
+		console.log('tip list req');
+		let database = req.session.company || 'bluelasso';
+
+		let query = `SELECT * FROM schedule WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}"`;
+
+		mysql.sendQuery( database, query, function(err, results, fields){
+			if(err){
+				console.log('getInputDb fail: ', err);
+				res.send({ err : 'getScheduleDb fail' });
+			}else {
+				console.log('getInputDb', results);
+				res.send(results);
+			}
+		});
+	}
 }
 
 module.exports = InputService;

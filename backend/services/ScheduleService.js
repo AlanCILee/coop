@@ -85,9 +85,6 @@ const ScheduleService = function(options) {
 				res.send(results);
 			}
 		});
-
-
-
 	}
 }
 
