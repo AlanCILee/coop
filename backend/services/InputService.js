@@ -3,32 +3,14 @@ const InputService = function(options) {
 	const mysql = options.mysql;
 
 	this.newInputDb = function (req, res) {
-		// let departName = req.body.dName;
-		// let departRatio = req.body.dRatio;
 		let database = req.session.company || 'bluelasso';
-		let target = [];
-		// let value ='';
-		let value = [];
-
 		console.log('input req:', req.body, 'for', database);
-
-		// target = Object.keys(req.body);
-		// let query = `INSERT INTO tip (`;
-		// query += target.join(', ')+') VALUES (';
-		//
-		// Object.keys(req.body).forEach((zoneId)=>{
-		// 	value.push(req.body[zoneId]);
-		// 	// query += `${req.body[zoneId]}, `;
-		// });
-		// query += value.join(', ');
-		// query += ')';
-		// console.log('newInputDb query: ', query);
-
-		let zoneCnt = Object.keys(req.body).length;
-		let cnt = 0;
 
 		let date = req.body.date;
 		delete req.body.date;
+
+		let zoneCnt = Object.keys(req.body).length;
+		let cnt = 0;
 
 		Object.keys(req.body).forEach((zoneId)=>{
 			let query = `INSERT INTO tip (date, zoneId, tip)
@@ -40,7 +22,7 @@ const InputService = function(options) {
 					res.send({insertId: -1});
 				} else {
 					cnt++;
-					console.log('Insert new department: ', cnt, result);
+					console.log('Insert new tips: ', cnt, zoneCnt, result);
 					if(cnt >= zoneCnt){
 						res.send({insertId: result.insertId});
 					}
@@ -48,40 +30,35 @@ const InputService = function(options) {
 			});
 		});
 	};
-	//
-	// this.upDepartmentDb = function (req, res) {
-	// 	let departId = req.body.dId;
-	// 	let departName = req.body.dName;
-	// 	let departRatio = req.body.dRatio;
-	// 	let database = req.session.company || 'bluelasso';
-	//
-	// 	console.log('department req:', departName, ':', departRatio, 'for', database);
-	//
-	// 	let query = `UPDATE department SET valid = "false"
-	//                         WHERE departId = "${departId}"`;
-	//
-	// 	mysql.sendQuery(database, query, function (err, result) {
-	// 		if (err) {
-	// 			console.log('sendQuery fail: ', err);
-	// 			res.send({affectedRows: -1});
-	// 		} else {
-	// 			console.log('Update new department', result);
-	//
-	// 			let query = `INSERT INTO department (departName, departRatio)
-	//                                 VALUES ("${departName}", "${departRatio}")`;
-	//
-	// 			mysql.sendQuery(database, query, function (err, result) {
-	// 				if (err) {
-	// 					console.log('sendQuery fail: ', err);
-	// 					res.send({insertId: -1});
-	// 				} else {
-	// 					console.log('Insert new department', result);
-	// 					res.send({insertId: result.insertId});
-	// 				}
-	// 			});
-	// 		}
-	// 	});
-	// };
+
+	this.upInputDb = function (req, res) {
+		let database = req.session.company || 'bluelasso';
+		console.log('input req:', req.body, 'for', database);
+
+		let zoneCnt = Object.keys(req.body).length;
+		let cnt = 0;
+
+		let date = req.body.date;
+		delete req.body.date;
+
+		Object.keys(req.body).forEach((zoneId)=>{
+			let query = `UPDATE tip SET tip = "${req.body[zoneId]}"
+							WHERE date = "${date}" AND zoneId = "${zoneId}"`;
+
+			mysql.sendQuery(database, query, function (err, result) {
+				if (err) {
+					console.log('sendQuery fail: ', err);
+					res.send({affectedRows: -1});
+				} else {
+					cnt++;
+					console.log('Update new tips: ', cnt, result);
+					if(cnt >= zoneCnt){
+						res.send({affectedRows: result.affectedRows});
+					}
+				}
+			});
+		});
+	};
 	//
 	// this.rmDepartmentDb = function (req, res) {
 	// 	let departId = req.body.dId;

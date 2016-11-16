@@ -75,25 +75,40 @@ export class InputComponent implements OnInit {
     onSubmit(form: any): void {
         console.log('you submitted value: ', form);
 	    let date = form.date;
-		// delete form.date;
+		console.log('dayilyT :',this.dailyT);
 
-	    this.httpComp.makePostRequest('http://localhost:3000/newInput',form).subscribe((res : Response) => {
-		    let response = res.json();
-		    console.log('HttpComponent : ',response);
+	    if (date in this.dailyT){   // update case
+		    this.httpComp.makePostRequest('http://localhost:3000/upInput',form).subscribe((res : Response) => {
+			    let response = res.json();
+			    console.log('HttpComponent : ', response);
 
-		    if( Number(response.insertId) > 0){
-			    console.log('insert schedule successfully :', response.insertId );
-		    }else{
-			    console.log('department insert fail');
-		    }
-	    });
+			    if( Number(response.affectedRows) > 0){
+				    console.log('update input successfully :', response.affectedRows );
+				    delete form.date;
+			        this.tipObj.addDailyT(date, form );
+				    this.dailyT = this.tipObj.getTipList(date, this.LIST_DATE);
+			    }else{
+				    console.log('update insert fail');
+			    }
+		        this.clearInput();
+		    });
+	    }else{                      // new case
+		    this.httpComp.makePostRequest('http://localhost:3000/newInput',form).subscribe((res : Response) => {
+			    let response = res.json();
+			    console.log('HttpComponent : ', response);
 
-        this.tipObj.addDailyT(date, form );
+			    if( Number(response.insertId) > 0){
+				    console.log('insert input successfully :', response.insertId );
+					delete form.date;
+			        this.tipObj.addDailyT(date, form );
+				    this.dailyT = this.tipObj.getTipList(this.editDate, this.LIST_DATE);
+			    }else{
+				    console.log('input insert fail');
+			    }
+		        this.clearInput();
+		    });
+	    }
 
-
-
-	    this.dailyT = this.tipObj.getTipList(this.editDate, this.LIST_DATE);
-        this.clearInput();
     }
 
     tipSelect(tip: Object): void {

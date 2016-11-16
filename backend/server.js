@@ -67,6 +67,7 @@ const Server = function(options) {
         app.post('/getSchedule', scheduleServiceObj.getScheduleDb);
 
         app.post('/newInput', inputServiceObj.newInputDb);
+        app.post('/upInput', inputServiceObj.upInputDb);
 
 
     };
