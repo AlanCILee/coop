@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.1.14
--- http://www.phpmyadmin.net
+-- version 4.6.4
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: 16-11-14 00:01
--- 서버 버전: 5.6.17
--- PHP Version: 5.5.12
+-- Host: localhost:3306
+-- 생성 시간: 16-11-16 09:10
+-- 서버 버전: 5.6.34
+-- PHP 버전: 5.6.27
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -14,10 +14,10 @@ SET time_zone = "+00:00";
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `bluelasso`
+-- 데이터베이스: `bluelasso`
 --
 
 -- --------------------------------------------------------
@@ -26,14 +26,12 @@ SET time_zone = "+00:00";
 -- 테이블 구조 `department`
 --
 
-CREATE TABLE IF NOT EXISTS `department` (
-  `departId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `department` (
+  `departId` int(11) NOT NULL,
   `departName` varchar(50) NOT NULL,
   `departRatio` int(11) NOT NULL,
-  `valid` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`departId`),
-  UNIQUE KEY `departId` (`departId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
+  `valid` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 테이블의 덤프 데이터 `department`
@@ -63,15 +61,13 @@ INSERT INTO `department` (`departId`, `departName`, `departRatio`, `valid`) VALU
 -- 테이블 구조 `employees`
 --
 
-CREATE TABLE IF NOT EXISTS `employees` (
-  `empId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `employees` (
+  `empId` int(11) NOT NULL,
   `name` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `departId` int(50) DEFAULT NULL,
-  `valid` tinyint(1) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`empId`),
-  KEY `Foreign_department` (`departId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+  `valid` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- 테이블의 덤프 데이터 `employees`
@@ -101,34 +97,38 @@ INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `valid`) VALUES
 -- --------------------------------------------------------
 
 --
--- 테이블 구조 `empwage`
---
-
-CREATE TABLE IF NOT EXISTS `empwage` (
-  `empId` int(11) NOT NULL,
-  `wageId` int(11) NOT NULL,
-  `setDate` date NOT NULL,
-  KEY `empId` (`empId`) USING BTREE,
-  KEY `wageId` (`wageId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- 테이블 구조 `schedule`
 --
 
-CREATE TABLE IF NOT EXISTS `schedule` (
-  `scheduleId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `schedule` (
+  `scheduleId` bigint(24) NOT NULL,
   `date` date NOT NULL,
   `departId` int(11) NOT NULL,
   `empId` int(11) NOT NULL,
-  `startT` int(11) NOT NULL,
-  `endT` int(11) NOT NULL,
-  PRIMARY KEY (`scheduleId`),
-  KEY `empId` (`empId`) USING BTREE,
-  KEY `departId` (`departId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `startT` varchar(11) NOT NULL,
+  `endT` varchar(11) NOT NULL,
+  `valid` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 테이블의 덤프 데이터 `schedule`
+--
+
+INSERT INTO `schedule` (`scheduleId`, `date`, `departId`, `empId`, `startT`, `endT`, `valid`) VALUES
+(1, '2016-11-14', 3, 7, '0', '1', 1),
+(2, '2016-11-14', 3, 7, '1', '2', 1),
+(3, '2016-11-14', 2, 11, '00:30', '01:00', 1),
+(4, '2016-11-14', 2, 6, '08:15', '09:30', 1),
+(5, '2016-11-14', 2, 17, '10:15', '11:00', 1),
+(6, '2016-11-14', 18, 19, '13:45', '14:15', 1),
+(7, '2016-11-14', 2, 14, '00:30', '01:00', 1),
+(8, '2016-11-14', 1, 12, '00:00', '00:00', 1),
+(9, '2016-11-14', 1, 10, '07:45', '11:45', 1),
+(10, '2016-11-14', 3, 10, '10:00', '12:15', 1),
+(11, '2016-11-14', 16, 32, '08:30', '11:00', 1),
+(12, '2016-11-14', 17, 18, '07:30', '10:00', 1),
+(13, '2016-11-14', 3, 8, '08:45', '10:45', 1),
+(14, '2016-11-14', 3, 31, '13:00', '14:15', 0);
 
 -- --------------------------------------------------------
 
@@ -136,14 +136,13 @@ CREATE TABLE IF NOT EXISTS `schedule` (
 -- 테이블 구조 `timezone`
 --
 
-CREATE TABLE IF NOT EXISTS `timezone` (
-  `zoneId` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `timezone` (
+  `zoneId` int(11) NOT NULL,
   `zoneName` varchar(50) NOT NULL,
   `startT` time NOT NULL,
   `endT` time NOT NULL,
-  `valid` tinyint(4) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`zoneId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=35 ;
+  `valid` tinyint(4) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- 테이블의 덤프 데이터 `timezone`
@@ -151,39 +150,64 @@ CREATE TABLE IF NOT EXISTS `timezone` (
 
 INSERT INTO `timezone` (`zoneId`, `zoneName`, `startT`, `endT`, `valid`) VALUES
 (1, 'KKK', '00:15:00', '00:45:00', 0),
-(2, 'LL', '00:00:00', '00:00:00', 1),
-(3, 'OOO', '00:00:00', '01:00:00', 1),
-(4, 'OOO', '01:30:00', '02:00:00', 1),
-(5, 'adf', '01:45:00', '02:30:00', 1),
-(6, 'dsaf', '00:00:00', '00:15:00', 1),
-(7, 'daddddd', '00:00:00', '00:45:00', 1),
-(8, 'daddddd', '00:00:00', '01:30:00', 1),
-(9, 'daddddd', '00:00:00', '02:30:00', 1),
+(2, 'LL', '00:00:00', '00:00:00', 0),
+(3, 'OOO', '00:00:00', '01:00:00', 0),
+(4, 'OOO', '01:30:00', '02:00:00', 0),
+(5, 'adf', '01:45:00', '02:30:00', 0),
+(6, 'dsaf', '00:00:00', '00:15:00', 0),
+(7, 'daddddd', '00:00:00', '00:45:00', 0),
+(8, 'daddddd', '00:00:00', '01:30:00', 0),
+(9, 'daddddd', '00:00:00', '02:30:00', 0),
 (10, 'ggg', '00:00:00', '00:00:00', 0),
-(11, 'ggg', '00:00:00', '01:00:00', 1),
-(12, 'ewq', '00:00:00', '00:00:00', 1),
-(13, 'ggg', '00:00:00', '00:45:00', 1),
-(14, 'kkk', '00:00:00', '00:00:00', 1),
+(11, 'ggg', '00:00:00', '01:00:00', 0),
+(12, 'ewq', '00:00:00', '00:00:00', 0),
+(13, 'ggg', '00:00:00', '00:45:00', 0),
+(14, 'kkk', '00:00:00', '00:00:00', 0),
 (15, 'qwe', '00:00:00', '00:00:00', 0),
-(16, 'qwe', '00:00:00', '00:15:00', 1),
+(16, 'qwe', '00:00:00', '00:15:00', 0),
 (17, 'zaq', '00:00:00', '00:00:00', 0),
-(18, 'zaq', '00:00:00', '00:15:00', 1),
+(18, 'zaq', '00:00:00', '00:15:00', 0),
 (19, 'teq', '00:00:00', '00:00:00', 0),
-(20, '19', '00:00:00', '01:45:00', 1),
+(20, '19', '00:00:00', '01:45:00', 0),
 (21, 'zxcv', '00:00:00', '00:00:00', 0),
-(22, 'zxcv', '00:00:00', '01:00:00', 1),
+(22, 'zxcv', '00:00:00', '01:00:00', 0),
 (23, 'TH', '00:00:00', '00:15:00', 0),
 (24, 'TH', '00:00:00', '01:00:00', 0),
 (25, 'HH', '00:00:00', '00:15:00', 0),
 (26, 'HH', '00:00:00', '01:00:00', 0),
 (27, 'ZZ', '00:00:00', '00:15:00', 0),
-(28, 'ZZ', '00:00:00', '01:00:00', 1),
+(28, 'ZZ', '00:00:00', '01:00:00', 0),
 (29, 'yhy', '00:00:00', '00:00:00', 0),
-(30, 'yhy', '00:00:00', '01:00:00', 1),
+(30, 'yhy', '00:00:00', '01:00:00', 0),
 (31, 'xxx', '00:00:00', '00:15:00', 0),
 (32, 'xxx', '00:00:00', '01:00:00', 0),
 (33, 'vvv', '00:00:00', '00:15:00', 0),
-(34, 'vvv', '00:00:00', '01:00:00', 0);
+(34, 'vvv', '00:00:00', '01:00:00', 0),
+(35, 'Morning', '06:00:00', '12:00:00', 1),
+(36, 'Afternoon', '12:00:00', '18:30:00', 1),
+(37, 'Evening', '18:30:00', '23:45:00', 1);
+
+-- --------------------------------------------------------
+
+--
+-- 테이블 구조 `tip`
+--
+
+CREATE TABLE `tip` (
+  `tipId` bigint(24) NOT NULL,
+  `date` date NOT NULL,
+  `zoneId` int(11) NOT NULL,
+  `tip` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 테이블의 덤프 데이터 `tip`
+--
+
+INSERT INTO `tip` (`tipId`, `date`, `zoneId`, `tip`) VALUES
+(22, '2016-11-15', 35, 11),
+(23, '2016-11-15', 36, 22),
+(24, '2016-11-15', 37, 33);
 
 -- --------------------------------------------------------
 
@@ -191,69 +215,100 @@ INSERT INTO `timezone` (`zoneId`, `zoneName`, `startT`, `endT`, `valid`) VALUES
 -- 테이블 구조 `wage`
 --
 
-CREATE TABLE IF NOT EXISTS `wage` (
-  `wageId` bigint(32) NOT NULL AUTO_INCREMENT,
-  `wage` float NOT NULL,
+CREATE TABLE `wage` (
+  `wageId` int(11) NOT NULL,
+  `wage` int(11) NOT NULL,
   `empId` int(11) NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`wageId`),
-  UNIQUE KEY `wageId` (`wageId`),
-  KEY `empId` (`empId`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=35 ;
+  `date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- 테이블의 덤프 데이터 `wage`
+-- 덤프된 테이블의 인덱스
 --
 
-INSERT INTO `wage` (`wageId`, `wage`, `empId`, `date`) VALUES
-(7, 32, 6, '2016-11-10 00:00:00'),
-(8, 1, 7, '2016-11-10 00:00:00'),
-(9, 11, 8, '2016-11-10 00:00:00'),
-(10, 44, 9, '2016-11-10 00:00:00'),
-(11, 21, 10, '2016-11-10 00:00:00'),
-(13, 222, 11, '2016-11-10 00:00:00'),
-(15, 33, 12, '2016-11-10 00:00:00'),
-(16, 44, 6, '0000-00-00 00:00:00'),
-(17, 33, 6, '0000-00-00 00:00:00'),
-(18, 0, 13, '2016-11-10 00:00:00'),
-(19, 0, 14, '2016-11-10 00:00:00'),
-(20, 10, 14, '0000-00-00 00:00:00'),
-(21, 0, 15, '2016-11-10 00:00:00'),
-(22, 10, 15, '0000-00-00 00:00:00'),
-(23, 33, 16, '2016-11-10 00:00:00'),
-(24, 2, 17, '2016-11-10 00:00:00'),
-(25, 29, 17, '2016-11-10 00:00:00'),
-(26, 31, 18, '2016-11-11 00:00:00'),
-(27, 33, 18, '2016-11-11 00:00:00'),
-(28, 32, 19, '2016-11-11 11:24:41'),
-(29, 2, 31, '2016-11-13 11:17:56'),
-(30, 11, 32, '2016-11-13 11:41:39'),
-(31, 12, 30, '2016-11-13 11:46:35'),
-(32, 21, 33, '2016-11-13 11:49:30'),
-(33, 2, 34, '2016-11-13 11:53:10'),
-(34, 3, 34, '2016-11-13 11:53:29');
+--
+-- 테이블의 인덱스 `department`
+--
+ALTER TABLE `department`
+  ADD PRIMARY KEY (`departId`),
+  ADD UNIQUE KEY `departId` (`departId`);
 
+--
+-- 테이블의 인덱스 `employees`
+--
+ALTER TABLE `employees`
+  ADD PRIMARY KEY (`empId`),
+  ADD KEY `Foreign_department` (`departId`);
+
+--
+-- 테이블의 인덱스 `schedule`
+--
+ALTER TABLE `schedule`
+  ADD PRIMARY KEY (`scheduleId`),
+  ADD KEY `empId` (`empId`) USING BTREE,
+  ADD KEY `departId` (`departId`);
+
+--
+-- 테이블의 인덱스 `timezone`
+--
+ALTER TABLE `timezone`
+  ADD PRIMARY KEY (`zoneId`);
+
+--
+-- 테이블의 인덱스 `tip`
+--
+ALTER TABLE `tip`
+  ADD PRIMARY KEY (`tipId`);
+
+--
+-- 테이블의 인덱스 `wage`
+--
+ALTER TABLE `wage`
+  ADD PRIMARY KEY (`wageId`);
+
+--
+-- 덤프된 테이블의 AUTO_INCREMENT
+--
+
+--
+-- 테이블의 AUTO_INCREMENT `department`
+--
+ALTER TABLE `department`
+  MODIFY `departId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- 테이블의 AUTO_INCREMENT `employees`
+--
+ALTER TABLE `employees`
+  MODIFY `empId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+--
+-- 테이블의 AUTO_INCREMENT `schedule`
+--
+ALTER TABLE `schedule`
+  MODIFY `scheduleId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+--
+-- 테이블의 AUTO_INCREMENT `timezone`
+--
+ALTER TABLE `timezone`
+  MODIFY `zoneId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+--
+-- 테이블의 AUTO_INCREMENT `tip`
+--
+ALTER TABLE `tip`
+  MODIFY `tipId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- 테이블의 AUTO_INCREMENT `wage`
+--
+ALTER TABLE `wage`
+  MODIFY `wageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- 덤프된 테이블의 제약사항
 --
-
---
--- 테이블의 제약사항 `empwage`
---
-ALTER TABLE `empwage`
-  ADD CONSTRAINT `empwage_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `employees` (`empId`);
 
 --
 -- 테이블의 제약사항 `schedule`
 --
 ALTER TABLE `schedule`
   ADD CONSTRAINT `FK_empId` FOREIGN KEY (`empId`) REFERENCES `employees` (`empId`) ON UPDATE CASCADE;
-
---
--- 테이블의 제약사항 `wage`
---
-ALTER TABLE `wage`
-  ADD CONSTRAINT `wage_ibfk_1` FOREIGN KEY (`empId`) REFERENCES `employees` (`empId`) ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
