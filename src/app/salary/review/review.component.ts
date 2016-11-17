@@ -5,7 +5,7 @@ import { Job, Schedule } from "../../model/schedule";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { TipModel } from "../../model/tip";
 import { TimeTable } from "../../model/time";
-
+import { Router } from '@angular/router';
 // import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 
@@ -31,13 +31,13 @@ export class ReviewComponent implements OnInit {
     
     LIST_DATE: number = 0;
     LIST_VIEW: string[] = [
-        'Today',
-        'This Week',
-        'This Two Weeks',
-        'This Month',
-        'A Week from Today',
-        'Two Weeks from Today',
-        'One Month from Today',
+        'One Day',
+        'One Week',
+        'Two Weeks',
+        'One Month',
+        'A Week from the Day',
+        'Two Weeks from the Day',
+        'A Month from the Day',
     ];
     
     LIST_OPTION_VALUE: number = 0;
@@ -54,19 +54,24 @@ export class ReviewComponent implements OnInit {
                 private departmentsObj: Departments,
                 private scheduleObj: Schedule,
                 private fb: FormBuilder,
+                private router: Router,
                 private timeObj: TimeTable,
                 private tipObj: TipModel,
     ){ }
 
     ngOnInit(){
-        this.employees = this.employeesObj.employees;
-        this.departments = this.departmentsObj.departments;
-        // this.timeZones = this.timeObj.timeZones;
-        this.timeZones = this.timeObj.timeZonesHistory;
-        this.dailyT = this.tipObj.dailyT;
-        this.form = this.fb.group({
-            date: [ '' ],
-        });
+        if(this.scheduleObj.initialize){
+            this.employees = this.employeesObj.employees;
+            this.departments = this.departmentsObj.departments;
+            // this.timeZones = this.timeObj.timeZones;
+            this.timeZones = this.timeObj.timeZonesHistory;
+            this.dailyT = this.tipObj.dailyT;
+            this.form = this.fb.group({
+                date: [ '' ],
+            });
+        }else{
+            this.router.navigate(['/home']);
+        }
     }
 
     dateChanged(str: string){

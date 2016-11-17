@@ -28,13 +28,13 @@ export class InputComponent implements OnInit {
 	
 	LIST_DATE: number = 0;
 	LIST_VIEW: string[] = [
-		'Today',
-		'This Week',
-		'This Two Weeks',
-		'This Month',
-		'A Week from Today',
-		'Two Weeks from Today',
-		'One Month from Today',
+		'One Day',
+		'One Week',
+		'Two Weeks',
+		'One Month',
+		'A Week from the Day',
+		'Two Weeks from the Day',
+		'A Month from the Day',
 	];
 	
     constructor(private employeesObj: Employees,

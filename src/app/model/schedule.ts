@@ -11,6 +11,7 @@ export class Schedule implements OnInit {
 	jobs: Job[] = [];
 	startD: string;
 	endD: string;
+	initialize: boolean = false;
 	// jobsBST: BinarySearchTree<Job>;
 
 	constructor(
@@ -131,6 +132,7 @@ export class Schedule implements OnInit {
 					this.jobs.push(job);
 				});
 			}
+			this.initialize = true;
 		});
 	}
 
