@@ -15,6 +15,7 @@ export class Employees {
                 departId: number,
                 empPhone: string,
                 wage: Wage,
+                ratio: number,
                 ): void{
 	    
 	    let updateEmp: boolean = false;
@@ -26,6 +27,7 @@ export class Employees {
 		        emp.empPhone = empPhone;
 	            if(wage)
 		            emp.wages.push(wage);
+	            emp.ratio = ratio;
 	            updateEmp = true;
 	        }
 	    });
@@ -33,7 +35,7 @@ export class Employees {
 	    if(!updateEmp){         // new Employee case
 		    let wages: Wage[] = [wage];
 	        this.employees.push(
-	            new Employee(empId, empName, departId, empPhone, wages, true)
+	            new Employee(empId, empName, departId, empPhone, wages, ratio, true)
 	        );
 	    }
         console.log('after addedEmployee: ', this.employees);
@@ -88,7 +90,7 @@ export class Employees {
 			                    wages.push(new Wage(1, '1999-12-31 00:00:00'));
 				
 				            this.employees.push(
-					            new Employee( emp['empId'], emp['name'], emp['departId'], emp['phone'], wages, emp['valid'])
+					            new Employee( emp['empId'], emp['name'], emp['departId'], emp['phone'], wages, emp['ratio'], emp['valid'])
 				            );
 			            });
 	                    console.log('loadEmployee: ', this.employees);
@@ -142,8 +144,9 @@ export class Employee {
             public departId: number,
 			public empPhone: string,
 		    public wages: Wage[],
-			// public wage: number,
-			public valid: boolean){
+	        public ratio: number,
+			public valid: boolean,
+			){
 	    console.log('constructor Employee');
 	}
 

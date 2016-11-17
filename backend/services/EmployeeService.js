@@ -6,17 +6,17 @@ const EmployeeService = function(options) {
 		let employeeName = req.body.name;
 		let employeeDepart = req.body.department;
 		let employeePhone = req.body.phone;
+		let employeeRatio = req.body.ratio;
 		let employeeWage = req.body.wage;
 		let wageDate = req.body.date;
 		
 		let database = req.session.company || 'bluelasso';
-		
 		console.log('newEmployee req:', req.body, 'for', database);
 		
 		// let query = `INSERT INTO employees (name, phone, departId, wage)
         //        VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}", "${employeeWage}")`;
-		let query = `INSERT INTO employees (name, phone, departId) 
-                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}")`;
+		let query = `INSERT INTO employees (name, phone, departId, ratio) 
+                VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}", "${employeeRatio}")`;
 		
 		mysql.sendQuery( database, query, function(err, result){
 			if(err){
@@ -45,13 +45,14 @@ const EmployeeService = function(options) {
 		let employeeDepart = req.body.department;
 		let employeePhone = req.body.phone;
 		let employeeWage = req.body.wage;
+		let employeeRatio = req.body.ratio;
 		let wageDate = req.body.date;
 		let database = req.session.company || 'bluelasso';
 	
 		console.log('upEmployee req:', req.body, 'for', database);
 		
 		let query = `UPDATE employees SET name = "${employeeName}",
-		            phone = "${employeePhone}", departId = "${employeeDepart}"
+		            phone = "${employeePhone}", departId = "${employeeDepart}", ratio = "${employeeRatio}"
                     WHERE empId = "${employeeId}"`;
 		// let query = `INSERT INTO employees (name, phone, departId, wage)
 	    //            VALUES ("${employeeName}", "${employeePhone}", "${employeeDepart}", "${employeeWage}")`;
@@ -80,28 +81,6 @@ const EmployeeService = function(options) {
 				}
 			}
 		});
-				
-		// 		mysql.sendQuery( database, query, function(err, result){
-		// 	if(err){
-		// 		console.log('update employee : new insert fail ', err);
-		// 		res.send({ insertId : -1 });
-		// 	}else {
-		// 		console.log('Inserted new employee', result);
-		//
-		// 		query = `UPDATE employees SET valid = "false"
-	     //                    WHERE empId = "${employeeId}"`;
-		//
-		// 		mysql.sendQuery( database, query, function(err, result2){
-		// 			if(err){
-		// 				console.log('update employee : old employee invalid fail: ', err);
-		// 				res.send({ insertId : -1 });
-		// 			}else{
-		// 				console.log('update employee success', result2);
-		// 				res.send({ insertId : result.insertId });
-		// 			}
-		// 		});
-		// 	}
-		// });
 	};
 	
 	this.rmEmployeeDb = function(req, res){
@@ -125,6 +104,7 @@ const EmployeeService = function(options) {
 	};
 	
 	this.getEmployeeDb = function(req, res){
+		console.log("DATA BASE: ============== ", req.session.company);
 		console.log('employee list req');
 		let database = req.session.company || 'bluelasso';
 		

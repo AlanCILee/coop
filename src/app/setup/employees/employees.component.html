@@ -22,6 +22,9 @@
 
             <label>Wage </label>
             <input type="text" formControlName="wage">
+            
+            <label>Tip Ratio(%) </label>
+            <input type="text" formControlName="ratio">
 
             <button type="submit">Submit</button>
             <button type="button" (click)="clearInput()">Clear</button>
@@ -36,6 +39,7 @@
                 <td>{{ getDepartName(emp.departId) }}</td>
                 <td>{{ emp.empPhone }}</td>
                 <td>{{ emp.getLatestWage().wage }}</td>
+                <td>{{ emp.ratio }}</td>
                 <!--<td>{{ // emp.wage }}</td>-->
             </span>
         </tr>

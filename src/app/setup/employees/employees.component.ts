@@ -34,6 +34,7 @@ export class EmployeesComponent implements OnInit {
             department: [ '' ],
             phone: [ '' ],
             wage: [ '' ],
+            ratio: [ '100' ],
         });
         // this.loadEmployees();
     }
@@ -62,7 +63,8 @@ export class EmployeesComponent implements OnInit {
             name: '',
             department: '',
             phone: '',
-            wage: ''
+            wage: '',
+            ratio: '',
         });
         this.editItem = null;
     }
@@ -94,10 +96,10 @@ export class EmployeesComponent implements OnInit {
 			        console.log('update successfully :', response.changedRows);
 			        if (form.date) {
 				        this.employeesObj.addEmployee(form.eId,
-					        form.name, form.department, form.phone, newWage);
+					        form.name, form.department, form.phone, newWage, form.ratio);
 			        } else {
 				        this.employeesObj.addEmployee(form.eId,
-					        form.name, form.department, form.phone, null);
+					        form.name, form.department, form.phone, null, form.ratio);
 			        }
 		        } else {
 			        console.log('invalid user :');
@@ -124,7 +126,7 @@ export class EmployeesComponent implements OnInit {
                 if( Number(response.insertId) > 0){
                     console.log('insert successfully :', response.insertId );
                     this.employeesObj.addEmployee(response.insertId,
-                        form.name, form.department, form.phone, newWage);
+                        form.name, form.department, form.phone, newWage, form.ratio);
                 }else{
                     console.log('newEmployee fail');
                 }
@@ -142,6 +144,7 @@ export class EmployeesComponent implements OnInit {
             phone: emp.empPhone,
             // wage: emp.wage
             wage: emp.getLatestWage().wage,
+            ratio: emp.ratio,
         });
         this.editItem = emp;
     }

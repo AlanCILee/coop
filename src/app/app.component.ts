@@ -9,6 +9,7 @@ import { TimeTable } from "./model/time";
 import { Schedule } from "./model/schedule";
 import { TipModel } from "./model/tip";
 import { HttpComponent } from "./core/http.component";
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'my-app',
@@ -27,16 +28,21 @@ export class AppComponent implements OnInit {
                 private tipObj: TipModel,
                 private time: TimeTable,
                 private fb: FormBuilder,
+                private router: Router,
                 private httpComp: HttpComponent,
     ) {
     }
     
     ngOnInit() {
-        this.timeObj.initTimeZone();
-        this.employees.initEmployee();
-        this.departments.initDepartments();
-        this.schedule.initSchedule();
-        this.tipObj.initTip();
+        console.log("App component ngOnInit ===================================");
+        if(this.getUserName()){
+            this.timeObj.initTimeZone();
+            this.employees.initEmployee();
+            this.departments.initDepartments();
+            this.schedule.initSchedule();
+            this.tipObj.initTip();
+            this.router.navigate(['/home']);
+        }
     }
 
     getUserName(): string{
