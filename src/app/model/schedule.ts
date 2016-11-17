@@ -134,12 +134,6 @@ export class Schedule implements OnInit {
 		});
 	}
 
-	getJobs(date: string, dayOption: number, callback: any) {
-		console.log('selected date: ',date, 'viewOption: ', dayOption);
-		let days: string[] = [];
-		let momentDay = moment(date);
-		let viewStart: string;
-		let viewEnd: string;
 
 		// LIST_VIEW: string[] = [
 		// 	'Today',                // 0
@@ -150,6 +144,12 @@ export class Schedule implements OnInit {
 		// 	'Two Weeks from Today', // 5
 		// 	'One Month from Today', // 6
 		// ];
+	getJobs(date: string, dayOption: number, callback: any) {
+		console.log('selected date: ',date, 'viewOption: ', dayOption);
+		let days: string[] = [];
+		let momentDay = moment(date);
+		let viewStart: string;
+		let viewEnd: string;
 
 		switch(dayOption){
 			case 0:

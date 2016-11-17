@@ -5,8 +5,11 @@
 
     <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
         <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-        <select (change)="onChange($event.target.value)">
+        <select (change)="onChangePeriod($event.target.value)">
             <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+        </select>
+        <select (change)="onChangeViewOption($event.target.value)">
+            <option *ngFor="let view of LIST_OPTION; let i = index" value ="{{ i }}">{{ view }}</option>
         </select>
         <button type="submit">Submit</button>
     </form>
@@ -14,6 +17,6 @@
 
     <div #summary></div>
     <div #tableData></div>
-    <div #tableData2></div>
+    <!--<div #tableData2></div>-->
 
 </div>
