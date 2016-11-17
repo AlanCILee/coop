@@ -247,13 +247,13 @@ export class ReviewComponent implements OnInit {
                     , Wage: ${ currency.format(periodWage) }</p>`;
     
         table =``;
+        table += `<table border="1">`;
+        table += `<tr><td>Name</td>
+                    <td>Date</td>
+                    <td>Department</td>
+                    <td>Category</td>`;
 
         Object.keys(this.jobsPeople).forEach((id) => {
-            table += `<table border="1">`;
-            // table += `<tr><td>${date}</td></tr>`;
-            table += `<tr><td>Name</td>
-                        <td>Date</td>
-                        <td>Department</td>`;
             // Object.keys(this.timeZones).forEach((zone) => {
             Object.keys(this.timeZones).forEach((zoneId) => {
                 table += `<td>${ this.timeZones[zoneId].zoneName }</td>`;
@@ -264,57 +264,57 @@ export class ReviewComponent implements OnInit {
             let dailyHour = 0;
             let dailyWage = 0;
 
-            table += `<tr><td>${this.employeesObj.getEmployeeName(Number(id))}</td>`;
+            table += `<tr><td>${this.employeesObj.getEmployeeName(Number(id))}</td></tr>`;
 
-            // Object.keys(this.jobsPeople[id]).forEach((date) => {
-            //     table += `<td>${ date }</td>`;
-            //
-            //     Object.keys(this.jobsPeople[id][date]).forEach((depart) => {
-            //         let department = this.jobsPeople[id][date][depart];
-            //
-            //
-            //         table += `<td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>`;
-            //
-            //         table += `<td>Hour</td>`;
-            //
-            //         let sum: number = 0;
-            //         Object.keys(department['hour']).forEach((zone) => {
-            //             sum += department['hour'][zone];
-            //             table += `<td>${ department['hour'][zone] }</td>`;
-            //             // table += `<td>${ employee['hour'][zone]/60 }</td>`;
-            //         });
-            //         table += `<td>${sum /60}</td>`;
-            //         table += `</tr>`;
-            //         dailyHour += sum;
-            //
-            //         table += `<tr><td></td><td></td>`;
-            //         table += `<td>Tip</td>`;
-            //         sum = 0;
-            //         Object.keys(department['tip']).forEach((zone) => {
-            //             sum += department['tip'][zone];
-            //             table += `<td>${ currency.format(department['tip'][zone]) }</td>`;
-            //         });
-            //         table += `<td>${ currency.format(sum) }</td>`;
-            //         table += `</tr>`;
-            //         dailyTip += sum;
-            //
-            //         table += `<tr><td></td><td></td>`;
-            //         table += `<td>Wage</td>`;
-            //         sum = 0;
-            //         Object.keys(department['wage']).forEach((zone) => {
-            //             sum += department['wage'][zone];
-            //             table += `<td>${ currency.format(department['wage'][zone]) }</td>`;
-            //         });
-            //         table += `<td>${ currency.format(sum) }</td>`;
-            //         table += `</tr>`;
-            //         dailyWage += sum;
-            //     });
-            // });
+            Object.keys(this.jobsPeople[id]).forEach((date) => {
+                table += `<tr><td></td><td>${ date }</td>`;
 
+                Object.keys(this.jobsPeople[id][date]).forEach((depart) => {
+                    let department = this.jobsPeople[id][date][depart];
+
+
+                    table += `<td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>`;
+
+                    table += `<td>Hour</td>`;
+
+                    let sum: number = 0;
+                    Object.keys(department['hour']).forEach((zone) => {
+                        sum += department['hour'][zone];
+                        table += `<td>${ department['hour'][zone] }</td>`;
+                        // table += `<td>${ employee['hour'][zone]/60 }</td>`;
+                    });
+                    table += `<td>${sum /60}</td>`;
+                    table += `</tr>`;
+                    dailyHour += sum;
+
+                    table += `<tr><td></td><td></td><td></td>`;
+                    table += `<td>Tip</td>`;
+                    sum = 0;
+                    Object.keys(department['tip']).forEach((zone) => {
+                        sum += department['tip'][zone];
+                        table += `<td>${ currency.format(department['tip'][zone]) }</td>`;
+                    });
+                    table += `<td>${ currency.format(sum) }</td>`;
+                    table += `</tr>`;
+                    dailyTip += sum;
+
+                    table += `<tr><td></td><td></td><td></td>`;
+                    table += `<td>Wage</td>`;
+                    sum = 0;
+                    Object.keys(department['wage']).forEach((zone) => {
+                        sum += department['wage'][zone];
+                        table += `<td>${ currency.format(department['wage'][zone]) }</td>`;
+                    });
+                    table += `<td>${ currency.format(sum) }</td>`;
+                    table += `</tr>`;
+                    dailyWage += sum;
+                });
+            });
             periodHour += dailyHour;
             periodTip += dailyTip;
             periodWage += dailyWage;
         });
+        table += `</table>`;
         this.tableData2.nativeElement.innerHTML = table;
     }
 
