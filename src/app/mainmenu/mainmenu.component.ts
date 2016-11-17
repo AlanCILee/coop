@@ -117,7 +117,7 @@ export class MainMenuComponent implements OnInit {
         // this.sJobs = this.dScheduleObj.getJobs(str, Number(this.LIST_DATE));
         this.dScheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
             this.sJobs = list;
-            console.log('ngOnInit() jobs:', this.sJobs);
+            console.log('dateChanged jobs:', this.sJobs);
         });
     }
 
@@ -127,7 +127,7 @@ export class MainMenuComponent implements OnInit {
         // this.sJobs = this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE));
         this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
             this.sJobs = list;
-            console.log('ngOnInit() jobs:', this.sJobs);
+            console.log('onChange jobs:', this.sJobs);
         });
     }
 

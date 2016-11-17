@@ -43,6 +43,7 @@ export class ReviewComponent implements OnInit {
     
     
     @ViewChild('tableData') tableData: ElementRef;
+    @ViewChild('tableData2') tableData2: ElementRef;
     @ViewChild('summary') summary: ElementRef;
 
     constructor(private employeesObj: Employees,
@@ -65,24 +66,32 @@ export class ReviewComponent implements OnInit {
     }
 
     dateChanged(str: string){
-        // let departJobs: any[][] =[];
-        // let departName: string[] = [];
         console.log('dateChanged');
         this.editDate = str;
-        // this.sJobs = this.scheduleObj.getJobs(str, this.LIST_DATE);
         this.scheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
             this.sJobs = list;
-            console.log('ngOnInit() jobs:', this.sJobs);
+            console.log('dateChanged jobs:', this.sJobs);
             this.show();
         });
     }
-
+    
+    onChange(dateOption: number) {
+        console.log(dateOption);
+        this.LIST_DATE = dateOption;
+        this.scheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+            this.sJobs = list;
+            console.log('onChange jobs:', this.sJobs);
+            this.show();
+        });
+    }
+    
     show(): void {
         // let hoursResult = this.calculateHours(0, 0);
 
         console.log("show():", this.timeZones);
         this.jobsDates = {};
         this.dailyHours = {};
+        this.jobsPeople = {};
         
         this.sJobs.forEach(( job ) => {
 
@@ -221,20 +230,92 @@ export class ReviewComponent implements OnInit {
                     dailyWage += sum;
                 });
             });
+
+            periodHour += dailyHour;
+            periodTip += dailyTip;
+            periodWage += dailyWage;
+            
             table += `</table>`;
             table += `<p>Daily Total, Hour: ${dailyHour/60}
                     , Tip: ${ currency.format(dailyTip) }
                     , Wage: ${ currency.format(dailyWage) }</p>`;
+        });
+
+        this.tableData.nativeElement.innerHTML = table;
+        this.summary.nativeElement.innerHTML = `<p>Period Total, Hour: ${periodHour/60}
+                    , Tip: ${ currency.format(periodTip) }
+                    , Wage: ${ currency.format(periodWage) }</p>`;
+    
+        table =``;
+
+        Object.keys(this.jobsPeople).forEach((id) => {
+            table += `<table border="1">`;
+            // table += `<tr><td>${date}</td></tr>`;
+            table += `<tr><td>Name</td>
+                        <td>Date</td>
+                        <td>Department</td>`;
+            // Object.keys(this.timeZones).forEach((zone) => {
+            Object.keys(this.timeZones).forEach((zoneId) => {
+                table += `<td>${ this.timeZones[zoneId].zoneName }</td>`;
+            });
+            table += `<td>Sum</td></tr>`;
+
+            let dailyTip = 0;
+            let dailyHour = 0;
+            let dailyWage = 0;
+
+            table += `<tr><td>${this.employeesObj.getEmployeeName(Number(id))}</td>`;
+
+            // Object.keys(this.jobsPeople[id]).forEach((date) => {
+            //     table += `<td>${ date }</td>`;
+            //
+            //     Object.keys(this.jobsPeople[id][date]).forEach((depart) => {
+            //         let department = this.jobsPeople[id][date][depart];
+            //
+            //
+            //         table += `<td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>`;
+            //
+            //         table += `<td>Hour</td>`;
+            //
+            //         let sum: number = 0;
+            //         Object.keys(department['hour']).forEach((zone) => {
+            //             sum += department['hour'][zone];
+            //             table += `<td>${ department['hour'][zone] }</td>`;
+            //             // table += `<td>${ employee['hour'][zone]/60 }</td>`;
+            //         });
+            //         table += `<td>${sum /60}</td>`;
+            //         table += `</tr>`;
+            //         dailyHour += sum;
+            //
+            //         table += `<tr><td></td><td></td>`;
+            //         table += `<td>Tip</td>`;
+            //         sum = 0;
+            //         Object.keys(department['tip']).forEach((zone) => {
+            //             sum += department['tip'][zone];
+            //             table += `<td>${ currency.format(department['tip'][zone]) }</td>`;
+            //         });
+            //         table += `<td>${ currency.format(sum) }</td>`;
+            //         table += `</tr>`;
+            //         dailyTip += sum;
+            //
+            //         table += `<tr><td></td><td></td>`;
+            //         table += `<td>Wage</td>`;
+            //         sum = 0;
+            //         Object.keys(department['wage']).forEach((zone) => {
+            //             sum += department['wage'][zone];
+            //             table += `<td>${ currency.format(department['wage'][zone]) }</td>`;
+            //         });
+            //         table += `<td>${ currency.format(sum) }</td>`;
+            //         table += `</tr>`;
+            //         dailyWage += sum;
+            //     });
+            // });
 
             periodHour += dailyHour;
             periodTip += dailyTip;
             periodWage += dailyWage;
         });
-
-        this.tableData.nativeElement.innerHTML = table;
-        this.summary.nativeElement.innerHTML = `<p>Period Total, Hour: ${periodHour}
-                    , Tip: ${ currency.format(periodTip) }
-                    , Wage: ${ currency.format(periodWage) }</p>`;
+        this.tableData2.nativeElement.innerHTML = table;
     }
 
     calculateEmpTipsAndWages(): void{
@@ -251,14 +332,19 @@ export class ReviewComponent implements OnInit {
                             this.jobsDates[date][depart][empId]['tip'][zone]
                                 = this.jobsDates[date][depart][empId]['hour'][zone] *
                                     departTip[zone] / departTime[zone];
+                            this.jobsPeople[empId][date][depart]['tip'][zone]
+                                = this.jobsDates[date][depart][empId]['tip'][zone];
                         }else{
                             this.jobsDates[date][depart][empId]['tip'][zone] = 0;
+                            this.jobsPeople[empId][date][depart]['tip'][zone] = 0;
                         }
 
                         this.jobsDates[date][depart][empId]['wage'][zone]
                             = this.jobsDates[date][depart][empId]['hour'][zone] *
                                 this.employeesObj.getEmployee(Number(empId)).getCurrentWage(date).wage
                                 / 60;
+                        this.jobsPeople[empId][date][depart]['wage'][zone]
+                            = this.jobsDates[date][depart][empId]['wage'][zone];
 
                         console.log('empId: ',empId, 'date:',date, 'wage: ',
                             this.employeesObj.getEmployee(Number(empId)).getCurrentWage(date));//.wage);
@@ -266,6 +352,8 @@ export class ReviewComponent implements OnInit {
                 });
             });
         });
+        console.log('calculateEmpTipsAndWages [jobsDates]: ', this.jobsDates);
+        console.log('calculateEmpTipsAndWages [jobsPeople]: ', this.jobsPeople);
     }
     
     calculateDepartTips():void{
@@ -326,79 +414,4 @@ export class ReviewComponent implements OnInit {
     }
 
 
-            // console.log('Add job date:', job.date, 'Add job: ',job);
-        // });
-
-        // console.log('aligh job by date: ', jobsDates);
-        //
-        // for (var key in jobsDates ){
-        //     let jobs: Job[] = jobsDates[key];
-        //
-        //     console.log('jobsDates[key] :', jobs);
-        //     this.departJobs = [];
-        //
-        //     this.departmentsObj.departments.forEach((department)=> {
-        //
-        //         departJob = jobs.filter((job)=>{
-        //             return job.departName == department.departName;
-        //         });
-        //
-        //         if(departJob.length > 0) {
-        //             this.departJobs[department.departName] = [];
-        //             this.jobsDatesDeparts[key][department.departName] = [];
-        //
-        //             this.departJobs[department.departName] =  departJob;
-        //             this.jobsDatesDeparts[key][department.departName] = departJob;
-        //             console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
-        //
-        //             this.departments.push(department.departName);
-        //             this.departCnt++;
-        //             this.dispEmpNum += this.getEmpNum(departJob);
-        //         }
-        //     });
-        //
-        //     jobsDates[key] = [];
-        //
-        //     console.log('align0 job by date & department: ', jobsDates);
-        //     console.log('align0 job by date & department: ', this.departJobs);
-        // }
-    // }
-    // getDepartName(departId: number){
-    //     return this.departmentsObj.getDepartmentName(departId);
-    // }
-    //
-    // clearInput(): void{
-    //     this.form.patchValue({
-    //         eId: -1,
-    //         name: '',
-    //         department: '',
-    //         phone: '',
-    //         wage: ''
-    //     });
-    //     this.editItem = null;
-    // }
-    //
-    // onSubmit(form: any): void {
-    //     console.log('you submitted value: ', form);
-    //     this.employeesObj.addEmployee(form.eId,
-    //         form.name, form.department, form.phone, form.wage);
-    //     this.clearInput();
-    // }
-    //
-    // empBtn(emp: Employee): void {
-    //     console.log('click Employee ID: ', emp);
-    //     this.form.patchValue({
-    //         eId: emp.empId,
-    //         name: emp.empName,
-    //         department: emp.departId,
-    //         phone: emp.empPhone,
-    //         wage: emp.wages.wage
-    //     });
-    //     this.editItem = emp;
-    // }
-    //
-    // deleteItem(): void {
-    //     this.employeesObj.removeEmployee(this.editItem);
-    //     this.clearInput();
-    // }
 }
