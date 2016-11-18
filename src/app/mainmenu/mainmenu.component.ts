@@ -73,7 +73,7 @@ export class MainMenuComponent implements OnInit {
         if(form.endT <= form.startT){
             valid['err'] = 'End time should be later than start time';
         }
-        if(!form.empId || !form.deparment || !form.startT || !form.endT){
+        if(!form.empId || !form.department || !form.startT || !form.endT){
             valid['err'] = 'Please select all menu items';
         }
         return valid;
@@ -98,7 +98,7 @@ export class MainMenuComponent implements OnInit {
                     console.log('update schedule successfully :', response.affectedRows );
                     this.dScheduleObj.addJob(form.jobId, form.date,
                         // form.empId, this.employeesObj.getEmployeeName(form.empId),
-                        form.empId, form.department, form.startT, form.endT);
+                        form.empId, form.department, form.startT, form.endT, true);
                 }else{
                     console.log('department insert fail');
                 }
@@ -118,7 +118,7 @@ export class MainMenuComponent implements OnInit {
                 if( Number(response.insertId) > 0){
                     console.log('insert schedule successfully :', response.insertId );
                     this.dScheduleObj.addJob(response.insertId, form.date,
-                        form.empId, form.department, form.startT, form.endT);
+                        form.empId, form.department, form.startT, form.endT, form.date);
                 }else{
                     console.log('department insert fail');
                 }
@@ -129,7 +129,6 @@ export class MainMenuComponent implements OnInit {
                     this.clearInput();
                 });
             });
-
         }
         return false;
     }
@@ -159,7 +158,7 @@ export class MainMenuComponent implements OnInit {
     	console.log('select Job: ', job);
 	    this.form.patchValue({
 		    jobId: job.jobId,
-		    name: job.empId,
+            empId: job.empId,
 		    department: job.departId,
 		    startT: job.startT,
 		    endT: job.endT,

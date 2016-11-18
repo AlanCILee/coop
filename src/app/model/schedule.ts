@@ -30,12 +30,13 @@ export class Schedule implements OnInit {
 			departId: number,
             startT: string,
             endT: string,
+	        valid: boolean,
 	        ): void{
 
 		if(jobId <0 ) {     // ADD Case
 			jobId = this.jobs.length+1;
 			// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
-			let job = new Job(jobId, date, empId, departId, startT, endT);
+			let job = new Job(jobId, date, empId, departId, startT, endT, valid);
 			this.jobs.push(job);
 			console.log("add new job :", job);
 		}else {
@@ -50,11 +51,11 @@ export class Schedule implements OnInit {
 				updateJob.endT = endT;
 				updateJob.startN = updateJob.calTime(startT);
 				updateJob.endN = updateJob.calTime(endT);
-
+				updateJob.valid = valid;
 				console.log("update job :", updateJob);
 			} else {
 				// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
-				let job = new Job(jobId, date, empId, departId, startT, endT);
+				let job = new Job(jobId, date, empId, departId, startT, endT, valid);
 				this.jobs.push(job);
 				console.log("Import job :", job);
 			}
@@ -88,9 +89,11 @@ export class Schedule implements OnInit {
 					console.log('loadSchedule from DB :', response);
 					this.jobs = [];
 					response.forEach((schedule: any)=>{
-						let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
-							schedule.departId, schedule.startT, schedule.endT);
-						this.jobs.push(job);
+						if(schedule.valid) {
+							let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
+								schedule.departId, schedule.startT, schedule.endT, schedule.valid);
+							this.jobs.push(job);
+						}
 					});
 
 					return callback();
@@ -127,9 +130,11 @@ export class Schedule implements OnInit {
 			}else{
 				console.log('initSchedule from DB :', response);
 				response.forEach((schedule: any)=>{
-					let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
-						schedule.departId, schedule.startT, schedule.endT);
-					this.jobs.push(job);
+					if(schedule.valid){
+						let job = new Job(schedule.scheduleId, schedule.date, schedule.empId,
+							schedule.departId, schedule.startT, schedule.endT, schedule.valid);
+						this.jobs.push(job);
+					}
 				});
 			}
 			this.initialize = true;
@@ -224,7 +229,6 @@ export class Schedule implements OnInit {
 		});
 		
 		this.jobs = newJobs;
-		//ToDO UpdateDB
 	}
     
 }
@@ -252,7 +256,8 @@ export class Job implements Comparable<Job>{
 		// public empName: string,
 		public departId: number,
 		public startT: string,
-		public endT: string,) {
+		public endT: string,
+		public valid: boolean) {
 			this.startN = this.calTime(startT);
 			this.endN = this.calTime(endT);
 			// this.lDuration = (16 * 60 - this.startN);

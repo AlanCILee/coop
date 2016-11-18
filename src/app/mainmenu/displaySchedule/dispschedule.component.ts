@@ -93,6 +93,7 @@ export class DispScheduleComponent implements OnInit {
 		
 
 		sJobs.forEach(( job ) => {
+			if(job.valid)
 			if(!(job.date in jobsDates)){
 				jobsDates[job.date] = [];
 				this.jobsDatesDeparts[job.date] = [];
