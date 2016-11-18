@@ -9,13 +9,16 @@ import { MainMenuComponent } from "./mainmenu.component";
 import { DispScheduleComponent } from "./displaySchedule/dispschedule.component";
 import { ShareModule } from "../core/Share.module";
 // import { ErrorMessage } from "../core/errorMessage";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         ReactiveFormsModule,
-        ShareModule
+        ShareModule,
+        NgbModule,
     ],
     declarations: [
         MainMenuComponent,

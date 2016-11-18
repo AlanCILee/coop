@@ -24,6 +24,7 @@ import { LoginComponent } from "./login/login.component";
 import { HomeModule } from "./home/home.module";
 import { HomeComponent } from "./home/home.component";
 import { ErrorMessage } from "./core/errorMessage";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
     imports: [
@@ -36,6 +37,7 @@ import { ErrorMessage } from "./core/errorMessage";
         MainmenuModule,
         SetupModule,
         SalaryModule,
+        NgbModule.forRoot(),
         // MainmenuModule,
         // SetupModule,
         // SalaryModule,
