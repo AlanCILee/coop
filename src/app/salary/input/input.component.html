@@ -1,32 +1,51 @@
 
-<script src="input.component.ts"></script><h3>Input Salary</h3>
-<div>
+<!--<script src="input.component.ts"></script><h3>Input Salary</h3>-->
 
-    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-        <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-	    <label>View Option </label>
-	    
-	    <select (change)="onChange($event.target.value)">
-		    <!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
-		    <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
-	    </select>
-	    
-	    <hr>
-	    
-	    <span *ngFor = "let val of zoneStr; let i = index">
-			<label>{{ val }}</label>
-			<input type="text" formControlName= "{{ zoneId[i] }}" >
-		</span>
-	    
-	    <button type="submit">Submit</button>
-        <button type="button" (click)="clearInput()">Clear</button>
-        <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
-    </form>
+<h3>Input Salary</h3>
+	<div class="form-inline">
+	    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+		    <div class="row">
+			    <div class ="col-md-2">
+		            <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+			    </div>
+			    <div class ="col-md-4">
+				    <label>View Option </label>
+				    <select (change)="onChange($event.target.value)" class="form-control">
+					    <!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
+					    <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+				    </select>
+			    </div>
+			</div>
+		    <br>
+		    <div class="row">
+			    <ng-container *ngFor = "let val of zoneStr; let i = index">
+				    <div class ="col-md-2">
+					<label>{{ val }}</label>
+					<input type="text" formControlName= "{{ zoneId[i] }}" class="form-control">
+				    </div>
+				</ng-container>
+			    <div class ="col-md-3">
+				    <br>
+				    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+			        <button type="button" (click)="clearInput()" class="btn btn-info btn-sm">Clear</button>
+			        <button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>
+			    </div>
+		    </div>
+	    </form>
+	</div>
 	<br>
-    <table>
-        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )">
-            <td>{{ dt.key }}</td>
-            <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
-        </tr>
+
+<div class="row">
+	<table *ngIf="getTipNumber() > 0" class ="table table-hover">
+	<!--<table class ="table table-hover">-->
+		<thead>
+			<tr><th>Zone Name</th><th>Start Time</th><th>End Time</th></tr>
+		</thead>
+		<tbody>
+	        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )">
+	            <td>{{ dt.key }}</td>
+	            <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
+	        </tr>
+		</tbody>
     </table>
 </div>

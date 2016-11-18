@@ -1,9 +1,7 @@
 <div class="row">
     <h3>Employees List</h3>
-    <!--<img src="../../../public/images/angular.png">-->
-    <!--<button (click)="addBtn()">Add New Employee</button>-->
-
-    <div>
+    
+    <div class="form-group">
         <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
             <input type="hidden" formControlName="eId" >
     
@@ -38,6 +36,7 @@
         </form>
     </div>
 </div>
+
 <br>
 <div class ="row">
     <table *ngIf="getEmpNumber() > 0" class ="table table-hover">

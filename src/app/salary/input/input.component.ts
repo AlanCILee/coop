@@ -160,5 +160,12 @@ export class InputComponent implements OnInit {
             this.form.patchValue({ [ key ]: tip['val'][key] });
         }
     }
-
+		
+	getTipNumber(): number {
+		if(this.dailyTDisp){
+			return Object.keys(this.dailyTDisp).length;
+		}else{
+			return 0;
+		}
+	}
 }
