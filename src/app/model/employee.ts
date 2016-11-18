@@ -193,7 +193,7 @@ export class Employee {
 		});
 
 		if(!retWage){
-			console.log('wage setting was missing when someone started to work');
+			console.log('wage setting was missing when someone started to work', wagesClone, date);
 			return wagesClone[0];   //return latest wage
 		}
 
