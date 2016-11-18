@@ -1,7 +1,5 @@
-
-<!--<script src="input.component.ts"></script><h3>Input Salary</h3>-->
-
-<h3>Input Salary</h3>
+<div class="row">
+<h3>Input Tip</h3>
 	<div class="form-inline">
 	    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
 		    <div class="row">
@@ -34,12 +32,14 @@
 	    </form>
 	</div>
 	<br>
-
+</div>
 <div class="row">
 	<table *ngIf="getTipNumber() > 0" class ="table table-hover">
-	<!--<table class ="table table-hover">-->
 		<thead>
-			<tr><th>Zone Name</th><th>Start Time</th><th>End Time</th></tr>
+			<tr>
+				<th>Date</th>
+				<th *ngFor = "let val of zoneStr">{{ val }}</th>
+			</tr>
 		</thead>
 		<tbody>
 	        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )">
