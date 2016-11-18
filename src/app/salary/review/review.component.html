@@ -1,22 +1,30 @@
-<script src="review.component.ts"></script>
-<div>
+<!--<script src="review.component.ts"></script>-->
+<div class="row">
     <h3>Review Salary</h3>
-
-
-    <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-        <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
-        <select (change)="onChangePeriod($event.target.value)">
-            <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
-        </select>
-        <select (change)="onChangeViewOption($event.target.value)">
-            <option *ngFor="let view of LIST_OPTION; let i = index" value ="{{ i }}">{{ view }}</option>
-        </select>
-        <button type="submit">Submit</button>
-    </form>
+    <div class="form-inline">
+        <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+            <div class ="col-md-2">
+                <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+            </div>
+            <div class ="col-md-4">
+                <label>View Option </label>
+                <select (change)="onChangePeriod($event.target.value)" class="form-control">
+                    <option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+                </select>
+            </div>
+            <div class ="col-md-3">
+                <label>Review Option </label>
+                <select (change)="onChangeViewOption($event.target.value)" class="form-control">
+                    <option *ngFor="let view of LIST_OPTION; let i = index" value ="{{ i }}">{{ view }}</option>
+                </select>
+            </div>
+            <!--<div class ="col-md-2">-->
+                <!--<button type="submit" class="btn btn-primary btn-sm">Save</button>-->
+            <!--</div>-->
+        </form>
+    </div>
     <br>
-
     <div #summary></div>
     <div #tableData></div>
-    <!--<div #tableData2></div>-->
 
 </div>

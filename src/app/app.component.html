@@ -2,13 +2,16 @@
 <div class="row">
     <nav class="navbar navbar-default">
         <div class="nav-custom">
-            
-            <login></login>
-            <span class="link" *ngIf ="getUserName()">
-                <a [routerLink]="['schedule']">Schedule Management</a> |
-                <a [routerLink]="['pay']">Wage Management</a> |
-                <a [routerLink]="['setup']">Setup</a>
-            </span>
+            <div class="col-md-6">
+                <login></login>
+            </div>
+            <div class="col-md-6">
+                <span class="link" *ngIf ="getUserName()">
+                    <a [routerLink]="['schedule']">Schedule Management</a> |
+                    <a [routerLink]="['pay']">Wage Management</a> |
+                    <a [routerLink]="['setup']">Setup</a>
+                </span>
+            </div>
         </div>
 
     </nav>
