@@ -1,30 +1,39 @@
-<main>
-    <h3>Department List</h3>
-    <div>
-        <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-            <input type="hidden" formControlName="dId">
-
-            <label>Department Name </label>
-            <input type="text" formControlName="dName">
-
-            <label>Department </label>
-
-            <label>Wage Ratio (%)</label>
-            <input type="text" formControlName="dRatio">
-
-            <button type="submit">Submit</button>
-            <button type="button" (click)="clearInput()">Clear</button>
-            <button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
-
-        </form>
+<div class="form-inline">
+    <div class ="row">
+        <h3>Department List</h3>
+        <div>
+            <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+                <input type="hidden" formControlName="dId">
+                <div class ="col-md-4">
+                    <label>Department Name </label>
+                    <input type="text" formControlName="dName" class="form-control">
+                </div>
+                <div class ="col-md-5">
+                    <label>Department Wage Ratio (%)</label>
+                    <input type="text" formControlName="dRatio" class="form-control">
+                </div>
+                <div class ="col-md-3">
+                    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+                    <button type="button" (click)="clearInput()" class="btn btn-info btn-sm">Clear</button>
+                    <button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <table>
-        <tr *ngFor="let dep of departments" (click)="depBtn( dep )">
-            <span *ngIf="dep.valid">
-                <td>{{ dep.departName }}</td>
-                <td>{{ dep.departRatio }}</td>
-            </span>
-        </tr>
+</div>
+<br>
+<div class ="row">
+    <table *ngIf="departments.length > 0" class ="table table-hover">
+        <thead>
+            <tr><th>Department Name</th><th>Tip Ratio</th></tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let dep of departments" (click)="depBtn( dep )">
+                <ng-container *ngIf="dep.valid">
+                    <td>{{ dep.departName }}</td>
+                    <td>{{ dep.departRatio }}</td>
+                </ng-container>
+            </tr>
+        </tbody>
     </table>
-</main>
-
+</div>
