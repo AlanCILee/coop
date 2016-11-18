@@ -106,4 +106,16 @@ export class TimezoneComponent implements OnInit {
         });
         
     }
+    
+    getZoneNumber(): number {
+        let cnt: number = 0;
+        
+        Object.keys(this.timeZonesHistory).forEach((zoneId)=>{
+            if(this.timeZonesHistory[zoneId].valid){
+                cnt++;
+            }
+        })
+        
+        return cnt;
+    }
 }

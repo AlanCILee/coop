@@ -1,40 +1,49 @@
-<h3>Timezone Setup</h3>
-
-<div>
-	<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-		
-		<label>TimeZone</label>
-		<input type="hidden" formControlName="zoneId">
-		<input type="text" formControlName="zoneName">
-
-		<label>Start Time </label>
-
-		<select formControlName="startT">
-			<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
-		</select>
-
-		<label>End Time </label>
-
-		<select formControlName="endT">
-			<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
-		</select>
-
-		<button type="submit">Submit</button>
-		<button type="button" (click)="clearInput()">Clear</button>
-		<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
-	</form>
-	<table>
-		<!--<tr *ngFor="let zone of timeZones | mapToIterable" (click)="zoneBtn( zone )">-->
-			<!--<td>{{ zone.val.zoneName}}</td>-->
-			<!--<td>{{ zone.val.startT.timeStr }}</td>-->
-			<!--<td>{{ zone.val.endT.timeStr }}</td>-->
-		<!--</tr>-->
-		<tr *ngFor="let zone of timeZonesHistory | mapToIterable" (click)="zoneBtn( zone )">
-			<span *ngIf="zone.val.valid">
-				<td>{{ zone.val.zoneName}}</td>
-				<td>{{ zone.val.startT.timeStr }}</td>
-				<td>{{ zone.val.endT.timeStr }}</td>
-			</span>
-		</tr>
+<div class="row">
+	<h3>Timezone Setup</h3>
+	
+	<div>
+		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
+			<input type="hidden" formControlName="zoneId">
+			
+			<div class ="col-md-3">
+				<label>TimeZone</label>
+				<input type="text" formControlName="zoneName" class="form-control">
+			</div>
+			
+			<div class ="col-md-3">
+				<label>Start Time </label>
+				<select formControlName="startT" class="form-control">
+					<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
+				</select>
+			</div>
+			<div class ="col-md-3">
+				<label>End Time </label>
+				<select formControlName="endT" class="form-control">
+					<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
+				</select>
+			</div>
+			<div class ="col-md-3">
+				<br>
+				<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+				<button type="button" (click)="clearInput()" class="btn btn-info btn-sm">Clear</button>
+				<button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>
+			</div>
+		</form>
+	</div>
+</div>
+<div class="row">
+	<table *ngIf="getZoneNumber() > 0" class ="table table-hover">
+		<thead>
+		<tr><th>Zone Name</th><th>Start Time</th><th>End Time</th></tr>
+		</thead>
+		<tbody>
+			<tr *ngFor="let zone of timeZonesHistory | mapToIterable" (click)="zoneBtn( zone )">
+				<ng-container *ngIf="zone.val.valid">
+					<td>{{ zone.val.zoneName}}</td>
+					<td>{{ zone.val.startT.timeStr }}</td>
+					<td>{{ zone.val.endT.timeStr }}</td>
+				</ng-container>
+			</tr>
+		</tbody>
 	</table>
 </div>
