@@ -281,16 +281,17 @@ export class ReviewComponent implements OnInit {
         let table: string =``;
         let currency = new Intl.NumberFormat('en-US', {style: 'currency', currency:'USD'});
         
-        table += `<table border="1">`;
-        table += `<tr><td>Name</td>
-                    <td>Date</td>
-                    <td>Department</td>
-                    <td>Category</td>`;
-        Object.keys(this.timeZones).forEach((zoneId) => {
-            table += `<td>${ this.timeZones[zoneId].zoneName }</td>`;
-        
-        });
-        table += `<td>Sum</td></tr>`;
+        if(Object.keys(this.jobsPeople).length > 0){
+            table += `<table border="1">`;
+            table += `<tr><td>Name</td>
+                        <td>Date</td>
+                        <td>Department</td>
+                        <td>Category</td>`;
+            Object.keys(this.timeZones).forEach((zoneId) => {
+                table += `<td>${ this.timeZones[zoneId].zoneName }</td>`;
+            });
+            table += `<td>Sum</td></tr>`;
+        }
     
         Object.keys(this.jobsPeople).forEach((id) => {
             // Object.keys(this.timeZones).forEach((zone) => {

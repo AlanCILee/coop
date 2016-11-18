@@ -1,22 +1,18 @@
 
-<div>
-    <!--<label>Welcome {{ getUserName() }}</label>-->
-    <!--<button type="button" (click)="logout()">LogOut</button>-->
-    <!--<hr/>-->
-    <login></login>
-    <!--<ul *ngIf ="getUserName()">-->
-        <!--<li><a [routerLink]="['schedule']">Schedule Management</a></li>-->
-        <!--<li><a [routerLink]="['pay']">Wage Management</a></li>-->
-        <!--<li><a [routerLink]="['setup']">Setup</a></li>-->
-    <!--</ul>-->
-    <span *ngIf ="getUserName()">
-        <a [routerLink]="['schedule']">Schedule Management</a> |
-        <a [routerLink]="['pay']">Wage Management</a> |
-        <a [routerLink]="['setup']">Setup</a>
-    </span>
-    <hr/>
-</div>
+<div class="row">
+    <nav class="navbar navbar-default">
+        <div class="nav-custom">
+            
+            <login></login>
+            <span class="link" *ngIf ="getUserName()">
+                <a [routerLink]="['schedule']">Schedule Management</a> |
+                <a [routerLink]="['pay']">Wage Management</a> |
+                <a [routerLink]="['setup']">Setup</a>
+            </span>
+        </div>
 
-<div>
+    </nav>
+</div>
+<div class="row">
     <router-outlet></router-outlet>
 </div>

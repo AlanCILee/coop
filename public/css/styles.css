@@ -2,3 +2,13 @@
     /*background: #0147A7;*/
     /*color: #fff;*/
 /*}*/
+.navbar .link {
+    float: right;
+}
+
+.navbar .nav-custom {
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
+}
