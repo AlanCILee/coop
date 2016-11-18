@@ -163,4 +163,15 @@ export class EmployeesComponent implements OnInit {
             this.clearInput();
         });
     }
+    
+    getEmpNumber(): number {
+        let cnt: number = 0;
+        
+        this.employees.forEach((emp)=>{
+            if(emp.valid){
+                cnt++;
+            }
+        })
+        return cnt;
+    }
 }

@@ -115,7 +115,6 @@ export class TimezoneComponent implements OnInit {
                 cnt++;
             }
         })
-        
         return cnt;
     }
 }

@@ -99,4 +99,15 @@ export class DepartmentComponent implements OnInit {
             this.clearInput();
         });
     }
+    
+    getDepartNumber(): number {
+        let cnt: number = 0;
+        
+        this.departments.forEach((depart)=>{
+            if(depart.valid){
+                cnt++;
+            }
+        })
+        return cnt;
+    }
 }
