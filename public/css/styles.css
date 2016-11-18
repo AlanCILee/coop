@@ -6,9 +6,16 @@
     float: right;
 }
 
+.cust-right {
+    float: right;
+}
 .navbar .nav-custom {
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 0;
     margin-top: 10px;
+}
+
+.form-control {
+    height: 30px;
 }

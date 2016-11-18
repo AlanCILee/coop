@@ -7,51 +7,62 @@
 	<!--<button *ngIf = "modeEdit" (click)="deleteJob()">Delete</button>-->
 	
 
-	<div>
+	<div class="form-inline">
 		<form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
-
-			<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
 			<input type = "hidden" formControlName= "jobId">
-			<label>View Option </label>
-			<select (change)="onChange($event.target.value)">
-				<!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
-				<option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
-			</select>
+			<div class ="row">
+				<div class ="col-md-2">
+					<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+				</div>
+				<div class ="col-md-4 ">
+					<label>View Option </label>
+					<select class="form-control" (change)="onChange($event.target.value)">
+						<!--<option *ngFor="let view of LIST_VIEW | mapToIterable" value="{{ view.key }}">{{ view.val }}</option>-->
+						<option *ngFor="let view of LIST_VIEW; let i = index" value ="{{ i }}">{{ view }}</option>
+					</select>
+				</div>
+			</div>
 			<hr>
-			<label>Name </label>
-			<select formControlName="empId">
-				<ng-container *ngFor="let employee of employees">
-					<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>
-				</ng-container>
-			</select>
-			
-			<label>Working Department </label>
-
-			<select formControlName="department">
-				<ng-container *ngFor="let depart of departments">
-					<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>
-				</ng-container>
-			</select>
-			
-			<label>Start Time </label>
-
-			<select formControlName="startT">
-				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
-			</select>
-
-			<label>End Time </label>
-
-			<select formControlName="endT">
-				<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
-			</select>
-
-			<button type="submit">Submit</button>
-			<button type="button" (click)="clearInput()">Clear</button>
-			<button *ngIf ="editItem" type="button" (click)="deleteItem()">Remove Item</button>
+			<div class ="row">
+				<div class ="col-md-2">
+					<label>Name </label>
+					<select class="form-control" formControlName="empId">
+						<ng-container *ngFor="let employee of employees">
+							<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>
+						</ng-container>
+					</select>
+				</div>
+				<div class ="col-md-3">
+					<label>Working Department </label>
+					<select class="form-control" formControlName="department">
+						<ng-container *ngFor="let depart of departments">
+							<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>
+						</ng-container>
+					</select>
+				</div>
+				
+				<div class ="col-md-2">
+					<label>Start Time </label>
+					<select class="form-control" formControlName="startT">
+						<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
+					</select>
+				</div>
+				
+				<div class ="col-md-2">
+					<label>End Time </label>
+					<select class="form-control" formControlName="endT">
+						<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
+					</select>
+				</div>
+					<div class ="col-md-3">
+					<button type="submit" class="btn btn-primary btn-sm">Submit</button>
+					<button type="button" (click)="clearInput()" class="btn btn-info btn-sm">Clear</button>
+					<button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>
+				</div>
+			</div>
 		</form>
 	</div>
 		<br>
 		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
 </main>
 <app-error-message></app-error-message>
-<!--<pre>{{data | json}}</pre>-->
