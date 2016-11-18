@@ -23,6 +23,7 @@ import { AuthGuard } from "./core/authguard";
 import { LoginComponent } from "./login/login.component";
 import { HomeModule } from "./home/home.module";
 import { HomeComponent } from "./home/home.component";
+import { ErrorMessage } from "./core/errorMessage";
 
 @NgModule({
     imports: [
@@ -60,6 +61,7 @@ import { HomeComponent } from "./home/home.component";
         TipModel,
         AuthGuard,
         LoginComponent,
+        ErrorMessage,
     ],
     bootstrap: [ AppComponent ]
 })

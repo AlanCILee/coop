@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 import { DatePickerComponent } from '../core/datepicker/ng2-datepicker';
 import { MapToIterable } from "./maptoIterable.pipe";
+import { ErrorMessage } from "./errorMessage";
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { MapToIterable } from "./maptoIterable.pipe";
 		ReactiveFormsModule,
 	],
 	declarations: [
+		ErrorMessage,
 		DatePickerComponent,
 		MapToIterable,
 	],
@@ -22,6 +24,7 @@ import { MapToIterable } from "./maptoIterable.pipe";
 	exports: [
 		DatePickerComponent,
 		MapToIterable,
+		ErrorMessage,
 	],
 })
 

@@ -53,4 +53,5 @@
 		<br>
 		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)"></schedule>
 </main>
+<app-error-message></app-error-message>
 <!--<pre>{{data | json}}</pre>-->

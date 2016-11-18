@@ -8,6 +8,7 @@ import { DatePickerComponent } from '../core/datepicker/ng2-datepicker';
 import { MainMenuComponent } from "./mainmenu.component";
 import { DispScheduleComponent } from "./displaySchedule/dispschedule.component";
 import { ShareModule } from "../core/Share.module";
+// import { ErrorMessage } from "../core/errorMessage";
 
 @NgModule({
     imports: [
@@ -20,6 +21,7 @@ import { ShareModule } from "../core/Share.module";
         MainMenuComponent,
         // DatePickerComponent,
         DispScheduleComponent,
+        // ErrorMessage,
     ],
     providers: [
         HttpComponent,

@@ -2,21 +2,25 @@
 import { Response } from "@angular/http";
 import { HttpComponent } from '../core/http.component';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 
 import { Employees, Employee, Wage } from "../model/employee";
 import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
 import { Schedule, Job } from "../model/schedule";
+import { ErrorMessage } from "../core/errorMessage";
 
 @Component({
     selector: 'mainmenu',
     templateUrl: './mainmenu.component.html',
-    styleUrls: ['./mainmenu.component.css']
+    styleUrls: ['./mainmenu.component.css'],
+    // directives: [ ErrorMessage ]
 })
 
 export class MainMenuComponent implements OnInit {
+    @ViewChild(ErrorMessage) errorMsg: ErrorMessage;
+    
     departments: Department[];
     employees: Employee[];
     timeTable: Time[];
@@ -53,7 +57,7 @@ export class MainMenuComponent implements OnInit {
         this.timeTable = this.timeObj.timeTable;
         
         this.form = this.fb.group({
-            view: ['opt1'],
+            // view: ['opt1'],
         	jobId: [ -1 ],
             empId: [ '' ],
             department: [ '' ],
@@ -63,9 +67,28 @@ export class MainMenuComponent implements OnInit {
         });
     }
 
+    checkInput(form: any): Object{
+        let valid: Object = {};
+        
+        if(form.endT <= form.startT){
+            valid['err'] = 'End time should be later than start time';
+        }
+        if(!form.empId || !form.deparment || !form.startT || !form.endT){
+            valid['err'] = 'Please select all menu items';
+        }
+        return valid;
+    }
+    
     onSubmit(form: any): any {
         console.log('you submitted value: ', form);
-
+        let err: string = this.checkInput(form)['err'];
+        
+        if(err){
+            console.log('Input format has error: ', err);
+            this.errorMsg.showErrorMessage(err);
+            return;
+        }
+            
         if( form.jobId > 0){    // update case
             this.httpComp.makePostRequest('http://localhost:3000/upSchedule',form).subscribe((res : Response) => {
                 let response = res.json();
