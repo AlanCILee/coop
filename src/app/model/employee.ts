@@ -135,6 +135,18 @@ export class Employees {
             });
             return employee;
     }
+	
+	
+	getEmployeeRatio(employeeId: number): number{
+		console.log('getEmployeeRatio :', employeeId);
+		let employee: Employee = null;
+		
+		this.employees.forEach((emp) => {
+			if(emp.empId == employeeId)
+				employee = emp;
+		});
+		return employee.ratio;
+	}
 }
 
 

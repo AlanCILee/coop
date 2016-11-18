@@ -179,7 +179,7 @@ export class ReviewComponent implements OnInit {
             Object.keys(empHours).forEach((zone)=>{
                 let newHours = this.calculateHours(job.startN, job.endN);
                 empHours[zone] += newHours[zone];
-                depHours[zone] += newHours[zone];
+                depHours[zone] += newHours[zone] * (this.employeesObj.getEmployeeRatio(job.empId) / 100);
             });
 
             this.jobsDates[job.date][job.departId][job.empId]['hour'] = empHours;
@@ -405,6 +405,7 @@ export class ReviewComponent implements OnInit {
                         if(departTime[zone] !=0 ) {
                             this.jobsDates[date][depart][empId]['tip'][zone]
                                 = this.jobsDates[date][depart][empId]['hour'][zone] *
+                                    (this.employeesObj.getEmployeeRatio(Number(empId)) / 100) *
                                     departTip[zone] / departTime[zone];
                             this.jobsPeople[empId][date][depart]['tip'][zone]
                                 = this.jobsDates[date][depart][empId]['tip'][zone];
@@ -433,21 +434,53 @@ export class ReviewComponent implements OnInit {
     calculateDepartTips():void{
         Object.keys(this.jobsDates).forEach((date) => {
             let dayTipAmount = this.dailyT[date];
-            let totalRatio: number = 0;
+            // let totalRatio: number = 0;
+            let totalRatio = {};
             let departRatio = {};
-
+            //
+            // Object.keys(this.jobsDates[date]).forEach((depart)=>{
+            //     departRatio[depart] = this.departmentsObj.getDepartRatio(Number(depart));
+            //     totalRatio += departRatio[depart];
+            // });
+            // Object.keys(this.jobsDates[date]).forEach((depart)=>{
+            //     Object.keys(dayTipAmount).forEach((zone) => {
+            //         this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart] / totalRatio;
+            //     });
+            // });
             Object.keys(this.jobsDates[date]).forEach((depart)=>{
-                departRatio[depart] = this.departmentsObj.getDepartRatio(Number(depart));
-                totalRatio += departRatio[depart];
+                departRatio[depart] = {};
+                
+                Object.keys(this.jobsDates[date][depart]).forEach((empId)=>{
+                    Object.keys(this.timeZones).forEach((zoneId) =>{
+                        if(this.jobsDates[date][depart][empId]['hour'][zoneId]){
+                            departRatio[depart][zoneId] = this.departmentsObj.getDepartRatio(Number(depart));
+                            if(!(zoneId in totalRatio)){
+                                totalRatio[zoneId] = 0;
+                            }
+                        }
+                    });
+                });
+    
+                Object.keys(this.timeZones).forEach((zoneId) => {
+                    if(departRatio[depart][zoneId]){
+                        totalRatio[zoneId] += departRatio[depart][zoneId];
+                    }
+                });
             });
+            console.log('departRatio ========:',departRatio);
+            console.log('totalRatio ========:',totalRatio);
             
             Object.keys(this.jobsDates[date]).forEach((depart)=>{
                 Object.keys(dayTipAmount).forEach((zone) => {
-                    this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart] / totalRatio;
+                    if(departRatio[depart][zone]){
+                        this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart][zone] / totalRatio[zone];
+                    }else{
+                        this.dailyHours[date][depart]['tip'][zone] = 0;
+                    }
                 });
             });
         });
-        console.log('calculateDepartTips :',this.dailyHours);
+        console.log('dailyHours =========:',this.dailyHours);
     }
     
     calculateHours(startN: number, endN: number): Object{
