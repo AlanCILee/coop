@@ -4,7 +4,7 @@
     <div class="form-inline">
         <form [formGroup]="form" (ngSubmit) = "onSubmit(form.value)">
             <div class ="col-md-2">
-                <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>
+                <datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="success"></datepicker>
             </div>
             <div class ="col-md-4">
                 <label>View Option </label>

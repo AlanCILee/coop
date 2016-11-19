@@ -53,10 +53,12 @@
 
 .ui-kit-calendar-container .ui-kit-calendar-cal-container {
 	position: absolute;
-	top: 55px;
+	/*top: 55px;*/
+	top: 40px;
 	/*right: 0;*/
 	left: 0;
-	color: #fff;
+	/*color: #fff;*/
+	color: #AAA;
 	background: #44c8f9;
 	display: inline-block;
 	width: 300px;
@@ -155,12 +157,12 @@
 
 .ui-kit-calendar-container .ui-kit-calendar-input {
 	border: 1px solid #aec9de;
-	border-radius: 10px;
+	border-radius: 5px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 70px;
-	height: 40px;
+	width: 60px;
+	height: 33px;
 	background: #fcfcff;
 	cursor: pointer;
 	text-align: center;
@@ -247,27 +249,34 @@
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-input.opened {
-	color: #3fc59d;
-	background: rgba(63, 197, 157, 0.15);
-	border: 1px solid #3fc59d;
+	/*color: #3fc59d;*/
+	color: #EEE;
+	/*background: rgba(63, 197, 157, 0.15);*/
+	background: #6e6b5e;
+	/*border: 1px solid #3fc59d;*/
+	border: 1px solid #FFFFFF;
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-input.opened i {
-	color: #3fc59d;
+	/*color: #3fc59d;*/
+	color: #6e6b5e;
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-cal-container {
-	background: #3fc59d;
+	/*background: #3fc59d;*/
+	background: #6e6b5e;
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-cal-container:after {
-	border-left: 15px solid #3fc59d;
+	/*border-left: 15px solid #3fc59d;*/
+	border-left: 15px solid #6e6b5e;
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-cal-container .ui-kit-calendar-day-names {
-	background: #257960;
+	background: #3e3e3e;
 }
 
 .ui-kit-calendar-container.success .ui-kit-calendar-cal-container .ui-kit-calendar-days span:hover, .ui-kit-calendar-container.success .ui-kit-calendar-cal-container .ui-kit-calendar-days span.is-active {
-	color: #3fc59d;
+	/*color: #3fc59d;*/
+	color: #6e6b5e;
 }

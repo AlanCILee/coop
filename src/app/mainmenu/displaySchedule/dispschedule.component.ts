@@ -11,14 +11,10 @@ import { Employees } from "../../model/employee";
 	outputs: ['sendJob']
 })
 
-
 export class DispScheduleComponent implements OnInit {
-
 	@Input() sJobs: Job[];
 
 	Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
-	// department: string;
-	// departJobs: Object[] =[];
 	departments: string[]=[];
 	departCnt: number;
 	dispEmpNum: number;
@@ -34,9 +30,6 @@ export class DispScheduleComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		// Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
-		// Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
-
 	}
 	
 	ngAfterViewInit(): void {
@@ -119,89 +112,14 @@ export class DispScheduleComponent implements OnInit {
 				});
 
 				if(departJob.length > 0) {
-					// this.departJobs[department.departName] = [];
 					this.jobsDatesDeparts[key][department.departName] = [];
-
-					// this.departJobs[department.departName] =  departJob;
 					this.jobsDatesDeparts[key][department.departName] = departJob;
-					// console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
-
-					// this.departments.push(department.departName);
 					this.departCnt++;
 					this.dispEmpNum += this.getEmpNum(departJob);
 				}
 			});
-			//
-			// jobsDates[key] = [];
-			//
-			// console.log('align0 job by date & department: ', jobsDates);
-			// console.log('align0 job by date & department: ', this.departJobs);
-
-
 		});
-
-
-		// for (var key in jobsDates ){
-		// 	let jobs: Job[] = jobsDates[key];
-		//
-		// 	console.log('jobsDates[key] :', jobs);
-		// 	this.departJobs = [];
-		//
-		// 	this.departmentsObj.departments.forEach((department)=> {
-		//
-		// 		departJob = jobs.filter((job)=>{
-		// 			return job.departId == department.departId;
-		// 		});
-		//
-		// 		if(departJob.length > 0) {
-		// 			this.departJobs[department.departName] = [];
-		// 			this.jobsDatesDeparts[key][department.departName] = [];
-		//
-		// 			this.departJobs[department.departName] =  departJob;
-		// 			this.jobsDatesDeparts[key][department.departName] = departJob;
-		// 			console.log('key: ',key, 'departJobs of ', department.departName, 'is ',this.departJobs[department.departName]);
-		//
-		// 			this.departments.push(department.departName);
-		// 			this.departCnt++;
-		// 			this.dispEmpNum += this.getEmpNum(departJob);
-		// 		}
-		// 	});
-		//
-		// 	jobsDates[key] = [];
-		//
-		// 	console.log('align0 job by date & department: ', jobsDates);
-		// 	console.log('align0 job by date & department: ', this.departJobs);
-		// }
-		
-		// console.log('jobsDatesDeparts: ', this.jobsDatesDeparts);
-		//
-		// for(var key in this.jobsDatesDeparts){
-		// 	let arr = this.jobsDatesDeparts[key];
-		// 	console.log('key1: ',key);
-		//
-		// 	for(var key in arr){
-		// 		console.log('key2: ',key);
-		// 		console.log(arr[key]);
-		// 	}
-		// }
-
-		// this.departmentsObj.departments.forEach((department)=>{
-		//
-		// 	departJob = sJobs.filter((job)=>{
-		// 		return job.departName == department.departName;
-		// 	});
-		//
-		// 	if(departJob.length > 0) {
-		// 		this.departJobs[department.departName] = [];
-		// 		this.departJobs[department.departName] =  departJob;
-		// 		this.departments.push(department.departName);
-		// 		this.departCnt++;
-		// 		this.dispEmpNum += this.getEmpNum(departJob);
-		// 	}
-		// });
-
 		console.log('alignJob:',this.jobsDatesDeparts,'dispDepartNum: ', this.departCnt,'dispEmpNum:', this.dispEmpNum);
-
 	}
 	
 	createInitiativeBg(): void {
@@ -219,8 +137,12 @@ export class DispScheduleComponent implements OnInit {
 	    container = this.Snap('#svgContainer');
 
 		container.attr({ width: width, height: height });
-		container.rect(0, 0, width, height).attr({fill: '#ababab'});
-
+		container.rect(0, 0, width, height).attr({
+			fill: '#FFF',
+			stroke: "#AAA",
+			strokeWidth: 1
+		});
+ 
 		console.log('width: ',width,'height: ',height);
 
 		this.hOffset += 20;
@@ -229,13 +151,12 @@ export class DispScheduleComponent implements OnInit {
 			container.text(OFFSET+ HOURW*i, this.hOffset, i+START_HOUR+":00").attr({
 				font: "100 1em Source Sans Pro",
 				textAnchor: "middle",
-				fill: "#FFF"
+				fill: "#888"
 			});
 			
 			container.line(OFFSET+ HOURW*i, 0, OFFSET+ HOURW*i, height).attr({
-				stroke: '#fff'
+				stroke: '#EEE'
 			});
-			
 		}
 		
 		this.container = container;
@@ -243,6 +164,7 @@ export class DispScheduleComponent implements OnInit {
 	
 	showSchdule(): void{
 		let svg = this.container;
+		const TEXT_OFFSET_X = 5;
 		const OFFSET = 200;
 		const HOURW = 50;
 		const START_HOUR = 8;
@@ -253,10 +175,12 @@ export class DispScheduleComponent implements OnInit {
 			
 			this.hOffset += 20;
 			
-			svg.text(0, this.hOffset, date).attr({
+			svg.text(TEXT_OFFSET_X, this.hOffset, date).attr({
 				font: "100 1em Source Sans Pro",
 				textAnchor: "left",
-				fill: "#FFF"
+				fill: "#000",
+				stroke: "#000",
+				strokeWidth: 1
 			});
 			
 			for (var depart in dateJob) {
@@ -266,38 +190,45 @@ export class DispScheduleComponent implements OnInit {
 				
 				this.hOffset += 20;
 				
-				svg.text(0, this.hOffset, depart).attr({
+				svg.text(TEXT_OFFSET_X, this.hOffset, depart).attr({
 					font: "100 1em Source Sans Pro",
 					textAnchor: "left",
-					fill: "#FFF"
+					fill: "#000",
 				});
 				
 				departJob.forEach((job) => {
-					// console.log('each job: ', job);
-					// if (!empOffset[job.empName]) {
 					if (!empOffset[job.empId]) {
 						this.hOffset += 20;
-						// empOffset[job.empName] = this.hOffset;
 						empOffset[job.empId] = this.hOffset;
-
-						// svg.text(0, empOffset[job.empName], job.empName).attr({
-						svg.text(0, empOffset[job.empId], this.employeesObj.getEmployeeName(job.empId)).attr({
+						
+						svg.text(TEXT_OFFSET_X+10, empOffset[job.empId], this.employeesObj.getEmployeeName(job.empId)).attr({
 							font: "100 1em Source Sans Pro",
 							textAnchor: "left",
-							fill: "#FFF"
+							fill: "#000"
 						});
 					}
 					
 					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
 					let w = HOURW * (job.endN - job.startN) /60;
-					// console.log("x: ",x, "w: ",w );
-					// svg.rect(x, empOffset[job.empName]-20, w, 20).attr({
+					
 					svg.rect(x, empOffset[job.empId]-20, w, 20).attr({
-						fill: "#FFF",
-						stroke: "#000",
-						strokeWidth: 1
+						fill: "#AAA",
+						stroke: "#EEE",
+						strokeWidth: 0.5
 					}).click(()=>{
 						this.sendJob.emit(job);
+					});
+					
+					svg.text(x, empOffset[job.empId]-5, job.startT).attr({
+						font: "100 1em Source Sans Pro",
+						textAnchor: "left",
+						fill: "#000",
+					});
+					
+					svg.text(x+w, empOffset[job.empId]-5, job.endT).attr({
+						font: "100 1em Source Sans Pro",
+						textAnchor: "end",
+						fill: "#000",
 					});
 				});
 			}
