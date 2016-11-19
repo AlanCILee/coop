@@ -77,7 +77,11 @@ const Server = function(options) {
         app.use(express.static('dist'));
 
         setRoute();
-
+    
+        // app.listen(process.env.PORT, function(){
+        //     console.log('Conneted', process.env.PORT,' port!');
+        // });
+        
         app.listen(3000, function(){
             console.log('Conneted 3000 port!');
         });
