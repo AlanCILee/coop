@@ -66,13 +66,13 @@ export class ReviewComponent implements OnInit {
             // this.timeZones = this.timeObj.timeZones;
             this.timeZones = this.timeObj.timeZonesHistory;
             this.dailyT = this.tipObj.dailyT;
-            this.form = this.fb.group({
-                date: [ '' ],
-                fix: [' '],
-            });
         }else{
             this.router.navigate(['/home']);
         }
+        this.form = this.fb.group({
+            date: [ '' ],
+            fix: [' '],
+        });
     }
 
     dateChanged(str: string){
