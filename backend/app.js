@@ -1,7 +1,7 @@
 'use strict';
 
-const server = require('./Server');
-const mysql = require('./Mysql');
+const server = require('./server');
+const mysql = require('./mysql');
 
 
 const mysqlObj = mysql.start();
