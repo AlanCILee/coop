@@ -68,6 +68,7 @@ export class ReviewComponent implements OnInit {
             this.dailyT = this.tipObj.dailyT;
             this.form = this.fb.group({
                 date: [ '' ],
+                fix: [' '],
             });
         }else{
             this.router.navigate(['/home']);
@@ -75,7 +76,7 @@ export class ReviewComponent implements OnInit {
     }
 
     dateChanged(str: string){
-        console.log('dateChanged');
+        console.log('dateChanged: ',str);
         this.editDate = str;
         this.scheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
             this.sJobs = list;
@@ -435,27 +436,19 @@ export class ReviewComponent implements OnInit {
     calculateDepartTips():void{
         Object.keys(this.jobsDates).forEach((date) => {
             let dayTipAmount = this.dailyT[date];
-            // let totalRatio: number = 0;
+            
+                // let totalRatio: number = 0;
             let totalRatio = {};
             let departRatio = {};
-            //
-            // Object.keys(this.jobsDates[date]).forEach((depart)=>{
-            //     departRatio[depart] = this.departmentsObj.getDepartRatio(Number(depart));
-            //     totalRatio += departRatio[depart];
-            // });
-            // Object.keys(this.jobsDates[date]).forEach((depart)=>{
-            //     Object.keys(dayTipAmount).forEach((zone) => {
-            //         this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart] / totalRatio;
-            //     });
-            // });
-            Object.keys(this.jobsDates[date]).forEach((depart)=>{
+
+            Object.keys(this.jobsDates[date]).forEach((depart)=> {
                 departRatio[depart] = {};
-                
-                Object.keys(this.jobsDates[date][depart]).forEach((empId)=>{
-                    Object.keys(this.timeZones).forEach((zoneId) =>{
-                        if(this.jobsDates[date][depart][empId]['hour'][zoneId]){
+    
+                Object.keys(this.jobsDates[date][depart]).forEach((empId)=> {
+                    Object.keys(this.timeZones).forEach((zoneId) => {
+                        if (this.jobsDates[date][depart][empId]['hour'][zoneId]) {
                             departRatio[depart][zoneId] = this.departmentsObj.getDepartRatio(Number(depart));
-                            if(!(zoneId in totalRatio)){
+                            if (!(zoneId in totalRatio)) {
                                 totalRatio[zoneId] = 0;
                             }
                         }
@@ -463,19 +456,19 @@ export class ReviewComponent implements OnInit {
                 });
     
                 Object.keys(this.timeZones).forEach((zoneId) => {
-                    if(departRatio[depart][zoneId]){
+                    if (departRatio[depart][zoneId]) {
                         totalRatio[zoneId] += departRatio[depart][zoneId];
                     }
                 });
             });
-            console.log('departRatio ========:',departRatio);
-            console.log('totalRatio ========:',totalRatio);
-            
+            console.log('departRatio ========:', departRatio);
+            console.log('totalRatio ========:', totalRatio);
+        
             Object.keys(this.jobsDates[date]).forEach((depart)=>{
-                Object.keys(dayTipAmount).forEach((zone) => {
-                    if(departRatio[depart][zone]){
+                Object.keys(this.timeZones).forEach((zone) => {
+                    if (departRatio[depart][zone] && dayTipAmount) {
                         this.dailyHours[date][depart]['tip'][zone] = dayTipAmount[zone] * departRatio[depart][zone] / totalRatio[zone];
-                    }else{
+                    } else {
                         this.dailyHours[date][depart]['tip'][zone] = 0;
                     }
                 });
@@ -522,6 +515,6 @@ export class ReviewComponent implements OnInit {
     }
     
     onSubmit(form: any): void {
-        
+        console.log("onSubmit: ",form);
     }
 }
