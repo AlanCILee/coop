@@ -1,4 +1,4 @@
-
+'use strict';
 const EmployeeService = function(options) {
 	const mysql = options.mysql;
 	

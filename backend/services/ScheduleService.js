@@ -1,4 +1,4 @@
-
+'use strict';
 const ScheduleService = function(options) {
 	const mysql = options.mysql;
 

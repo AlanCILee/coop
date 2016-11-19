@@ -1,4 +1,4 @@
-
+'use strict';
 const TimezoneService = function(options) {
 	const mysql = options.mysql;
 	

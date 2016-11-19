@@ -1,4 +1,4 @@
-
+'use strict';
 const LoginService = function(options) {
 	const mysql = options.mysql;
 	

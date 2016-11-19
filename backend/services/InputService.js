@@ -1,4 +1,4 @@
-
+'use strict';
 const InputService = function(options) {
 	const mysql = options.mysql;
 

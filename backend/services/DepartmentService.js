@@ -1,4 +1,4 @@
-
+'use strict';
 const DepartmentService = function(options) {
 	const mysql = options.mysql;
 	
