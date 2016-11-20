@@ -15,9 +15,12 @@ const express = require('express'),
 const Server = function(options) {
     const server = this;
     const mysql = options.mysql;
-
+    
+    const serverPort = options.serverPort;
+    const serverIpAddress = options.serverIpAddress;
     // const server = this;
-
+    
+    console.log('serverPort:', serverPort);
     const setRoute = function(){
         let employeeServiceObj = new EmployeeService(options),
             departmentServiceObj = new DepartmentService(options),
@@ -82,8 +85,8 @@ const Server = function(options) {
         //     console.log('Conneted', process.env.PORT,' port!');
         // });
         
-        app.listen(3000, function(){
-            console.log('Conneted 3000 port!');
+        app.listen(serverPort, function(){
+            console.log('Conneted port!', serverPort);
         });
     };
 };
