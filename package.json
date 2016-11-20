@@ -1,11 +1,17 @@
 {
-  "name": "angular2-webpack",
+  "name": "manager",
   "version": "1.0.0",
-  "description": "A webpack starter for Angular",
+  "description": "application",
   "scripts": {
-    "start": "webpack-dev-server --inline --progress --port 8080",
+    "start": "node ./backend/app.js",
+    "devlop": "webpack-dev-server --inline --progress --port 8080",
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
+  },
+  "author": {
+    "name" : "Alan Lee",
+    "email" : "alan.changil.lee@gmail.com",
+    "url" : "http://goodtidings.info/"
   },
   "licenses": [
     {
