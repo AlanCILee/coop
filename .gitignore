@@ -3,6 +3,7 @@ __MAC*
 *.tz
 *.gz
 build/*
+dist/*
 .idea
 .settings
 *.bak
