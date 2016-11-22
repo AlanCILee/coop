@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Response } from "@angular/http";
 
 import { HttpComponent } from '../core/http.component';
+import {API_ENDPOINT} from "../core/config";
 
 @Component({
     selector: 'salary',
@@ -19,7 +20,7 @@ export class SalaryComponent {
 
     request(): void {
         console.log('request() input');
-        this.httpComponent.makeRequest('http://localhost:3000/emp').subscribe((res: Response) => {
+        this.httpComponent.makeRequest(API_ENDPOINT+'/emp').subscribe((res: Response) => {
             this.data = res.json();
             this.loading = false;
             console.log('HttpComponent : ' + JSON.stringify(this.data));

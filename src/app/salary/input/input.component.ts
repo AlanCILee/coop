@@ -8,6 +8,7 @@ import { TimeTable } from "../../model/time";
 import { TipModel } from "../../model/tip";
 import { HttpComponent } from "../../core/http.component";
 import { Router, ActivatedRoute }       from '@angular/router';
+import {API_ENDPOINT} from "../../core/config";
 
 @Component({
     selector: 'enter',
@@ -113,7 +114,7 @@ export class InputComponent implements OnInit {
 		console.log('dayilyT :',this.dailyTDisp);
 
 	    if (date in this.dailyTDisp){   // update case
-		    this.httpComp.makePostRequest('http://localhost:3000/upInput',form).subscribe((res : Response) => {
+		    this.httpComp.makePostRequest(API_ENDPOINT+'/upInput',form).subscribe((res : Response) => {
 			    let response = res.json();
 			    console.log('HttpComponent : ', response);
 
@@ -132,7 +133,7 @@ export class InputComponent implements OnInit {
 		        this.clearInput();
 		    });
 	    }else{                      // new case
-		    this.httpComp.makePostRequest('http://localhost:3000/newInput',form).subscribe((res : Response) => {
+		    this.httpComp.makePostRequest(API_ENDPOINT+'/newInput',form).subscribe((res : Response) => {
 			    let response = res.json();
 			    console.log('HttpComponent : ', response);
 

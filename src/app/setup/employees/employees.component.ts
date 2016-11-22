@@ -6,6 +6,7 @@ import { Response } from "@angular/http";
 import { HttpComponent } from "../../core/http.component";
 
 import * as moment from 'moment';
+import { API_ENDPOINT } from "../../core/config";
 
 @Component({
     selector: 'employees',
@@ -40,7 +41,7 @@ export class EmployeesComponent implements OnInit {
     }
 
     loadEmployees(): void{
-        this.httpComp.makeRequest('http://localhost:3000/getEmployee').subscribe((res : Response) => {
+        this.httpComp.makeRequest(API_ENDPOINT+'/getEmployee').subscribe((res : Response) => {
             let response = res.json();
             console.log('Http response : ',response);
         
@@ -88,7 +89,7 @@ export class EmployeesComponent implements OnInit {
 		        form.date = null;
 	        }
 	
-	        this.httpComp.makePostRequest('http://localhost:3000/upEmployee',form).subscribe((res : Response) => {
+	        this.httpComp.makePostRequest(API_ENDPOINT+'/upEmployee',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('Http response : ',response);
 		
@@ -119,7 +120,7 @@ export class EmployeesComponent implements OnInit {
             });
 	        
         }else {             // insert case
-            this.httpComp.makePostRequest('http://localhost:3000/newEmployee',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/newEmployee',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('Http response : ',response);
 
@@ -150,7 +151,7 @@ export class EmployeesComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.httpComp.makePostRequest('http://localhost:3000/rmEmployee',{ eId: this.editItem.empId}).subscribe((res : Response) => {
+        this.httpComp.makePostRequest(API_ENDPOINT+'/rmEmployee',{ eId: this.editItem.empId}).subscribe((res : Response) => {
             let response = res.json();
             console.log('Http response : ',response);
         

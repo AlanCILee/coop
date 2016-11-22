@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
+import {API_ENDPOINT} from "../core/config";
 
 @Injectable()
 export class Employees {
@@ -64,7 +65,7 @@ export class Employees {
     //     });
 
 	initEmployee(): void {
-	    this.httpComp.makeRequest('http://localhost:3000/getEmployee').subscribe((res : Response) => {
+	    this.httpComp.makeRequest(API_ENDPOINT+'/getEmployee').subscribe((res : Response) => {
 		    let response = res.json();
 		    let response2: any;
 		
@@ -72,7 +73,7 @@ export class Employees {
 			    console.log('loadEmployees Fail :');
 		    }else{
 			    console.log('loadEmployees from DB :', response);
-	            this.httpComp.makeRequest('http://localhost:3000/getWage').subscribe((res2 : Response) => {
+	            this.httpComp.makeRequest(API_ENDPOINT+'/getWage').subscribe((res2 : Response) => {
 		            response2 = res2.json();
 		            console.log('load wages', response2);
 	            	if ( response2.err ) {

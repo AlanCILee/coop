@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
 import { Employees } from "./employee";
+import {API_ENDPOINT} from "../core/config";
 
 @Injectable()
 export class Schedule implements OnInit {
@@ -80,7 +81,7 @@ export class Schedule implements OnInit {
 
 			console.log('loadSchedule Loading Schedules', period);
 
-			this.httpComp.makePostRequest('http://localhost:3000/getSchedule', period).subscribe((res : Response) => {
+			this.httpComp.makePostRequest(API_ENDPOINT+'/getSchedule', period).subscribe((res : Response) => {
 				let response = res.json();
 
 				if ( response.err ) {
@@ -122,7 +123,7 @@ export class Schedule implements OnInit {
 
 		console.log('initSchedule Loading Schedules', period);
 
-		this.httpComp.makePostRequest('http://localhost:3000/getSchedule', period).subscribe((res : Response) => {
+		this.httpComp.makePostRequest(API_ENDPOINT+'/getSchedule', period).subscribe((res : Response) => {
 			let response = res.json();
 
 			if ( response.err ) {

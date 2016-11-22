@@ -4,6 +4,7 @@ import { Department, Departments } from "../../model/department";
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Response } from "@angular/http";
 import { HttpComponent } from "../../core/http.component";
+import {API_ENDPOINT} from "../../core/config";
 
 
 @Component({
@@ -45,7 +46,7 @@ export class DepartmentComponent implements OnInit {
         console.log('department form result: ',form);
 
         if( form.dId > 0){  // update case
-            this.httpComp.makePostRequest('http://localhost:3000/upDepartment',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/upDepartment',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
@@ -59,7 +60,7 @@ export class DepartmentComponent implements OnInit {
             });
             this.clearInput();
         }else {             // insert case
-            this.httpComp.makePostRequest('http://localhost:3000/newDepartment',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/newDepartment',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
@@ -86,7 +87,7 @@ export class DepartmentComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.httpComp.makePostRequest('http://localhost:3000/rmDepartment',{ dId: this.editItem.departId} ).subscribe((res : Response) => {
+        this.httpComp.makePostRequest(API_ENDPOINT+'/rmDepartment',{ dId: this.editItem.departId} ).subscribe((res : Response) => {
             let response = res.json();
             console.log('deleteItem : ', response);
         

@@ -3,6 +3,7 @@ import { TimeTable, Time, TimeZone } from "../../model/time";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { HttpComponent } from "../../core/http.component";
 import { Response } from "@angular/http";
+import {API_ENDPOINT} from "../../core/config";
 
 @Component({
     selector: 'timezone',
@@ -42,7 +43,7 @@ export class TimezoneComponent implements OnInit {
         console.log('timezone form result: ',form);
     
         if( form.zoneId > 0){  // update case
-            this.httpComp.makePostRequest('http://localhost:3000/upTimeZone',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/upTimeZone',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
             
@@ -55,7 +56,7 @@ export class TimezoneComponent implements OnInit {
                 }
             });
         }else {             // insert case
-            this.httpComp.makePostRequest('http://localhost:3000/newTimeZone',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/newTimeZone',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
             
@@ -91,7 +92,7 @@ export class TimezoneComponent implements OnInit {
     }
 
     deleteItem(): void {
-        this.httpComp.makePostRequest('http://localhost:3000/rmTimeZone',{ zoneId: this.editItem.val.zoneId }).subscribe((res : Response) => {
+        this.httpComp.makePostRequest(API_ENDPOINT+'/rmTimeZone',{ zoneId: this.editItem.val.zoneId }).subscribe((res : Response) => {
             let response = res.json();
             console.log('HttpComponent : ',response);
         

@@ -4,7 +4,7 @@
   "description": "application",
   "scripts": {
     "start": "node ./backend/app.js",
-    "devlop": "webpack-dev-server --inline --progress --port 8080",
+    "develop": "webpack-dev-server --inline --progress --port 8080",
     "test": "karma start",
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },

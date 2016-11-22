@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
+import {API_ENDPOINT} from "../core/config";
 
 @Injectable()
 export class TimeTable {
@@ -91,7 +92,7 @@ export class TimeTable {
 		// this.loadMockTimeZone();
 		this.createTimeTable();
 
-		this.httpComp.makeRequest('http://localhost:3000/getTimeZone').subscribe((res : Response) => {
+		this.httpComp.makeRequest(API_ENDPOINT+'/getTimeZone').subscribe((res : Response) => {
 			let response = res.json();
 			// let response2: any;
 

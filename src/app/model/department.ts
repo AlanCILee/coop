@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
+import {API_ENDPOINT} from "../core/config";
 
 @Injectable()
 export class Departments {
@@ -41,7 +42,7 @@ export class Departments {
         console.log('initDepartments Loading Departments');
         // this.loadDepartments(mockDepartments);
 
-        this.httpComp.makeRequest('http://localhost:3000/getDepartment').subscribe((res : Response) => {
+        this.httpComp.makeRequest(API_ENDPOINT+'/getDepartment').subscribe((res : Response) => {
             let response = res.json();
 
             if ( response.err ) {

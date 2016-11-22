@@ -10,6 +10,7 @@ import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
 import { Schedule, Job } from "../model/schedule";
 import { ErrorMessage } from "../core/errorMessage";
+import {API_ENDPOINT} from "../core/config";
 
 @Component({
     selector: 'mainmenu',
@@ -90,7 +91,7 @@ export class MainMenuComponent implements OnInit {
         }
             
         if( form.jobId > 0){    // update case
-            this.httpComp.makePostRequest('http://localhost:3000/upSchedule',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/upSchedule',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
@@ -111,7 +112,7 @@ export class MainMenuComponent implements OnInit {
                 });
             });
         }else {                 // new Schedule case
-            this.httpComp.makePostRequest('http://localhost:3000/newSchedule',form).subscribe((res : Response) => {
+            this.httpComp.makePostRequest(API_ENDPOINT+'/newSchedule',form).subscribe((res : Response) => {
                 let response = res.json();
                 console.log('HttpComponent : ',response);
 
@@ -182,7 +183,7 @@ export class MainMenuComponent implements OnInit {
     deleteItem(): void{
         console.log('Click delete Job');
 
-        this.httpComp.makePostRequest('http://localhost:3000/rmSchedule', {jobId: this.editItem.jobId}).subscribe((res : Response) => {
+        this.httpComp.makePostRequest(API_ENDPOINT+'/rmSchedule', {jobId: this.editItem.jobId}).subscribe((res : Response) => {
             let response = res.json();
             console.log('HttpComponent : ',response);
 

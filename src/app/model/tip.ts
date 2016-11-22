@@ -3,6 +3,7 @@ import { TimeTable } from "./time";
 import * as moment from 'moment';
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
+import {API_ENDPOINT} from "../core/config";
 
 @Injectable()
 export class TipModel implements OnInit{
@@ -45,7 +46,7 @@ export class TipModel implements OnInit{
 		}
 		console.log('initTip Loading Tips', period);
 		
-		this.httpComp.makePostRequest('http://localhost:3000/getInput', period).subscribe((res : Response) => {
+		this.httpComp.makePostRequest(API_ENDPOINT+'/getInput', period).subscribe((res : Response) => {
 			let response = res.json();
 			let tipObj: Object = {};
 			
@@ -157,7 +158,7 @@ export class TipModel implements OnInit{
 			
 			console.log('loadTips Period', period);
 			
-			this.httpComp.makePostRequest('http://localhost:3000/getInput', period).subscribe((res : Response) => {
+			this.httpComp.makePostRequest(API_ENDPOINT+'/getInput', period).subscribe((res : Response) => {
 				let response = res.json();
 				let tipObj: Object = {};
 				

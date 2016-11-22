@@ -4,11 +4,12 @@ import { Response } from "@angular/http";
 
 import { HttpComponent } from "../core/http.component";
 import { Router } from "@angular/router";
-import {TipModel} from "../model/tip";
-import {TimeTable} from "../model/time";
-import {Schedule} from "../model/schedule";
-import {Departments} from "../model/department";
-import {Employees} from "../model/employee";
+import { TipModel } from "../model/tip";
+import { TimeTable } from "../model/time";
+import { Schedule } from "../model/schedule";
+import { Departments } from "../model/department";
+import { Employees } from "../model/employee";
+import { API_ENDPOINT } from "../core/config";
 
 @Component({
 	selector: 'login',
@@ -42,7 +43,7 @@ export class LoginComponent implements OnInit {
 		console.log('you submitted value: ', form);
 
 		// this.httpComp.makePostRequest('/login',form).subscribe((res : Response) => {
-		this.httpComp.makePostRequest('http://localhost:3000/login',form).subscribe((res : Response) => {
+		this.httpComp.makePostRequest(API_ENDPOINT+'/login',form).subscribe((res : Response) => {
 			let response = res.json();
 			console.log('HttpComponent : ',response);
 
@@ -66,7 +67,7 @@ export class LoginComponent implements OnInit {
 
 	logout(): void{
 		// this.httpComp.makeRequest('/logout').subscribe((res : Response) => {
-		this.httpComp.makeRequest('http://localhost:3000/logout').subscribe((res : Response) => {
+		this.httpComp.makeRequest(API_ENDPOINT+'/logout').subscribe((res : Response) => {
 			let response = res.json();
 			console.log('HttpComponent : ',response);
 
