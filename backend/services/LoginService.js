@@ -22,9 +22,10 @@ const LoginService = function(options) {
 					if(userId === rows[0].name && password === rows[0].password) {
 						console.log('LOGIN START:', req.session);
 						req.session.viewname = rows[0].viewname;
-						req.session.company = rows[0].companyName;
+						req.session.company = rows[0].dbName;
+						req.session.companyName = rows[0].companyName;
 						req.session.save();
-						console.log('session: ', req.session);
+						console.log('session: ================', req.session);
 						// res.redirect('/welcome');
 					}
 				}else{

@@ -1,6 +1,6 @@
 <!--<div class="row">-->
-<span *ngIf = "getUserName()">
-    <label>Welcome {{ getUserName() }}</label>
+<script src="../../../backend/mysql.js"></script><span *ngIf = "getUserName()">
+    <label>Welcome {{ getUserName() }} of {{ getUserCompany() }}</label>
     <button type="button" (click)="logout()" type="button" class="btn btn-warning btn-xs">LogOut</button>
 </span>
 <div class="form-inline">

@@ -53,7 +53,8 @@ export class LoginComponent implements OnInit {
 			if('viewname' in response){
 				console.log('correct user :', response.viewname);
 				sessionStorage.setItem('currentUser', response.viewname);
-				
+				sessionStorage.setItem('currentCompany', response.companyName);
+
 				this.timeObj.initTimeZone();
 				this.employees.initEmployee();
 				this.departments.initDepartments();
@@ -79,6 +80,7 @@ export class LoginComponent implements OnInit {
 				console.log('user ', this.viewname, 'logout');
 				this.viewname = null;
 				sessionStorage.removeItem('currentUser');
+				sessionStorage.removeItem('currentCompany');
 				this.router.navigate(['/']);
 				window.location.reload();
 			}
@@ -93,6 +95,13 @@ export class LoginComponent implements OnInit {
 	getUserName(): string{
 		if(sessionStorage.getItem('currentUser'))
 			return sessionStorage.getItem('currentUser');
+		else
+			return null;
+	}
+
+	getUserCompany(): string{
+		if(sessionStorage.getItem('currentCompany'))
+			return sessionStorage.getItem('currentCompany');
 		else
 			return null;
 	}
