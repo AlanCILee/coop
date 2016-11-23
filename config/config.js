@@ -1,3 +1,5 @@
-module.exports = {
-	DB_PSWD : '',
-};
+const Config = function(){
+	const DB_PSWD = '';
+}
+
+module.exports = Config;

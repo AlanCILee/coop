@@ -12,7 +12,7 @@ const Mysql = function () {
         conn = mysql.createConnection({
             host: '127.0.0.1',
             user: 'root',
-            password: DB_PSWD,
+            password: config.DB_PSWD,
             database: database,
             port: '3306'
         });
