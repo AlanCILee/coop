@@ -83,7 +83,7 @@ export class Employees {
 				            let wages: Wage[] = [];
 			                response2.forEach((wage:any) => {
 					            if(wage['empId'] == emp['empId']){
-						            wages.push(new Wage(wage['empId'], wage['date']));
+						            wages.push(new Wage(wage['wage'], wage['date']));
 					            }
 				            });
 			                

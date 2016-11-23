@@ -84,8 +84,8 @@ export class EmployeesComponent implements OnInit {
 
         if( form.eId > 0){  // update case
 	        let emp = this.employeesObj.getEmployee(form.eId);
-	        if (form.wage == emp.getLatestWage()) {
-		        console.log('emp.getLatestWage():', emp.getLatestWage());
+		    console.log('form.wage:',form.wage, 'emp.getLatestWage():', emp.getLatestWage());
+	        if (form.wage == emp.getLatestWage().wage) {
 		        form.date = null;
 	        }
 	
