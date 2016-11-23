@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Response } from "@angular/http";
 
@@ -10,6 +10,7 @@ import { Schedule } from "../model/schedule";
 import { Departments } from "../model/department";
 import { Employees } from "../model/employee";
 import { API_ENDPOINT } from "../core/config";
+import { ErrorMessage } from "../core/errorMessage";
 
 @Component({
 	selector: 'login',
@@ -18,6 +19,8 @@ import { API_ENDPOINT } from "../core/config";
 })
 
 export class LoginComponent implements OnInit {
+	@ViewChild(ErrorMessage) errorMsg: ErrorMessage;
+
 	form: FormGroup;
 	viewname: string = null;
 
@@ -60,6 +63,7 @@ export class LoginComponent implements OnInit {
 				this.router.navigate(['/']);
 			}else{
 				console.log('invalid user :');
+				this.errorMsg.showErrorMessage('ID or Password is not correct');
 				this.router.navigate(['/']);
 			}
 		});

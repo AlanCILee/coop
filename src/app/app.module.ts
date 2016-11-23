@@ -21,7 +21,6 @@ import { TipModel } from "./model/tip";
 import { ShareModule } from "./core/Share.module";
 import { AuthGuard } from "./core/authguard";
 import { LoginComponent } from "./login/login.component";
-import { HomeModule } from "./home/home.module";
 import { HomeComponent } from "./home/home.component";
 import { ErrorMessage } from "./core/errorMessage";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -33,16 +32,11 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         APP_ROUTING,
         FormsModule,
         ReactiveFormsModule,
-        // HomeModule,
         MainmenuModule,
         SetupModule,
         SalaryModule,
         NgbModule.forRoot(),
-        // MainmenuModule,
-        // SetupModule,
-        // SalaryModule,
-        // HomeModule,
-        // ShareModule,
+        ShareModule,
     ],
     declarations: [
         AppComponent,
@@ -63,7 +57,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         TipModel,
         AuthGuard,
         LoginComponent,
-        ErrorMessage,
+        // ErrorMessage,
     ],
     bootstrap: [ AppComponent ]
 })

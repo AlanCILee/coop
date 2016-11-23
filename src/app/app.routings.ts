@@ -10,16 +10,8 @@ import { AuthGuard } from "./core/authguard";
 import { LoginComponent } from "./login/login.component";
 import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
-import { HomeRoutes } from "./home/home.routings";
 
 const APP_ROUTES: Routes = [
-    // { path: '', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard]},
-    // { path: 'login', component: LoginComponent },
-    // { path: 'home', component: HomeComponent, children: HomeRoutes, canActivate: [AuthGuard] },
-    // { path: 'home', component: MainMenuComponent, canActivate: [AuthGuard] },
-    // { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard] },
-    // { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]},
-    // { path: 'setup', component: SetupComponent, children: setupRoutes, canActivate: [AuthGuard] },
     { path: 'home', component: HomeComponent },
     { path: 'schedule', component: MainMenuComponent, canActivate: [AuthGuard]  },
     { path: 'pay', component: SalaryComponent, children: salaryRoutes, canActivate: [AuthGuard]  },

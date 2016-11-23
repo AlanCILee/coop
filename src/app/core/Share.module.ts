@@ -19,7 +19,6 @@ import { ErrorMessage } from "./errorMessage";
 		MapToIterable,
 	],
 	providers: [
-
 	],
 	exports: [
 		DatePickerComponent,

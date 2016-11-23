@@ -10,7 +10,7 @@ import { Department, Departments } from "../model/department";
 import { TimeTable, Time } from "../model/time";
 import { Schedule, Job } from "../model/schedule";
 import { ErrorMessage } from "../core/errorMessage";
-import {API_ENDPOINT} from "../core/config";
+import { API_ENDPOINT } from "../core/config";
 
 @Component({
     selector: 'mainmenu',
