@@ -1,6 +1,7 @@
 'use strict';
 
 const mysql = require('mysql');
+const config = require('../config/config');
 
 const Mysql = function () {
     let conn = null;
@@ -11,7 +12,7 @@ const Mysql = function () {
         conn = mysql.createConnection({
             host: '127.0.0.1',
             user: 'root',
-            password: '',
+            password: DB_PSWD,
             database: database,
             port: '3306'
         });
