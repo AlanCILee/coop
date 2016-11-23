@@ -57,7 +57,7 @@ const ScheduleService = function(options) {
 
 		console.log('ScheduleDb delete req:', sId);
 
-		let query = `UPDATE schedule SET valid = "false" WHERE scheduleId = "${sId}"`;
+		let query = `UPDATE schedule SET valid = 0 WHERE scheduleId = "${sId}"`;
 
 		mysql.sendQuery(database, query, function (err, result) {
 			if (err) {

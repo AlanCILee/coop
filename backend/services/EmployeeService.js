@@ -89,7 +89,7 @@ const EmployeeService = function(options) {
 	
 		console.log('employee delete req:', employeeId );
 	
-		let query = `UPDATE employees SET valid = "false"
+		let query = `UPDATE employees SET valid = 0
 	                        WHERE empId = "${employeeId}"`;
 	
 		mysql.sendQuery( database, query, function(err, result){

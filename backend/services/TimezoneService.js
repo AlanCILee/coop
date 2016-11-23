@@ -44,7 +44,7 @@ const TimezoneService = function(options) {
 			}else {
 				console.log('Inserted new timezone', result);
 				
-				let query = `UPDATE timezone SET valid = "false"               
+				let query = `UPDATE timezone SET valid = 0               
                                 WHERE zoneId = "${zoneId}"`;
 				
 				mysql.sendQuery( database, query, function(err, result2){
@@ -66,7 +66,7 @@ const TimezoneService = function(options) {
 		
 		console.log('zone delete req:', zoneId);
 		
-		let query = `UPDATE timezone SET valid = "false"               
+		let query = `UPDATE timezone SET valid = 0               
                         WHERE zoneId = "${zoneId}"`;
 		
 		mysql.sendQuery(database, query, function (err, result) {

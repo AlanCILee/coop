@@ -63,7 +63,7 @@ const DepartmentService = function(options) {
 		
 		console.log('department delete req:', departId);
 		
-		let query = `UPDATE department SET valid = "false"               
+		let query = `UPDATE department SET valid = 0               
 	                        WHERE departId = "${departId}"`;
 		
 		mysql.sendQuery(database, query, function (err, result) {
