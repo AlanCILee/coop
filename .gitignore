@@ -14,3 +14,4 @@ jsdoc/*
 process.pid
 tmp/
 hello/
+config/config.js
