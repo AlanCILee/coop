@@ -37,7 +37,7 @@ const LoginService = function(options) {
 	
 	this.logOff = function(req, res){
 		console.log('user logout', req.session);
-		// delete req.session.viewname;
+		delete req.session.viewname;
 		res.send(req.session);
 	};
 	

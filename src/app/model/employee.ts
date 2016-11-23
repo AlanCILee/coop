@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpComponent } from "../core/http.component";
 import { Response } from "@angular/http";
-import {API_ENDPOINT} from "../core/config";
+import { API_ENDPOINT } from "../core/config";
 
 @Injectable()
 export class Employees {

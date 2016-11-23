@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
 				this.viewname = null;
 				sessionStorage.removeItem('currentUser');
 				this.router.navigate(['/']);
+				window.location.reload();
 			}
 
 			this.form.patchValue({
