@@ -18,6 +18,7 @@ export class DispScheduleComponent implements OnInit {
 	departments: string[]=[];
 	departCnt: number;
 	dispEmpNum: number;
+	dispDateNum: number;
 	container: any;
 	
 	hOffset: number = 0;
@@ -44,6 +45,7 @@ export class DispScheduleComponent implements OnInit {
 		// this.departments = [];
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
+		this.dispDateNum = 0;
 		this.hOffset = 0;
 		this.jobsDatesDeparts = [];
 		
@@ -81,6 +83,7 @@ export class DispScheduleComponent implements OnInit {
 		let departJob: Job[] =[];
 		this.departCnt = 0;
 		this.dispEmpNum = 0;
+		this.dispDateNum = 0;
 
 		let jobsDates: any[] = [];
 		
@@ -101,7 +104,7 @@ export class DispScheduleComponent implements OnInit {
 
 		Object.keys(jobsDates).forEach((key)=>{     // key : date
 			let jobs: Job[] = jobsDates[key];
-
+			this.dispDateNum++;
 			console.log('jobsDates[key] :', jobs);
 			// this.departJobs = [];
 
@@ -133,7 +136,7 @@ export class DispScheduleComponent implements OnInit {
 		this.alignJobs(this.sJobs);
 		
 		let width = HOURW * HOURS + OFFSET,
-		height = this.dispEmpNum * 30 + this.departCnt * 30 + 30,
+		height = (this.dispDateNum + this.dispEmpNum + this.departCnt ) * 22 + 30,
 	    container = this.Snap('#svgContainer');
 
 		container.attr({ width: width, height: height });
