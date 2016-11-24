@@ -49,8 +49,8 @@ export class ReviewComponent implements OnInit {
     ];
     
     @ViewChild('tableData') tableData: ElementRef;
-    @ViewChild('tableData2') tableData2: ElementRef;
-    @ViewChild('summary') summary: ElementRef;
+    // @ViewChild('tableData2') tableData2: ElementRef;
+    // @ViewChild('summary') summary: ElementRef;
 
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
