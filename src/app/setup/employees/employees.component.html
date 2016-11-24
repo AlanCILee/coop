@@ -1,3 +1,4 @@
+<script src="employees.component.ts"></script>
 <div class="row">
     <h3>Employees List</h3>
     
@@ -46,7 +47,7 @@
             <tr><th>Employee Name</th><th>Department</th><th>Phone</th><th>Wage</th><th>Tip Ratio(%)</th></tr>
         </thead>
         <tbody>
-            <tr *ngFor="let emp of employees" (click)="empBtn( emp )">
+            <tr *ngFor="let emp of employees" (click)="empBtn( emp )" [class.danger]="checkHighlighted( emp )">
                 <ng-container *ngIf="emp.valid">
                     <td>{{ emp.empName }}</td>
                     <td>{{ getDepartName(emp.departId) }}</td>

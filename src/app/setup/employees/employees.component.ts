@@ -175,4 +175,12 @@ export class EmployeesComponent implements OnInit {
         })
         return cnt;
     }
+
+    checkHighlighted(emp: Employee): boolean{
+        if(this.editItem){
+            return this.editItem.empId == emp.empId;
+        }else{
+            return false;
+        }
+    }
 }

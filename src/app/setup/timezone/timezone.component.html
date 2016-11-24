@@ -37,7 +37,7 @@
 		<tr><th>Zone Name</th><th>Start Time</th><th>End Time</th></tr>
 		</thead>
 		<tbody>
-			<tr *ngFor="let zone of timeZonesHistory | mapToIterable" (click)="zoneBtn( zone )">
+			<tr *ngFor="let zone of timeZonesHistory | mapToIterable" (click)="zoneBtn( zone )" [class.danger]="checkHighlighted( zone )">
 				<ng-container *ngIf="zone.val.valid">
 					<td>{{ zone.val.zoneName}}</td>
 					<td>{{ zone.val.startT.timeStr }}</td>

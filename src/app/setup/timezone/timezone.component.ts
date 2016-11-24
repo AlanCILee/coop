@@ -118,4 +118,13 @@ export class TimezoneComponent implements OnInit {
         })
         return cnt;
     }
+
+
+    checkHighlighted(zone: any): boolean{
+        if(this.editItem){
+            return this.editItem.val.zoneId == zone.val.zoneId;
+        }else{
+            return false;
+        }
+    }
 }
