@@ -28,7 +28,7 @@
             <tr><th>Department Name</th><th>Tip Ratio</th></tr>
         </thead>
         <tbody>
-            <tr *ngFor="let dep of departments" (click)="depBtn( dep )">
+            <tr *ngFor="let dep of departments" (click)="depBtn( dep )" [class.danger]="checkHighlighted(dep)">
                 <ng-container *ngIf="dep.valid">
                     <td>{{ dep.departName }}</td>
                     <td>{{ dep.departRatio }}</td>

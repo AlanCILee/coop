@@ -111,4 +111,13 @@ export class DepartmentComponent implements OnInit {
         });
         return cnt;
     }
+
+    checkHighlighted(dep: Department): boolean{
+        if(this.editItem){
+            return this.editItem.departId == dep.departId;
+        }else{
+            return false;
+        }
+    }
+
 }
