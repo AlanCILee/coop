@@ -34,13 +34,13 @@ export class Schedule implements OnInit {
 	        valid: boolean,
 	        ): void{
 
-		if(jobId <0 ) {     // ADD Case
-			jobId = this.jobs.length+1;
-			// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
-			let job = new Job(jobId, date, empId, departId, startT, endT, valid);
-			this.jobs.push(job);
-			console.log("add new job :", job);
-		}else {
+		// if(jobId <0 ) {     // ADD Case
+		// 	jobId = this.jobs.length+1;
+		// 	// let job = new Job(jobId, date, empId, empName, departId, startT, endT);
+		// 	let job = new Job(jobId, date, empId, departId, startT, endT, valid);
+		// 	this.jobs.push(job);
+		// 	console.log("add new job :", job);
+		// }else {
 			let updateJob = this.getJob(jobId);
 
 			if (updateJob) {
@@ -60,7 +60,7 @@ export class Schedule implements OnInit {
 				this.jobs.push(job);
 				console.log("Import job :", job);
 			}
-		}
+		// }
 
 		//TODO updateDB
 

@@ -85,7 +85,6 @@ export class DatePickerComponent implements ControlValueAccessor, OnInit {
 			if (!this.opened || !e.target) {
 				return;
 			}
-			;
 			if (this.el !== e.target && !this.el.contains((<any>e.target))) {
 				this.close();
 			}
