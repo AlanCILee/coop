@@ -44,7 +44,8 @@ export class ReviewComponent implements OnInit {
     LIST_OPTION: string[] = [
         'Employee Detail',
         'Date Detail',
-        'Employee Simple'
+        'Employee Simple',
+        'Date Simple'
     ];
     
     @ViewChild('tableData') tableData: ElementRef;
@@ -113,7 +114,8 @@ export class ReviewComponent implements OnInit {
                 break;
         
             case 1:
-                table = this.dateDetail();
+            case 3:
+                table = this.dateDetail(viewOption);
                 break;
         
             default:
@@ -199,7 +201,7 @@ export class ReviewComponent implements OnInit {
         console.log('dailyHours: ', this.dailyHours);
     }
 
-    dateDetail(): string{
+    dateDetail(viewOption: number): string{
         console.log('date detail table create');
         let table: string =``;
         let currency = new Intl.NumberFormat('en-US', {style: 'currency', currency:'USD'});
@@ -210,58 +212,63 @@ export class ReviewComponent implements OnInit {
         Object.keys(this.jobsDates).forEach((date) => {
             table += `<div class="table-responsive"><table class ="table table-hover">`;
             table += `<thead><tr><th>${date}</th><th></th><th></th><th></th><th></th><th></th><th></th></tr>`;
-            table += `<tr><th>Department</th>
-                        <th>Name</th>
-                        <th>Category</th>`;
-            // Object.keys(this.timeZones).forEach((zone) => {
-            Object.keys(this.timeZones).forEach((zoneId) => {
-                table += `<th>${ this.timeZones[zoneId].zoneName }</th>`;
-            });
-            table += `<th>Sum</th></thead></tr><tbody>`;
-        
+
+            if(viewOption == 1){
+                table += `<tr><th>Department</th>
+                            <th>Name</th>
+                            <th>Category</th>`;
+                Object.keys(this.timeZones).forEach((zoneId) => {
+                    table += `<th>${ this.timeZones[zoneId].zoneName }</th>`;
+                });
+                table += `<th>Sum</th></tr></thead><tbody>`;
+            }else{
+                table += `</tr></thead>`;
+            }
+
             let dailyTip = 0;
             let dailyHour = 0;
             let dailyWage = 0;
-        
+            let detailString: string = '';
+
             Object.keys(this.jobsDates[date]).forEach((depart) => {
             
                 Object.keys(this.jobsDates[date][depart]).forEach((emp) => {
                     let employee = this.jobsDates[date][depart][emp];
-                
-                    table += `<tr><td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>
+
+                    detailString += `<tr><td>${this.departmentsObj.getDepartmentName(Number(depart))}</td>
                                 <td>${employee['name']}</td>`;
-                    table += `<td>Hour</td>`;
+                    detailString += `<td>Hour</td>`;
                 
                     let sum: number = 0;
                     Object.keys(employee['hour']).forEach((zone) => {
                         sum += employee['hour'][zone];
-                        table += `<!--<td>${ employee['hour'][zone] }</td>-->`;
-                        table += `<td>${ employee['hour'][zone]/60 }</td>`;
+                        detailString += `<!--<td>${ employee['hour'][zone] }</td>-->`;
+                        detailString += `<td>${ employee['hour'][zone]/60 }</td>`;
                     });
-                    table += `<td>${sum /60}</td>`;
-                    table += `</tr>`;
+                    detailString += `<td>${sum /60}</td>`;
+                    detailString += `</tr>`;
                     dailyHour += sum;
-                
-                    table += `<tr><td></td><td></td>`;
-                    table += `<td>Tip</td>`;
+
+                    detailString += `<tr><td></td><td></td>`;
+                    detailString += `<td>Tip</td>`;
                     sum = 0;
                     Object.keys(employee['tip']).forEach((zone) => {
                         sum += employee['tip'][zone];
-                        table += `<td>${ currency.format(employee['tip'][zone]) }</td>`;
+                        detailString += `<td>${ currency.format(employee['tip'][zone]) }</td>`;
                     });
-                    table += `<td class="active">${ currency.format(sum) }</td>`;
-                    table += `</tr>`;
+                    detailString += `<td class="active">${ currency.format(sum) }</td>`;
+                    detailString += `</tr>`;
                     dailyTip += sum;
-                
-                    table += `<tr><td></td><td></td>`;
-                    table += `<td>Wage</td>`;
+
+                    detailString += `<tr><td></td><td></td>`;
+                    detailString += `<td>Wage</td>`;
                     sum = 0;
                     Object.keys(employee['wage']).forEach((zone) => {
                         sum += employee['wage'][zone];
-                        table += `<td>${ currency.format(employee['wage'][zone]) }</td>`;
+                        detailString += `<td>${ currency.format(employee['wage'][zone]) }</td>`;
                     });
-                    table += `<td class="active">${ currency.format(sum) }</td>`;
-                    table += `</tr>`;
+                    detailString += `<td class="active">${ currency.format(sum) }</td>`;
+                    detailString += `</tr>`;
                     dailyWage += sum;
                 });
             });
@@ -271,15 +278,15 @@ export class ReviewComponent implements OnInit {
             periodWage += dailyWage;
         
             // table += `</tbody></table></div>`;
-            table += `</tbody>`;
+            if(viewOption == 1){
+                table += detailString;
+                table += `</tbody>`;
+            }
+
             table += `<tfoot><tr><th>Daily Total</th><th></th><th></th><th></th><th>Hour</th><th>Tip</th><th>Wage</th></tr>`;
             table += `<tr><td></td><td></td><td></td><td></td><td>${ dailyHour/60 }</td><td>${ currency.format(dailyTip)}</td><td>${ currency.format(dailyWage) }</td></tr></tfoot>`;
             table += `</table></div>`;
-            // table += `<p>Daily Total, Hour: ${dailyHour/60}
-            //         , Tip: ${ currency.format(dailyTip) }
-            //         , Wage: ${ currency.format(dailyWage) }</p>`;
         });
-        
         return table;
     }
     
