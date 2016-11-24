@@ -14,6 +14,7 @@ const Mysql = function () {
             user: 'root',
             password: config.DB_PSWD,
             database: database,
+            multipleStatements: true,
             port: '3306'
         });
 

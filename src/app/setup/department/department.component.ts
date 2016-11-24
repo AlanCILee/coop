@@ -108,7 +108,7 @@ export class DepartmentComponent implements OnInit {
             if(depart.valid){
                 cnt++;
             }
-        })
+        });
         return cnt;
     }
 }

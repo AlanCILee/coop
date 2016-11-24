@@ -31,6 +31,7 @@ export class MainMenuComponent implements OnInit {
     dName: string[];
 
     editDate: string;
+    copyDate: string;
     editItem: any = null;
 
     LIST_DATE: number = 0;
@@ -43,7 +44,10 @@ export class MainMenuComponent implements OnInit {
         'Two Weeks from the Day',
         'A Month from the Day',
     ];
-    
+
+    copyClass: string = 'visible';
+    copyCalendarClass: string ='inVisible';
+
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private timeObj: TimeTable,
@@ -142,6 +146,58 @@ export class MainMenuComponent implements OnInit {
             this.sJobs = list;
             console.log('dateChanged jobs:', this.sJobs);
         });
+    }
+
+    copyDateChanged(str: string){
+        console.log('copyDateChanged message from Calendar: ' + str);
+        this.copyDate = str;
+    }
+
+    copy(){
+        if(this.copyCalendarClass == 'inVisible'){
+            this.copyCalendarClass = 'visible';
+            this.copyClass = 'invisible';
+        }
+    }
+
+    copyCancel(){
+        this.copyCalendarClass = 'inVisible';
+        this.copyClass = 'visible';
+        this.copyDate = null;
+    }
+
+    copySubmit(){
+        console.log('copy schedule from', this.editDate, 'To ', this.copyDate);
+
+        let dateJobs: Job[] = this.sJobs.filter((job)=>{
+            return (job.date == this.editDate);
+        });
+
+        dateJobs.forEach((job) => {
+            job.date = this.copyDate;
+        });
+
+        // this.httpComp.makePostRequest(API_ENDPOINT+'/copySchedule', JSON.stringify(dateJobs)).subscribe((res : Response) => {
+        this.httpComp.makePostRequest(API_ENDPOINT+'/copySchedule', { copyData:JSON.stringify(dateJobs)}).subscribe((res : Response) => {
+            let response = res.json();
+            console.log('HttpComponent : ',response);
+
+
+            if( response.length > 0){
+                console.log('copy schedule successfully :', response.insertId );
+            }else{
+                console.log('copy schedule fail');
+            }
+            // this.sJobs = this.dScheduleObj.getJobs(this.editDate, this.LIST_DATE);
+            this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
+                this.sJobs = list;
+                console.log('ngOnInit() jobs:', this.sJobs);
+                this.clearInput();
+            }, true);
+
+        });
+
+        this.copyCancel();
     }
 
     onChange(dateOption: number) {

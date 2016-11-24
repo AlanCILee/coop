@@ -66,11 +66,11 @@ export class Schedule implements OnInit {
 
     }
 
-	loadSchedule(sDate:string, eDate:string, callback:any) {
+	loadSchedule(sDate:string, eDate:string, callback:any, reload?: boolean) {
 
-		console.log('loadSchedule start');
+		console.log('loadSchedule start', reload);
 
-		if(sDate < this.startD || eDate > this.endD){
+		if(sDate < this.startD || eDate > this.endD || reload){
 			this.startD = moment(sDate).date(1).add(-1,'month').format('YYYY-MM-DD');
 			this.endD = moment(eDate).add(1,'month').format('YYYY-MM-DD');
 
@@ -104,10 +104,6 @@ export class Schedule implements OnInit {
 			console.log('schedule already loaded');
 			return callback();
 		}
-		// mockSchedule.forEach(( schedule ) => {
-		// 	this.addJob( schedule['jobId'], schedule['date'], schedule['empId'],
-		// 		schedule['departId'], schedule['startT'], schedule['endT']);
-		// });
 	}
 
 	initSchedule(){
@@ -152,7 +148,7 @@ export class Schedule implements OnInit {
 		// 	'Two Weeks from Today', // 5
 		// 	'One Month from Today', // 6
 		// ];
-	getJobs(date: string, dayOption: number, callback: any) {
+	getJobs(date: string, dayOption: number, callback: any, reload?: boolean) {
 		console.log('selected date: ',date, 'viewOption: ', dayOption);
 		let days: string[] = [];
 		let momentDay = moment(date);
@@ -209,7 +205,7 @@ export class Schedule implements OnInit {
 			});
 			console.log("after loadSchedule: ",jobList);
 			return callback(jobList);
-		});
+		}, reload);
 	}
 
 	getJob(jobId: number): Job {

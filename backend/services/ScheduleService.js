@@ -27,6 +27,44 @@ const ScheduleService = function(options) {
 		});
 	};
 
+	this.copyScheduleDb = function (req, res) {
+		let jobs = [];
+		let query = '';
+		let database = req.session.company || 'bluelasso';
+
+		console.log(req.body.copyData);
+		console.log(JSON.parse(req.body.copyData));
+
+		jobs = JSON.parse(req.body.copyData);
+
+		jobs.forEach((job)=>{
+			let sDate = job.date;
+			let sEId = job.empId;
+			let sDId = job.departId;
+			let sST = job.startT;
+			let sET = job.endT;
+
+			console.log('newScheduleDb req:', sDate, sEId, sDId, sST, sET, 'for', database);
+
+			query += `INSERT INTO schedule (date, departId, empId, startT, endT) VALUES ("${sDate}", "${sDId}", "${sEId}", "${sST}", "${sET}");`;
+		});
+
+		mysql.sendQuery(database, query, function (err, result) {
+			if (err) {
+				console.log('copyScheduleDb fail: ', err);
+				res.send({insertId: -1});
+			} else {
+				console.log('copy Schedule', result);
+				let insertedIds = [];
+				result.forEach((res)=>{
+					console.log(res.insertId);
+					insertedIds.push({insertId: res.insertId});
+				});
+				res.send(JSON.stringify(insertedIds));
+			}
+		});
+	};
+
 	this.upScheduleDb = function (req, res) {
 		let sId = req.body.jobId;
 		let sDate = req.body.date;

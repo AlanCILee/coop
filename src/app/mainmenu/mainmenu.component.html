@@ -12,8 +12,16 @@
 			<input type = "hidden" formControlName= "jobId">
 			<div class ="row">
 				<div class ="col-md-2">
-					<!--<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="warning"></datepicker>-->
 					<datepicker formControlName="date" (sendDate)="dateChanged($event)" [expanded]="true" class="success"></datepicker>
+				</div>
+				<div class ="col-md-6">
+					<button type="button" (click)="copy()" class="btn btn-default btn-sm {{ copyClass }}">Copy Schedule</button>
+					<label class="{{ copyCalendarClass }}"> Copy To
+						<datepicker formControlName="date" (sendDate)="copyDateChanged($event)" [expanded]="true" class="success"></datepicker>
+					</label>
+					<button type="button" (click)="copySubmit()" class="btn btn-primary btn-sm {{ copyCalendarClass }}">Copy Schedule</button>
+					<button type="button" (click)="copyCancel()" class="btn btn-info btn-sm {{ copyCalendarClass }}">Cancel</button>
+
 				</div>
 				<div class ="col-md-4 ">
 					<label>View Option </label>
