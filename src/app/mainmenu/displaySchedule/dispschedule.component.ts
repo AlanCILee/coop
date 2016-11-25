@@ -8,12 +8,17 @@ import { Employees } from "../../model/employee";
 @Component({
 	selector: 'schedule',
 	templateUrl: './dispschedule.component.html',
-	outputs: ['sendJob']
+	outputs: [
+		'sendJob',
+		'sendDate',
+	]
 })
 
 export class DispScheduleComponent implements OnInit {
 	@Input() sJobs: Job[];
 	@Input() editItem: Job;
+	@Input() editDate: string;
+
 	Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 	departments: string[]=[];
 	departCnt: number;
@@ -22,11 +27,13 @@ export class DispScheduleComponent implements OnInit {
 	container: any;
 	hOffset: number = 0;
 	private sendJob: EventEmitter<Job>;
+	private sendDate: EventEmitter<string>;
 	jobsDatesDeparts: any[] = [];
 	
 	constructor(private departmentsObj: Departments,
 				private employeesObj: Employees) {
 		this.sendJob = new EventEmitter<Job>();
+		this.sendDate = new EventEmitter<string>();
 	}
 
 	ngOnInit() {
@@ -171,18 +178,38 @@ export class DispScheduleComponent implements OnInit {
 		const HOURW = 50;
 		const START_HOUR = 8;
 
+		Object.keys(this.jobsDatesDeparts).forEach((date) =>{
 
-		for(var date in this.jobsDatesDeparts) {
+		// });
+		// for(var date in this.jobsDatesDeparts) {
 			let dateJob = this.jobsDatesDeparts[date];
 			
 			this.hOffset += 20;
-			
+
+			let strokeColor;
+			let strokeWidth;
+			let fillColor;
+
+			if(this.editDate == date){
+				fillColor = 'none';
+				strokeColor = '#FF9999';
+				strokeWidth = 2;
+			}else {
+				fillColor = '#000';
+				strokeColor = '#000';
+				strokeWidth = 1;
+			}
+
 			svg.text(TEXT_OFFSET_X, this.hOffset, date).attr({
 				font: "100 1em Source Sans Pro",
 				textAnchor: "left",
-				fill: "#000",
-				stroke: "#000",
-				strokeWidth: 1
+				fill: fillColor,
+				stroke: strokeColor,
+				strokeWidth: strokeWidth,
+			}).click(()=>{
+				console.log('click and emit date',date);
+				this.sendDate.emit(date);
+				// this.editDate = date;
 			});
 			
 			for (var depart in dateJob) {
@@ -227,6 +254,7 @@ export class DispScheduleComponent implements OnInit {
 						strokeWidth: 0.5
 					}).click(()=>{
 						this.sendJob.emit(job);
+						this.editDate = job.date;
 					});
 
 					svg.text(x, empOffset[job.empId]-5, job.startT).attr({
@@ -243,6 +271,7 @@ export class DispScheduleComponent implements OnInit {
 				});
 			}
 			this.hOffset += 20;
-		}
+		// }
+		});
 	}
 }

@@ -167,6 +167,7 @@ export class MainMenuComponent implements OnInit {
             this.sJobs = list;
             console.log('dateChanged jobs:', this.sJobs);
         });
+        this.clearInput();
     }
 
     copyDateChanged(str: string){
@@ -247,8 +248,17 @@ export class MainMenuComponent implements OnInit {
 		    endT: job.endT,
 		    date: job.date
 	    });
-
+        this.editDate = job.date;
         this.editItem = job;
+    }
+
+    selectDate(date: string){
+        console.log('select date: ', date);
+        // this.form.patchValue({
+        //     date: date
+        // });
+        this.editDate = date;
+        this.clearInput();
     }
 
     clearInput(): void{
@@ -258,6 +268,7 @@ export class MainMenuComponent implements OnInit {
             department: '',
             startT: '00:00',
             endT: '00:00',
+            date: this.editDate,
         });
         this.editItem = null;
     }
