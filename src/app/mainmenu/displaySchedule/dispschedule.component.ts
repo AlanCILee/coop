@@ -240,7 +240,7 @@ export class DispScheduleComponent implements OnInit {
 					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
 					let w = HOURW * (job.endN - job.startN) /60;
 
-					let fillColor;
+					let fillColor: string ='';
 
 					if(this.editItem && (this.editItem.jobId == job.jobId)) {
 						fillColor = '#FF9999';
