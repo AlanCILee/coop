@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- 생성 시간: 16-11-16 09:10
+-- 생성 시간: 16-11-25 10:14
 -- 서버 버전: 5.6.34
 -- PHP 버전: 5.6.27
 
@@ -38,22 +38,9 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`departId`, `departName`, `departRatio`, `valid`) VALUES
-(9, 'yyy', 90, 0),
-(10, 'yyy', 9, 0),
-(11, 'mmm', 86, 0),
-(12, 'mmm', 77, 0),
-(13, 'qw', 1, 0),
-(14, 'qw', 11, 0),
-(15, 'as', 1, 0),
-(16, 'as', 11, 1),
-(17, 'klklkl', 12, 1),
-(18, 'asasas', 1, 1),
-(19, 'ewq', 1, 0),
-(20, 'zzz', 1, 0),
-(21, 'qqq', 1, 0),
-(22, 'sasasa', 12, 0),
-(23, 'xx', 99, 0),
-(24, 'xx', 12, 0);
+(28, 'S', 20, 1),
+(29, 'K', 20, 1),
+(30, 'W', 60, 1);
 
 -- --------------------------------------------------------
 
@@ -66,6 +53,7 @@ CREATE TABLE `employees` (
   `name` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   `departId` int(50) DEFAULT NULL,
+  `ratio` int(11) NOT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -73,26 +61,14 @@ CREATE TABLE `employees` (
 -- 테이블의 덤프 데이터 `employees`
 --
 
-INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `valid`) VALUES
-(6, 'dfd', '12', 1, 1),
-(7, 'jjj', '123', 2, 1),
-(8, 'fgt', '333', 0, 1),
-(9, 'ggg', '444', 2, 1),
-(10, 'abc', '12', 2, 1),
-(11, 'ggg', '111', 3, 1),
-(12, 'bbb', '12', 1, 1),
-(13, 'yt6', '7', 0, 1),
-(14, 'hy', '9', 1, 1),
-(15, 'qwe', '12', 1, 1),
-(16, 'qaz', '12', 1, 1),
-(17, 'qwe', '1', 2, 1),
-(18, 'agde2', '12', 0, 1),
-(19, 'eadc', '222', 2, 1),
-(30, 'rew', '444', 3, 0),
-(31, 'zasa', '1', 1, 1),
-(32, 'rew', '444', 3, 1),
-(33, 'trew', '12', 2, 1),
-(34, 'trewq', '1', 0, 0);
+INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `ratio`, `valid`) VALUES
+(35, 'Young', '1', 29, 100, 1),
+(36, 'Roland', '2', 29, 100, 1),
+(37, 'Omu', '3', 28, 100, 1),
+(38, 'Daniel', '4', 28, 100, 1),
+(39, 'Queenee', '5', 30, 100, 1),
+(40, 'Lisa', '6', 29, 50, 1),
+(41, 'Grace', '7', 29, 100, 1);
 
 -- --------------------------------------------------------
 
@@ -102,7 +78,7 @@ INSERT INTO `employees` (`empId`, `name`, `phone`, `departId`, `valid`) VALUES
 
 CREATE TABLE `schedule` (
   `scheduleId` bigint(24) NOT NULL,
-  `date` date NOT NULL,
+  `date` varchar(20) NOT NULL,
   `departId` int(11) NOT NULL,
   `empId` int(11) NOT NULL,
   `startT` varchar(11) NOT NULL,
@@ -115,20 +91,34 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`scheduleId`, `date`, `departId`, `empId`, `startT`, `endT`, `valid`) VALUES
-(1, '2016-11-14', 3, 7, '0', '1', 1),
-(2, '2016-11-14', 3, 7, '1', '2', 1),
-(3, '2016-11-14', 2, 11, '00:30', '01:00', 1),
-(4, '2016-11-14', 2, 6, '08:15', '09:30', 1),
-(5, '2016-11-14', 2, 17, '10:15', '11:00', 1),
-(6, '2016-11-14', 18, 19, '13:45', '14:15', 1),
-(7, '2016-11-14', 2, 14, '00:30', '01:00', 1),
-(8, '2016-11-14', 1, 12, '00:00', '00:00', 1),
-(9, '2016-11-14', 1, 10, '07:45', '11:45', 1),
-(10, '2016-11-14', 3, 10, '10:00', '12:15', 1),
-(11, '2016-11-14', 16, 32, '08:30', '11:00', 1),
-(12, '2016-11-14', 17, 18, '07:30', '10:00', 1),
-(13, '2016-11-14', 3, 8, '08:45', '10:45', 1),
-(14, '2016-11-14', 3, 31, '13:00', '14:15', 0);
+(15, '2016-11-23', 29, 35, '10:30', '14:00', 1),
+(16, '2016-11-23', 29, 36, '10:00', '15:00', 1),
+(17, '2016-11-23', 29, 35, '16:00', '22:30', 1),
+(18, '2016-11-23', 28, 38, '10:00', '17:00', 0),
+(19, '2016-11-23', 28, 38, '12:00', '22:00', 1),
+(20, '2016-11-23', 29, 41, '15:00', '21:30', 1),
+(21, '2016-11-23', 30, 41, '10:00', '14:00', 1),
+(22, '2016-11-23', 30, 39, '10:00', '20:00', 1),
+(23, '2016-11-23', 30, 40, '10:00', '14:00', 1),
+(24, '2016-11-23', 28, 37, '10:00', '15:00', 1),
+(54, '2016-11-24', 29, 35, '10:30', '14:00', 1),
+(55, '2016-11-24', 29, 36, '10:00', '15:00', 1),
+(56, '2016-11-24', 29, 35, '16:00', '22:30', 1),
+(57, '2016-11-24', 28, 38, '12:00', '21:45', 1),
+(58, '2016-11-24', 29, 41, '15:00', '21:30', 1),
+(59, '2016-11-24', 30, 41, '10:00', '14:00', 1),
+(60, '2016-11-24', 30, 39, '10:00', '20:00', 1),
+(61, '2016-11-24', 30, 40, '10:00', '14:00', 1),
+(62, '2016-11-24', 28, 37, '10:00', '15:00', 1),
+(63, '2016-11-25', 29, 35, '10:30', '14:00', 1),
+(64, '2016-11-25', 29, 36, '10:00', '15:00', 1),
+(65, '2016-11-25', 29, 35, '16:00', '22:30', 1),
+(66, '2016-11-25', 28, 38, '12:00', '21:45', 0),
+(67, '2016-11-25', 29, 41, '15:00', '21:30', 1),
+(68, '2016-11-25', 30, 41, '10:00', '14:00', 1),
+(69, '2016-11-25', 30, 39, '10:00', '20:00', 1),
+(70, '2016-11-25', 30, 40, '10:00', '14:00', 1),
+(71, '2016-11-25', 28, 37, '10:00', '15:00', 1);
 
 -- --------------------------------------------------------
 
@@ -139,8 +129,8 @@ INSERT INTO `schedule` (`scheduleId`, `date`, `departId`, `empId`, `startT`, `en
 CREATE TABLE `timezone` (
   `zoneId` int(11) NOT NULL,
   `zoneName` varchar(50) NOT NULL,
-  `startT` time NOT NULL,
-  `endT` time NOT NULL,
+  `startT` varchar(20) NOT NULL,
+  `endT` varchar(20) NOT NULL,
   `valid` tinyint(4) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -149,43 +139,9 @@ CREATE TABLE `timezone` (
 --
 
 INSERT INTO `timezone` (`zoneId`, `zoneName`, `startT`, `endT`, `valid`) VALUES
-(1, 'KKK', '00:15:00', '00:45:00', 0),
-(2, 'LL', '00:00:00', '00:00:00', 0),
-(3, 'OOO', '00:00:00', '01:00:00', 0),
-(4, 'OOO', '01:30:00', '02:00:00', 0),
-(5, 'adf', '01:45:00', '02:30:00', 0),
-(6, 'dsaf', '00:00:00', '00:15:00', 0),
-(7, 'daddddd', '00:00:00', '00:45:00', 0),
-(8, 'daddddd', '00:00:00', '01:30:00', 0),
-(9, 'daddddd', '00:00:00', '02:30:00', 0),
-(10, 'ggg', '00:00:00', '00:00:00', 0),
-(11, 'ggg', '00:00:00', '01:00:00', 0),
-(12, 'ewq', '00:00:00', '00:00:00', 0),
-(13, 'ggg', '00:00:00', '00:45:00', 0),
-(14, 'kkk', '00:00:00', '00:00:00', 0),
-(15, 'qwe', '00:00:00', '00:00:00', 0),
-(16, 'qwe', '00:00:00', '00:15:00', 0),
-(17, 'zaq', '00:00:00', '00:00:00', 0),
-(18, 'zaq', '00:00:00', '00:15:00', 0),
-(19, 'teq', '00:00:00', '00:00:00', 0),
-(20, '19', '00:00:00', '01:45:00', 0),
-(21, 'zxcv', '00:00:00', '00:00:00', 0),
-(22, 'zxcv', '00:00:00', '01:00:00', 0),
-(23, 'TH', '00:00:00', '00:15:00', 0),
-(24, 'TH', '00:00:00', '01:00:00', 0),
-(25, 'HH', '00:00:00', '00:15:00', 0),
-(26, 'HH', '00:00:00', '01:00:00', 0),
-(27, 'ZZ', '00:00:00', '00:15:00', 0),
-(28, 'ZZ', '00:00:00', '01:00:00', 0),
-(29, 'yhy', '00:00:00', '00:00:00', 0),
-(30, 'yhy', '00:00:00', '01:00:00', 0),
-(31, 'xxx', '00:00:00', '00:15:00', 0),
-(32, 'xxx', '00:00:00', '01:00:00', 0),
-(33, 'vvv', '00:00:00', '00:15:00', 0),
-(34, 'vvv', '00:00:00', '01:00:00', 0),
-(35, 'Morning', '06:00:00', '12:00:00', 1),
-(36, 'Afternoon', '12:00:00', '18:30:00', 1),
-(37, 'Evening', '18:30:00', '23:45:00', 1);
+(38, 'Morning', '08:00', '16:00', 1),
+(39, 'Evening', '16:00', '23:45', 1),
+(40, 'Test', '00:30', '01:15', 0);
 
 -- --------------------------------------------------------
 
@@ -195,7 +151,7 @@ INSERT INTO `timezone` (`zoneId`, `zoneName`, `startT`, `endT`, `valid`) VALUES
 
 CREATE TABLE `tip` (
   `tipId` bigint(24) NOT NULL,
-  `date` date NOT NULL,
+  `date` varchar(20) NOT NULL,
   `zoneId` int(11) NOT NULL,
   `tip` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -205,9 +161,10 @@ CREATE TABLE `tip` (
 --
 
 INSERT INTO `tip` (`tipId`, `date`, `zoneId`, `tip`) VALUES
-(22, '2016-11-15', 35, 11),
-(23, '2016-11-15', 36, 22),
-(24, '2016-11-15', 37, 33);
+(25, '2016-11-23', 38, 1000),
+(26, '2016-11-23', 39, 1500),
+(27, '2016-11-24', 38, 1100),
+(28, '2016-11-24', 39, 1200);
 
 -- --------------------------------------------------------
 
@@ -217,10 +174,32 @@ INSERT INTO `tip` (`tipId`, `date`, `zoneId`, `tip`) VALUES
 
 CREATE TABLE `wage` (
   `wageId` int(11) NOT NULL,
-  `wage` int(11) NOT NULL,
+  `wage` float NOT NULL,
   `empId` int(11) NOT NULL,
-  `date` datetime NOT NULL
+  `date` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- 테이블의 덤프 데이터 `wage`
+--
+
+INSERT INTO `wage` (`wageId`, `wage`, `empId`, `date`) VALUES
+(7, 12, 35, '2016-11-23 15:10:45'),
+(8, 12, 35, '2016-11-23 15:11:53'),
+(9, 35, 35, '2016-11-23 15:12:36'),
+(10, 10, 35, '2016-11-23 15:13:50'),
+(11, 17, 35, '2016-11-23 15:22:50'),
+(12, 1, 35, '2016-11-23 15:25:23'),
+(13, 3, 35, '2016-11-23 15:26:40'),
+(14, 10, 35, '2016-11-23 15:33:47'),
+(15, 5.1, 35, '2016-11-23 15:35:06'),
+(16, 10, 36, '2016-11-23 15:39:02'),
+(17, 25, 37, '2016-11-23 15:41:10'),
+(18, 15, 38, '2016-11-23 15:41:24'),
+(19, 8.9, 39, '2016-11-23 15:41:41'),
+(20, 8.9, 40, '2016-11-23 15:41:54'),
+(21, 10, 41, '2016-11-23 15:43:44'),
+(22, 30, 37, '2016-11-24 15:31:51');
 
 --
 -- 덤프된 테이블의 인덱스
@@ -274,32 +253,32 @@ ALTER TABLE `wage`
 -- 테이블의 AUTO_INCREMENT `department`
 --
 ALTER TABLE `department`
-  MODIFY `departId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `departId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 --
 -- 테이블의 AUTO_INCREMENT `employees`
 --
 ALTER TABLE `employees`
-  MODIFY `empId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `empId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- 테이블의 AUTO_INCREMENT `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `scheduleId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `scheduleId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
 --
 -- 테이블의 AUTO_INCREMENT `timezone`
 --
 ALTER TABLE `timezone`
-  MODIFY `zoneId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `zoneId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 --
 -- 테이블의 AUTO_INCREMENT `tip`
 --
 ALTER TABLE `tip`
-  MODIFY `tipId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `tipId` bigint(24) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- 테이블의 AUTO_INCREMENT `wage`
 --
 ALTER TABLE `wage`
-  MODIFY `wageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `wageId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 --
 -- 덤프된 테이블의 제약사항
 --

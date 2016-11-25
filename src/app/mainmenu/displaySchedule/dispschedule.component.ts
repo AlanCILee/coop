@@ -186,9 +186,9 @@ export class DispScheduleComponent implements OnInit {
 			
 			this.hOffset += 20;
 
-			let strokeColor;
-			let strokeWidth;
-			let fillColor;
+			let strokeColor: string ='';
+			let strokeWidth: number;
+			let fillColor: string='';
 
 			if(this.editDate == date){
 				fillColor = 'none';
