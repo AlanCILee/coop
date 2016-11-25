@@ -6,7 +6,7 @@ const mysqlObj = mysql.start();
 const options = {
 	mysql: mysqlObj,
 	serverPort: config.SERVER_PORT,
-	serverIpAddress: '127.0.0.1',
+	serverAddress: config.SERVER,
 
 };
 console.log(options);

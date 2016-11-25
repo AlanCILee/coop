@@ -17,7 +17,7 @@ const Server = function(options) {
     const mysql = options.mysql;
     
     const serverPort = options.serverPort;
-    const serverIpAddress = options.serverIpAddress;
+    const serverAddress = options.serverAddress;
     // const server = this;
     
     console.log('serverPort:', serverPort);
@@ -41,7 +41,7 @@ const Server = function(options) {
             secret: '12345%$#@!qazXSW',
             resave: false,
             saveUninitialized: true,
-            cookie: { secure : false, httpOnly : false },
+            cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 6 },
         }));
         app.use(allowCrossDomain);
         
