@@ -1,3 +1,4 @@
+<script src="input.component.ts"></script>
 <div class="row">
 <h3>Input Tip</h3>
 	<div class="form-inline">
@@ -26,7 +27,7 @@
 				    <br>
 				    <button type="submit" class="btn btn-primary btn-sm">Submit</button>
 			        <button type="button" (click)="clearInput()" class="btn btn-info btn-sm">Clear</button>
-			        <button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>
+			        <!--<button *ngIf ="editItem" type="button" (click)="deleteItem()" class="btn btn-danger btn-sm">Remove Item</button>-->
 			    </div>
 		    </div>
 	    </form>
@@ -42,7 +43,7 @@
 			</tr>
 		</thead>
 		<tbody>
-	        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )">
+	        <tr *ngFor="let dt of dailyTDisp | mapToIterable" (click)="tipSelect( dt )" [class.danger]="checkHighlighted( dt )">
 	            <td>{{ dt.key }}</td>
 	            <td *ngFor="let pt of dt.val | mapToIterable">{{ pt.val }}</td>
 	        </tr>

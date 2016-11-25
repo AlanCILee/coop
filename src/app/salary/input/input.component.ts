@@ -23,7 +23,8 @@ export class InputComponent implements OnInit {
     form : FormGroup;
     dailyTDisp: Object;
     editDate: string;
-	
+	editItem: any;
+
 	zoneStr: string[] = null;
 	zoneId: string[] =[];
 	
@@ -76,11 +77,7 @@ export class InputComponent implements OnInit {
     dateChanged(str: string){
         console.log('got message from Calendar: ' + str);
         this.editDate = str;
-	    // this.dScheduleObj.getJobs(str, Number(this.LIST_DATE),(list: Job[])=>{
-		 //    this.sJobs = list;
-		 //    console.log('ngOnInit() jobs:', this.sJobs);
-	    // });
-	    // this.dailyTDisp = this.tipObj.getTipList(str, this.LIST_DATE);
+
 	    this.tipObj.getTipList(this.editDate, Number(this.LIST_DATE), (list: Object) =>{
 		    this.dailyTDisp = list;
 		    console.log('Get dailyTDisp() :', this.dailyTDisp);
@@ -95,17 +92,17 @@ export class InputComponent implements OnInit {
 			this.dailyTDisp = list;
 			console.log('Get dailyTDisp() :', this.dailyTDisp);
 		});
-		// this.dScheduleObj.getJobs(this.editDate, Number(this.LIST_DATE),(list: Job[])=>{
-		// 	this.sJobs = list;
-		// 	console.log('ngOnInit() jobs:', this.sJobs);
-		// });
 	}
 
     clearInput(): void{
-	    // this.zoneStr.forEach((zone) =>{
-	    // 	console.log('patch value: ', zone);
-	    // 	this.form.patchValue({ [ zone ]: ''});
-	    // });
+	    Object.keys(this.timeZones).forEach((zoneId)=>{
+		    if(this.timeZones[zoneId].valid){
+			    this.form.patchValue({
+				    [ zoneId ]: '',
+			    });
+		    }
+	    });
+	    this.editItem = null;
     }
 
     onSubmit(form: any): void {
@@ -160,6 +157,9 @@ export class InputComponent implements OnInit {
             console.log('tipBtn :', key, 'value :',tip['val'][key]);
             this.form.patchValue({ [ key ]: tip['val'][key] });
         }
+        this.editDate = tip['key'];
+        this.form.patchValue({ date: this.editDate });
+        this.editItem = tip;
     }
 		
 	getTipNumber(): number {
@@ -169,4 +169,16 @@ export class InputComponent implements OnInit {
 			return 0;
 		}
 	}
+
+
+	checkHighlighted(dt: any): boolean{
+		// console.log("dt:",dt, "this.editItem:", this.editItem);
+
+		if(this.editItem){
+			return this.editItem.key == dt.key;
+		}else{
+			return false;
+		}
+	}
+
 }
