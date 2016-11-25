@@ -169,6 +169,11 @@ export class MainMenuComponent implements OnInit {
     copySubmit(){
         console.log('copy schedule from', this.editDate, 'To ', this.copyDate);
 
+        if(this.editDate == this.copyDate){
+            console.log('Error : copy to same date');
+            return;
+        }
+
         let dateJobs: Job[] = this.sJobs.filter((job)=>{
             return (job.date == this.editDate);
         });

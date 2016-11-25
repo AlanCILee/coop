@@ -13,14 +13,13 @@ import { Employees } from "../../model/employee";
 
 export class DispScheduleComponent implements OnInit {
 	@Input() sJobs: Job[];
-
+	@Input() editItem: Job;
 	Snap = require( "imports-loader?this=>window,fix=>module.exports=0!snapsvg/dist/snap.svg.js" );
 	departments: string[]=[];
 	departCnt: number;
 	dispEmpNum: number;
 	dispDateNum: number;
 	container: any;
-	
 	hOffset: number = 0;
 	private sendJob: EventEmitter<Job>;
 	jobsDatesDeparts: any[] = [];
@@ -213,15 +212,23 @@ export class DispScheduleComponent implements OnInit {
 					
 					let x = OFFSET + HOURW * (job.startN - START_HOUR*60) /60;
 					let w = HOURW * (job.endN - job.startN) /60;
-					
+
+					let fillColor;
+
+					if(this.editItem && (this.editItem.jobId == job.jobId)) {
+						fillColor = '#FF9999';
+					}else {
+						fillColor = '#AAA';
+					}
+
 					svg.rect(x, empOffset[job.empId]-20, w, 20).attr({
-						fill: "#AAA",
+						fill: fillColor,
 						stroke: "#EEE",
 						strokeWidth: 0.5
 					}).click(()=>{
 						this.sendJob.emit(job);
 					});
-					
+
 					svg.text(x, empOffset[job.empId]-5, job.startT).attr({
 						font: "100 1em Source Sans Pro",
 						textAnchor: "left",

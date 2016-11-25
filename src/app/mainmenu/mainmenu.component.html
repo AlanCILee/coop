@@ -72,6 +72,6 @@
 		</form>
 	</div>
 		<br>
-		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" (sendJob)="selectJob($event)" class="printSection"></schedule>
+		<schedule *ngIf="sJobs.length > 0" [sJobs]="sJobs" [editItem]="editItem" (sendJob)="selectJob($event)" class="printSection"></schedule>
 </main>
 <app-error-message></app-error-message>
