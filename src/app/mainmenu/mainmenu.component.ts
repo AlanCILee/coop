@@ -64,7 +64,7 @@ export class MainMenuComponent implements OnInit {
         this.form = this.fb.group({
             // view: ['opt1'],
         	jobId: [ -1 ],
-            empId: [ '' ],
+            empId: [ -1 ],
             department: [ '' ],
             startT: [ '00:00' ],
             endT: [ '00:00' ],
@@ -233,10 +233,10 @@ export class MainMenuComponent implements OnInit {
     clearInput(): void{
         this.form.patchValue({
             jobId: -1,
-            name: null,
-            department: null,
-            startT: null,
-            endT: null,
+            empId: -1,
+            department: '',
+            startT: '00:00',
+            endT: '00:00',
         });
         this.editItem = null;
     }
@@ -264,6 +264,15 @@ export class MainMenuComponent implements OnInit {
                 this.clearInput();
             });
         });
+    }
+
+    getDepartmentName(departId: number):string{
+        return this.departmentsObj.getDepartmentName(departId);
+    }
+
+    getEmployeeName(empId: number):string{
+        console.log()
+        return this.employeesObj.getEmployeeName(empId);
     }
 }
 

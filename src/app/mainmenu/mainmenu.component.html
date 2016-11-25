@@ -37,7 +37,8 @@
 					<label>Name </label>
 					<select class="form-control" formControlName="empId">
 						<ng-container *ngFor="let employee of employees">
-							<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>
+							<!--<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ employee.empName }}</option>-->
+							<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ getEmployeeName(employee.empId) }}</option>
 						</ng-container>
 					</select>
 				</div>
@@ -45,7 +46,8 @@
 					<label>Working Department </label>
 					<select class="form-control" formControlName="department">
 						<ng-container *ngFor="let depart of departments">
-							<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>
+							<!--<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>-->
+							<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ getDepartmentName(depart.departId) }}</option>
 						</ng-container>
 					</select>
 				</div>

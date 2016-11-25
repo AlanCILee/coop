@@ -115,7 +115,7 @@ export class Employees {
 	// }
 
     getEmployeeName(employeeId: number): string{
-            console.log('getEmployeeName :'+ employeeId);
+            // console.log('getEmployeeName :'+ employeeId);
             let employee: Employee = null;
 
             this.employees.forEach((emp) => {
@@ -127,19 +127,21 @@ export class Employees {
     }
 
 	getEmployee(employeeId: number): Employee{
-            console.log('getEmployee :'+ employeeId);
             let employee: Employee = null;
 
-            this.employees.forEach((emp) => {
-                if(emp.empId == employeeId)
-                    employee = emp;
-            });
+			if(employeeId > 0){
+                // console.log('getEmployee :'+ employeeId);
+	            this.employees.forEach((emp) => {
+	                if(emp.empId == employeeId)
+	                    employee = emp;
+	            });
+			}
             return employee;
     }
 	
 	
 	getEmployeeRatio(employeeId: number): number{
-		console.log('getEmployeeRatio :', employeeId);
+		// console.log('getEmployeeRatio :', employeeId);
 		let employee: Employee = null;
 		
 		this.employees.forEach((emp) => {
