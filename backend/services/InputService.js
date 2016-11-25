@@ -64,7 +64,7 @@ const InputService = function(options) {
 		console.log('tip list req');
 		let database = req.session.company || 'bluelasso';
 
-		let query = `SELECT * FROM tip WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}"`;
+		let query = `SELECT * FROM tip WHERE date >= "${req.body.startD}" AND date <= "${req.body.endD}" ORDER BY date ASC`;
 
 		mysql.sendQuery( database, query, function(err, results, fields){
 			if(err){
