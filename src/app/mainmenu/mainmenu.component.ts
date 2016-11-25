@@ -11,6 +11,7 @@ import { TimeTable, Time } from "../model/time";
 import { Schedule, Job } from "../model/schedule";
 import { ErrorMessage } from "../core/errorMessage";
 import { API_ENDPOINT } from "../core/config";
+import { Router } from "@angular/router";
 
 @Component({
     selector: 'mainmenu',
@@ -51,16 +52,36 @@ export class MainMenuComponent implements OnInit {
     constructor(private employeesObj: Employees,
                 private departmentsObj: Departments,
                 private timeObj: TimeTable,
+                private router: Router,
                 private dScheduleObj: Schedule,
                 private httpComp: HttpComponent,
                 private fb: FormBuilder,) {
     };
+
+    // ngOnInit(){
+    //     if(this.scheduleObj.initialize){
+    //         this.employees = this.employeesObj.employees;
+    //         this.departments = this.departmentsObj.departments;
+    //         // this.timeZones = this.timeObj.timeZones;
+    //         this.timeZones = this.timeObj.timeZonesHistory;
+    //         this.dailyT = this.tipObj.dailyT;
+    //     }else{
+    //         this.router.navigate(['/home']);
+    //     }
+    //     this.form = this.fb.group({
+    //         date: [ '' ],
+    //         fix: [' '],
+    //     });
+    // }
     
     ngOnInit(){
-        this.employees = this.employeesObj.employees;
-        this.departments = this.departmentsObj.departments;
-        this.timeTable = this.timeObj.timeTable;
-        
+        if(this.dScheduleObj.initialize) {
+            this.employees = this.employeesObj.employees;
+            this.departments = this.departmentsObj.departments;
+            this.timeTable = this.timeObj.timeTable;
+        }else{
+            this.router.navigate(['/home']);
+        }
         this.form = this.fb.group({
             // view: ['opt1'],
         	jobId: [ -1 ],
