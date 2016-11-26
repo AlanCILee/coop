@@ -34,14 +34,15 @@ const Server = function(options) {
             res.header('Access-Control-Allow-Headers', 'Content-Type');
             next();
         };
-        
+        console.log('serverAddress:::::::::::::::::',serverAddress);
         app.use(bodyParser.json()); // for parsing application/json
         app.use(bodyParser.urlencoded({ extended: true }));
         app.use(session({
             secret: '12345%$#@!qazXSW',
             resave: false,
             saveUninitialized: true,
-            cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 6 },
+            cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 2 },
+            // cookie: { secure : false, httpOnly : false, maxAge : 1000 * 60 * 60 * 6 },
         }));
         app.use(allowCrossDomain);
         
