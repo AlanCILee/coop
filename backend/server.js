@@ -41,8 +41,8 @@ const Server = function(options) {
             secret: '12345%$#@!qazXSW',
             resave: false,
             saveUninitialized: true,
-            cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 2 },
-            // cookie: { secure : false, httpOnly : false, maxAge : 1000 * 60 * 60 * 6 },
+            // cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 2 },
+            cookie: { secure : false, httpOnly : false },
         }));
         app.use(allowCrossDomain);
         
