@@ -7,8 +7,6 @@ import { SetupComponent } from "./setup/setup.component";
 import { setupRoutes } from "./setup/setup.module";
 import { salaryRoutes } from "./salary/salary.module";
 import { AuthGuard } from "./core/authguard";
-import { LoginComponent } from "./login/login.component";
-import { AppComponent } from "./app.component";
 import { HomeComponent } from "./home/home.component";
 
 const APP_ROUTES: Routes = [

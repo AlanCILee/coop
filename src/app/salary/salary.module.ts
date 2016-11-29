@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from "@angular/common";
-import { HttpComponent } from "../core/http.component";
 import { ReviewComponent } from "./review/review.component";
 import { InputComponent } from "./input/input.component";
-import { Routes } from "@angular/router";
+import { Routes, RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-// import { DatePickerComponent } from "../core/datepicker/ng2-datepicker";
 import { ShareModule } from "../core/Share.module";
 import { AuthGuard } from "../core/authguard";
-
-
+import { SalaryComponent } from "./salary.component";
 
 @NgModule({
     imports: [
@@ -17,15 +14,17 @@ import { AuthGuard } from "../core/authguard";
         FormsModule,
         ReactiveFormsModule,
         ShareModule,
+        RouterModule,
     ],
     providers: [
-        HttpComponent,
-        AuthGuard,
     ],
     declarations: [
+        SalaryComponent,
         InputComponent,
         ReviewComponent,
-        // MapToIterable,
+    ],
+    exports: [
+        SalaryComponent,
     ],
 })
 

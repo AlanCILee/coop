@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DepartmentComponent } from "./department/department.component";
 import { ShareModule } from "../core/Share.module";
 import { AuthGuard } from "../core/authguard";
+import { SetupComponent } from "./setup.component";
 
 
 @NgModule({
@@ -18,18 +19,19 @@ import { AuthGuard } from "../core/authguard";
 		FormsModule,
 		ReactiveFormsModule,
 		ShareModule,
+		RouterModule,
 	],
 	declarations: [
+		SetupComponent,
 		EmployeesComponent,
 		TimezoneComponent,
 		DepartmentComponent,
-		// MapToIterable
 	],
 	providers: [
 
 	],
 	exports: [
-
+		SetupComponent,
 	],
 })
 export class SetupModule { }
