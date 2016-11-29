@@ -3,6 +3,7 @@ const express = require('express'),
         app = express(),
         bodyParser = require('body-parser'),
         session = require('express-session'),
+        MySQLStore = require('express-mysql-session')(session),
         sha = require('sha256'),
         fs = require('fs'),
         EmployeeService = require('./services/EmployeeService'),
@@ -12,6 +13,7 @@ const express = require('express'),
         ScheduleService = require('./services/ScheduleService'),
         InputService = require('./services/InputService');
 
+
 const Server = function(options) {
     const server = this;
     const mysql = options.mysql;
@@ -19,8 +21,36 @@ const Server = function(options) {
     const serverPort = options.serverPort;
     const serverAddress = options.serverAddress;
     // const server = this;
-    
+
     console.log('serverPort:', serverPort);
+
+    const setServer = function () {
+        var sessionOptions = {
+            host: '127.0.0.1',
+            port: 3306,
+            user: 'root',
+            password: '',
+            database: 'session',
+        };
+        // DEBUG=express-mysql-session* node your-app.js
+        var sessionStore = new MySQLStore(sessionOptions);
+
+        console.log('serverAddress:::::::::::::::::',serverAddress);
+
+        app.use(bodyParser.json()); // for parsing application/json
+        app.use(bodyParser.urlencoded({ extended: true }));
+
+        app.use(session({
+            secret: '12345%$#@!qazXSW',
+            store: sessionStore,
+            resave: true,
+            saveUninitialized: true,
+            // cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 2 },
+            // cookie: { secure : false, httpOnly : false },
+        }));
+    };
+
+
     const setRoute = function(){
         let employeeServiceObj = new EmployeeService(options),
             departmentServiceObj = new DepartmentService(options),
@@ -34,20 +64,12 @@ const Server = function(options) {
             res.header('Access-Control-Allow-Headers', 'Content-Type');
             next();
         };
-        console.log('serverAddress:::::::::::::::::',serverAddress);
-        app.use(bodyParser.json()); // for parsing application/json
-        app.use(bodyParser.urlencoded({ extended: true }));
-        app.use(session({
-            secret: '12345%$#@!qazXSW',
-            resave: false,
-            saveUninitialized: true,
-            // cookie: { secure : false, httpOnly : false, domain : serverAddress, maxAge : 1000 * 60 * 60 * 2 },
-            cookie: { secure : false, httpOnly : false },
-        }));
+
         app.use(allowCrossDomain);
         
         app.post('/login', loginServiceObj.logIn);
         app.get('/logout', loginServiceObj.logOff);
+        app.get('/loginCheck', loginServiceObj.loginCheck);
 
         app.post('/newDepartment', departmentServiceObj.newDepartmentDb);
         app.post('/upDepartment', departmentServiceObj.upDepartmentDb);
@@ -81,6 +103,7 @@ const Server = function(options) {
         app.use(express.static('public'));
         app.use(express.static('dist'));
 
+        setServer();
         setRoute();
     
         // app.listen(process.env.PORT, function(){

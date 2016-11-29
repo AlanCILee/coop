@@ -24,6 +24,7 @@ import { LoginComponent } from "./login/login.component";
 import { HomeComponent } from "./home/home.component";
 import { ErrorMessage } from "./core/errorMessage";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { LogIn } from "./model/login";
 
 @NgModule({
     imports: [
@@ -57,6 +58,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         TipModel,
         AuthGuard,
         LoginComponent,
+        LogIn,
         // ErrorMessage,
     ],
     bootstrap: [ AppComponent ]

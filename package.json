@@ -9,9 +9,9 @@
     "build": "rimraf dist && webpack --config config/webpack.prod.js --progress --profile --bail"
   },
   "author": {
-    "name" : "Alan Lee",
-    "email" : "alan.changil.lee@gmail.com",
-    "url" : "http://goodtidings.info/"
+    "name": "Alan Lee",
+    "email": "alan.changil.lee@gmail.com",
+    "url": "http://goodtidings.info/"
   },
   "licenses": [
     {
@@ -34,6 +34,7 @@
     "child_process": "^1.0.2",
     "core-js": "^2.4.1",
     "express": "^4.14.0",
+    "express-mysql-session": "^1.2.0",
     "express-session": "^1.14.2",
     "fs": "0.0.1-security",
     "imports-loader": "^0.6.5",

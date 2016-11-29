@@ -114,6 +114,15 @@ export class TimeTable {
 		});
 
 	}
+
+	closeTimeZone(){
+		console.log('close time zone -------------');
+		this.timeTable = [];
+		this.timeZonesHistory = [];
+		this.timeZones =[];              //current timezone
+		this.timestring = '';
+		this.time = null;
+	}
 }
 
 export class TimeZone {

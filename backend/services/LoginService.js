@@ -39,9 +39,15 @@ const LoginService = function(options) {
 	this.logOff = function(req, res){
 		console.log('user logout', req.session);
 		delete req.session.viewname;
+		delete req.session.company;
+		delete req.session.companyName;
 		res.send(req.session);
 	};
-	
+
+	this.loginCheck = function(req, res){
+		console.log('user login check', req.session);
+		res.send(req.session);
+	};
 }
 
 module.exports = LoginService;

@@ -56,6 +56,11 @@ export class Departments {
         });
     }
 
+    closeDepartment(){
+        console.log('closeDepartment -----------------------');
+        this.departments = [];
+    }
+
     getDepartmentName(departId: number): string{
         // console.log('getDepartmentName :'+ departId);
         let departName: string ='';

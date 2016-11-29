@@ -101,6 +101,11 @@ export class Employees {
         });
     }
 
+    closeEmployee() {
+	    console.log('close employee -------------');
+	    this.employees = [];
+    }
+
     // initEmployee():Promise<string>{
     	// return new Promise((resolve, reject)=> {
 	    //     console.log('start initEmployee Promise ===============');

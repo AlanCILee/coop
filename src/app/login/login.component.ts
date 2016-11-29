@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Injectable } from '@angular/core';
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { Response } from "@angular/http";
 
@@ -11,6 +11,7 @@ import { Departments } from "../model/department";
 import { Employees } from "../model/employee";
 import { API_ENDPOINT } from "../core/config";
 import { ErrorMessage } from "../core/errorMessage";
+import { LogIn } from "../model/login";
 
 @Component({
 	selector: 'login',
@@ -18,11 +19,11 @@ import { ErrorMessage } from "../core/errorMessage";
 	styleUrls: ['./login.component.css']
 })
 
+@Injectable()
 export class LoginComponent implements OnInit {
 	@ViewChild(ErrorMessage) errorMsg: ErrorMessage;
 
 	form: FormGroup;
-	viewname: string = null;
 
 	constructor(
 				private employees: Employees,
@@ -30,16 +31,55 @@ export class LoginComponent implements OnInit {
 				private schedule : Schedule,
 				private timeObj: TimeTable,
 				private tipObj: TipModel,
+				private loginObj: LogIn,
 	            private fb: FormBuilder,
 	            private router: Router,
+	            // private form: FormGroup,
 	            private httpComp: HttpComponent,) {
-	}
 
-	ngOnInit() {
 		this.form = this.fb.group({
 			id: [ '' ],
 			password: [ '' ],
 		});
+	}
+
+	ngOnInit() {
+		this.httpComp.makeRequest(API_ENDPOINT+'/loginCheck').subscribe((res : Response) => {
+			let response = res.json();
+			console.log('HttpComponent : ',response);
+
+			if('viewname' in response){
+				console.log('correct user :', response.viewname);
+				this.loginObj.setCurrentUser(response.viewname);
+				this.loginObj.setCurrentCompany(response.companyName);
+
+				this.timeObj.initTimeZone();
+				this.employees.initEmployee();
+				this.departments.initDepartments();
+				this.schedule.initSchedule();
+				this.tipObj.initTip();
+
+				this.router.navigate(['/']);
+			}else{
+				console.log('invalid user :');
+				this.closeSystem();
+			}
+		});
+	}
+
+	closeSystem(): void{
+		this.loginObj.setCurrentUser(null);
+		this.loginObj.setCurrentCompany(null);
+
+		this.timeObj.closeTimeZone();
+		this.employees.closeEmployee();
+		this.departments.closeDepartment();
+		this.schedule.closeSchedule();
+		this.tipObj.closeTip();
+
+		if (this.router.url != '/'){
+			this.router.navigate(['/']);
+		}
 	}
 
 	onSubmit(form: any): void {
@@ -52,8 +92,17 @@ export class LoginComponent implements OnInit {
 
 			if('viewname' in response){
 				console.log('correct user :', response.viewname);
-				sessionStorage.setItem('currentUser', response.viewname);
-				sessionStorage.setItem('currentCompany', response.companyName);
+
+				this.form.patchValue({
+					id: '',
+					password: '',
+				});
+
+				this.loginObj.setCurrentUser(response.viewname);
+				this.loginObj.setCurrentCompany(response.companyName);
+
+				// sessionStorage.setItem('currentUser', response.viewname);
+				// sessionStorage.setItem('currentCompany', response.companyName);
 
 				this.timeObj.initTimeZone();
 				this.employees.initEmployee();
@@ -77,33 +126,17 @@ export class LoginComponent implements OnInit {
 			console.log('HttpComponent : ',response);
 
 			if(!response.viewname){
-				console.log('user ', this.viewname, 'logout');
-				this.viewname = null;
-				sessionStorage.removeItem('currentUser');
-				sessionStorage.removeItem('currentCompany');
-				this.router.navigate(['/']);
-				window.location.reload();
+				this.closeSystem();
 			}
-
-			this.form.patchValue({
-				id: '',
-				password: '',
-			});
 		});
 	}
 
 	getUserName(): string{
-		if(sessionStorage.getItem('currentUser'))
-			return sessionStorage.getItem('currentUser');
-		else
-			return null;
+		return this.loginObj.getCurrentUser();
 	}
 
 	getUserCompany(): string{
-		if(sessionStorage.getItem('currentCompany'))
-			return sessionStorage.getItem('currentCompany');
-		else
-			return null;
+		return this.loginObj.getCurrentCompany();
 	}
 
 }

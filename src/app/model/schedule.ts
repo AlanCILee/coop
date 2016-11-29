@@ -138,6 +138,13 @@ export class Schedule implements OnInit {
 		});
 	}
 
+	closeSchedule(){
+		console.log('closeSchedule -----------------------');
+		this.jobs = [];
+		this.startD = null;
+		this.endD = null;
+		this.initialize = false;
+	}
 
 		// LIST_VIEW: string[] = [
 		// 	'Today',                // 0

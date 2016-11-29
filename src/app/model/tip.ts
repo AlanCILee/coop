@@ -67,6 +67,14 @@ export class TipModel implements OnInit{
 		});
 	}
 
+	closeTip(){
+		console.log('closeTip -----------------------');
+		this.dailyT  = {};
+		this.timeZones =[];
+		this.startD = null;
+		this.endD = null;
+	}
+
 	getTipList(date: string, dayOption: number, callback: any) {
 		console.log('selected date: ',date, 'viewOption: ', dayOption);
 		let days: string[] = [];
