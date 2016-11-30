@@ -34,8 +34,8 @@ export class EmployeesComponent implements OnInit {
             name: [ '' ],
             department: [ '' ],
             phone: [ '' ],
-            wage: [ '' ],
-            ratio: [ '100' ],
+            wage: [ 0 ],
+            ratio: [ 100 ],
         });
         // this.loadEmployees();
     }
@@ -64,8 +64,8 @@ export class EmployeesComponent implements OnInit {
             name: '',
             department: '',
             phone: '',
-            wage: '',
-            ratio: '',
+            wage: 0,
+            ratio: 100,
         });
         this.editItem = null;
     }

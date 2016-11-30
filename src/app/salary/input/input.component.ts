@@ -63,7 +63,7 @@ export class InputComponent implements OnInit {
 		        if(this.timeZones[zoneId].valid){
 		            this.zoneStr.push(this.timeZones[zoneId].zoneName);
 				    this.zoneId.push(zoneId);
-		            group[zoneId] = new FormControl('');
+		            group[zoneId] = new FormControl(0);
 			    }else{
 			    }
 		    });
@@ -98,7 +98,7 @@ export class InputComponent implements OnInit {
 	    Object.keys(this.timeZones).forEach((zoneId)=>{
 		    if(this.timeZones[zoneId].valid){
 			    this.form.patchValue({
-				    [ zoneId ]: '',
+				    [ zoneId ]: 0,
 			    });
 		    }
 	    });

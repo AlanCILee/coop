@@ -242,7 +242,7 @@ export class ReviewComponent implements OnInit {
                     let sum: number = 0;
                     Object.keys(employee['hour']).forEach((zone) => {
                         sum += employee['hour'][zone];
-                        detailString += `<!--<td>${ employee['hour'][zone] }</td>-->`;
+                        // detailString += `<!--<td>${ employee['hour'][zone] }</td>-->`;
                         detailString += `<td>${ employee['hour'][zone]/60 }</td>`;
                     });
                     detailString += `<td>${sum /60}</td>`;

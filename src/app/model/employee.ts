@@ -88,7 +88,7 @@ export class Employees {
 				            });
 			                
 			                if(wages.length == 0)
-			                    wages.push(new Wage(1, '1999-12-31 00:00:00'));
+			                    wages.push(new Wage(0, '1999-12-31 00:00:00'));
 				
 				            this.employees.push(
 					            new Employee( emp['empId'], emp['name'], emp['departId'], emp['phone'], wages, emp['ratio'], emp['valid'])
