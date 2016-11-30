@@ -396,10 +396,10 @@ export class ReviewComponent implements OnInit {
         
             table += `<tr><td></td><td></td><td></td><td class="active">Total Hour</td>`;
             Object.keys(this.timeZones).forEach((zoneId) => {
-                table += `<td class="active">${dailyHour[zoneId]}</td>`;
+                table += `<td class="active">${dailyHour[zoneId]/60}</td>`;
                 dailyHour['sum'] += dailyHour[zoneId];
             });
-            table += `<td class="active">${dailyHour['sum']}</td></tr>`;
+            table += `<td class="active">${dailyHour['sum']/60}</td></tr>`;
         
             table += `<tr><td></td><td></td><td></td><td class="active">Total Tip</td>`;
             Object.keys(this.timeZones).forEach((zoneId) => {
