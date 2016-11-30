@@ -6,6 +6,7 @@ const express = require('express'),
         MySQLStore = require('express-mysql-session')(session),
         sha = require('sha256'),
         fs = require('fs'),
+		config = require('../config/config'),
         EmployeeService = require('./services/EmployeeService'),
         DepartmentService = require('./services/DepartmentService'),
         TimezoneService = require('./services/TimezoneService'),
@@ -29,7 +30,7 @@ const Server = function(options) {
             host: '127.0.0.1',
             port: 3306,
             user: 'root',
-            password: '',
+            password: config.DB_PSWD,
             database: 'session',
         };
         // DEBUG=express-mysql-session* node your-app.js
