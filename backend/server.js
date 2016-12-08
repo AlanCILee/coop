@@ -74,6 +74,7 @@ const Server = function(options) {
 
         app.post('/newDepartment', departmentServiceObj.newDepartmentDb);
         app.post('/upDepartment', departmentServiceObj.upDepartmentDb);
+        app.post('/backDepartment', departmentServiceObj.backDepartmentDb);
         app.post('/rmDepartment', departmentServiceObj.rmDepartmentDb);
         app.get('/getDepartment', departmentServiceObj.getDepartmentDb);
 

@@ -56,6 +56,28 @@ const DepartmentService = function(options) {
 			}
 		});
 	};
+	
+	this.backDepartmentDb = function (req, res) {
+		let departId = req.body.dId;
+		let departName = req.body.dName;
+		let departRatio = req.body.dRatio;
+		let database = req.session.company || 'bluelasso';
+		
+		console.log('department req:', departName, ':', departRatio, 'for', database);
+		
+		let query = `UPDATE department SET departName = "${ departName }",  departRatio = "${ departRatio }"               
+	                        WHERE departId = "${departId}"`;
+		
+		mysql.sendQuery(database, query, function (err, result) {
+			if (err) {
+				console.log('sendQuery fail: ', err);
+				res.send({affectedRows: -1});
+			} else {
+				console.log('Update new department', result);
+				res.send({affectedRows: result.affectedRows});
+			}
+		});
+	};
 
 	this.rmDepartmentDb = function (req, res) {
 		let departId = req.body.dId;

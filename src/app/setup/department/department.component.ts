@@ -41,7 +41,25 @@ export class DepartmentComponent implements OnInit {
         });
         this.editItem = null;
     }
-
+    
+    backDateSubmit(){
+        let form:any = this.form.getRawValue();
+        console.log('backDateSubmit', form);
+    
+        this.httpComp.makePostRequest(API_ENDPOINT+'/backDepartment',form).subscribe((res : Response) => {
+            let response = res.json();
+            console.log('HttpComponent : ',response);
+        
+            if( Number(response.affectedRows) > 0){
+                console.log('update successfully :', response.insertId );
+                this.departmentsObj.updateDepartment(form.dId, form.dName, Number(form.dRatio));
+            }else{
+                console.log('department update fail');
+            }
+        });
+        this.clearInput();
+    }
+    
     onSubmit(form: any): void{
         console.log('department form result: ',form);
 

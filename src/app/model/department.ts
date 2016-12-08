@@ -22,6 +22,17 @@ export class Departments {
         }
         console.log('addDepartment : ', this.departments);
     }
+    
+    updateDepartment(departId: number, departName: string, ratio: number): void{
+            this.departments.forEach((dep)=>{
+                if(dep.departId == departId){
+                    dep.departName = departName;
+                    dep.departRatio = ratio;
+                }
+            });
+        
+        console.log('updateDepartment : ', this.departments);
+    }
 
     removeDepartment(depart: Department): void{
         this.departments.forEach((dep)=>{
