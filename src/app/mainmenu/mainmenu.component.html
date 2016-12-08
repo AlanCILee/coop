@@ -33,7 +33,7 @@
 			</div>
 			<hr>
 			<div class ="row">
-				<div class ="col-md-2">
+				<div class ="col-md-5">
 					<label>Name </label>
 					<select class="form-control" formControlName="empId">
 						<ng-container *ngFor="let employee of employees">
@@ -41,9 +41,9 @@
 							<option *ngIf="employee.valid" value="{{ employee.empId }}">{{ getEmployeeName(employee.empId) }}</option>
 						</ng-container>
 					</select>
-				</div>
-				<div class ="col-md-3">
-					<label>Working Department </label>
+				<!--</div>-->
+				<!--<div class ="col-md-2">-->
+					<label> Department </label>
 					<select class="form-control" formControlName="department">
 						<ng-container *ngFor="let depart of departments">
 							<!--<option *ngIf="depart.valid" value="{{ depart.departId }}">{{ depart.departName }}</option>-->
@@ -52,15 +52,15 @@
 					</select>
 				</div>
 				
-				<div class ="col-md-2">
-					<label>Start Time </label>
+				<div class ="col-md-4">
+					<label>Start </label>
 					<select class="form-control" formControlName="startT">
 						<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 					</select>
-				</div>
+				<!--</div>-->
 				
-				<div class ="col-md-2">
-					<label>End Time </label>
+				<!--<div class ="col-md-2">-->
+					<label> End </label>
 					<select class="form-control" formControlName="endT">
 						<option *ngFor="let time of timeTable">{{ time.timeStr }}</option>
 					</select>

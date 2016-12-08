@@ -121,8 +121,8 @@ export class DispScheduleComponent implements OnInit {
 				});
 
 				if(departJob.length > 0) {
-					this.jobsDatesDeparts[key][department.departName] = [];
-					this.jobsDatesDeparts[key][department.departName] = departJob;
+					this.jobsDatesDeparts[key][department.departId] = [];
+					this.jobsDatesDeparts[key][department.departId] = departJob;
 					this.departCnt++;
 					this.dispEmpNum += this.getEmpNum(departJob);
 				}
@@ -219,7 +219,7 @@ export class DispScheduleComponent implements OnInit {
 				
 				this.hOffset += 20;
 				
-				svg.text(TEXT_OFFSET_X, this.hOffset, depart).attr({
+				svg.text(TEXT_OFFSET_X, this.hOffset, this.getDepartName(Number(depart))).attr({
 					font: "100 1em Source Sans Pro",
 					textAnchor: "left",
 					fill: "#000",
@@ -273,5 +273,9 @@ export class DispScheduleComponent implements OnInit {
 			this.hOffset += 20;
 		// }
 		});
+	}
+	
+	getDepartName(departId: number): string{
+		return this.departmentsObj.getDepartmentName(departId);
 	}
 }
