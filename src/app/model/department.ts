@@ -94,6 +94,17 @@ export class Departments {
         
         return departRatio;
     }
+    
+    getDepartment(departId: number): Department{
+        let department: Department = null;
+        
+        this.departments.forEach((dep)=>{
+            if(dep.departId == departId){
+                department = dep;
+            }
+        });
+        return department;
+    }
 }
 
 export class Department {

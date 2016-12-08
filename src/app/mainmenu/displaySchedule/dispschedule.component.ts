@@ -215,6 +215,7 @@ export class DispScheduleComponent implements OnInit {
 			for (var depart in dateJob) {
 				let departJob: Job[] = dateJob[depart];
 				let empOffset: any[] = [];
+				let validDepart = false;
 				// console.log('depart: ', depart);
 				
 				this.hOffset += 20;
@@ -224,6 +225,12 @@ export class DispScheduleComponent implements OnInit {
 					textAnchor: "left",
 					fill: "#000",
 				});
+				
+				let dp = this.getDepartmnet(Number(depart));
+				
+				if(dp && dp.valid){
+					validDepart = true;
+				}
 				
 				departJob.forEach((job) => {
 					if (!empOffset[job.empId]) {
@@ -244,6 +251,8 @@ export class DispScheduleComponent implements OnInit {
 
 					if(this.editItem && (this.editItem.jobId == job.jobId)) {
 						fillColor = '#FF9999';
+					}else if(validDepart){
+						fillColor = '#7ABABC';
 					}else {
 						fillColor = '#AAA';
 					}
@@ -278,4 +287,10 @@ export class DispScheduleComponent implements OnInit {
 	getDepartName(departId: number): string{
 		return this.departmentsObj.getDepartmentName(departId);
 	}
+	
+	getDepartmnet(departId: number): Department{
+		return this.departmentsObj.getDepartment(departId);
+	}
+	
+	
 }
